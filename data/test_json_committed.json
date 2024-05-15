@@ -1,1 +1,1773 @@
-{"Alle Sorgegemeinschaften, z.B. Paare":{"Haushalt + Wohnen":{"täglich":{"2":{"Wäsche waschen + aufhängen":{"2":{"answer":"mache ich","points":"4.00","answer_type":"1"},"3":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}},"3":{"Wäsche falten + wegräumen":{"4":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"4":{"Betten machen":{"6":{"answer":"mache ich","points":"4.00","answer_type":"1"},"7":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}},"5":{"Kochen":{"8":{"answer":"mache ich","points":"4.00","answer_type":"1"},"9":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}},"157":{"Backen":{"822":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"26":{"Küche aufräumen + spülen":{"50":{"answer":"mache ich","points":"4.00","answer_type":"1"},"51":{"answer":"denke ich dran","points":"0.00","answer_type":"2"}}},"27":{"Einkaufsliste pflegen":{"692":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"29":{"Aufräumen":{"57":{"answer":"denke ich dran","points":"0.00","answer_type":"2"}}},"30":{"Haustiere versorgen":{"58":{"answer":"mache ich","points":"4.00","answer_type":"1"}}}},"wöchentlich":{"6":{"Saugen":{"10":{"answer":"mache ich","points":"3.00","answer_type":"1"}}},"7":{"Wischen":{"12":{"answer":"mache ich","points":"3.00","answer_type":"1"}}},"8":{"Bad putzen":{"15":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"9":{"Blumen gießen":{"16":{"answer":"mache ich","points":"3.00","answer_type":"1"}}},"31":{"Staub wischen":{"60":{"answer":"mache ich","points":"3.00","answer_type":"1"},"61":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"32":{"Bügeln":{"697":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"33":{"Wocheneinkauf":{"64":{"answer":"mache ich","points":"3.00","answer_type":"1"},"65":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"34":{"Mahlzeiten planen":{"66":{"answer":"mache ich","points":"3.00","answer_type":"1"},"67":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"35":{"Obst\/Gemüse frisch nachkaufen":{"700":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"36":{"Monitoring der Familienfinanzen":{"70":{"answer":"mache ich","points":"3.00","answer_type":"1"}}},"28":{"Müll rausbringen":{"693":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"monatlich":{"46":{"Betten frisch beziehen":{"90":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"37":{"Putzmittel\/Staubsaugerbeutel kaufen":{"72":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"38":{"Abflüsse reinigen":{"74":{"answer":"mache ich","points":"2.00","answer_type":"1"},"75":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"39":{"Kleinreparaturen":{"76":{"answer":"mache ich","points":"2.00","answer_type":"1"},"77":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"40":{"Zahlungen veranlassen (Miete, Strom, etc.)":{"705":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"41":{"Altglas wegbringen":{"80":{"answer":"mache ich","points":"2.00","answer_type":"1"},"81":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"42":{"Deko + Gemütlichkeit zuhause":{"707":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"43":{"Garten\/Balkon":{"84":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"44":{"Schrauben + Bohren":{"86":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"159":{"Ärzt*innentermine + Gesundheitsorganisation":{"317":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"45":{"Schuhe putzen":{"88":{"answer":"mache ich","points":"2.00","answer_type":"1"},"89":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}}},"jährlich":{"160":{"Fenster putzen":{"318":{"answer":"mache ich","points":"1.00","answer_type":"1"}}},"14":{"Küchenschränke abwischen":{"26":{"answer":"mache ich","points":"1.00","answer_type":"1"},"27":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"15":{"Steuererklärung":{"28":{"answer":"mache ich","points":"1.00","answer_type":"1"}}},"47":{"Maschinen entkalken":{"92":{"answer":"mache ich","points":"1.00","answer_type":"1"},"93":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"48":{"Kühlschrank + TK + Backofen putzen":{"94":{"answer":"mache ich","points":"1.00","answer_type":"1"}}},"49":{"Sperrmüll entsorgen":{"97":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"50":{"Recherchen für Strom\/Internet\/Versicherung":{"99":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"51":{"Medizinschrank sortieren + updaten":{"716":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"161":{"Kleinanzeigenverkäufe":{"826":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"162":{"Nachbarschaftshilfe":{"323":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}}}},"Fahren + Freizeit":{"wöchentlich":{"52":{"Entertainment\/Familienausflüge am Wochenende planen":{"102":{"answer":"mache ich","points":"3.00","answer_type":"1"}}}},"monatlich":{"53":{"Fahrräder instandhalten":{"104":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"54":{"Tanken":{"719":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"55":{"Auto waschen":{"720":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"56":{"Feiertagsplanung (siehe MentalLoad@Christmas-Test)":{"110":{"answer":"mache ich","points":"2.00","answer_type":"1"}}}},"jährlich":{"13":{"Auto zum TÜV":{"678":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"57":{"Autoreparaturen":{"722":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"58":{"Urlaubsplanung":{"114":{"answer":"mache ich","points":"1.00","answer_type":"1"},"115":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"59":{"Koffer packen für Urlaub":{"116":{"answer":"mache ich","points":"1.00","answer_type":"1"}}}}},"Beziehungspflege":{"täglich":{"158":{"Verhütung":{"823":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"wöchentlich":{"60":{"Paartermine organisieren":{"118":{"answer":"mache ich","points":"3.00","answer_type":"1"}}},"61":{"Geburtstagsgrüße an Freund*innen + Familie senden":{"121":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"62":{"Emotionsbegleitung":{"122":{"answer":"mache ich","points":"3.00","answer_type":"1"},"123":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}}},"monatlich":{"63":{"Kontaktpflege zu Angehörigen":{"124":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"64":{"Geburtstagsgeschenke für Freund*innen + Familie besorgen":{"127":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"65":{"Sich mit partnerschaftlichen Konflikten befassen":{"128":{"answer":"mache ich","points":"2.00","answer_type":"1"},"129":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"163":{"Besuch bewirten\/Gästebetten machen":{"828":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"jährlich":{"66":{"Erinnerungen + Fotos aufbewahren":{"130":{"answer":"mache ich","points":"1.00","answer_type":"1"},"131":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"164":{"Geburtstagsfeiern organisieren":{"326":{"answer":"mache ich","points":"1.00","answer_type":"1"},"327":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"165":{"Sonstige Familienfeste organisieren":{"328":{"answer":"mache ich","points":"1.00","answer_type":"1"}}}}}},"... mit Kindern":{"Kita + Schule":{"täglich":{"70":{"Brotboxen vorbereiten":{"138":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"67":{"Bringen":[]},"68":{"Abholen":{"134":{"answer":"mache ich","points":"4.00","answer_type":"1"},"135":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}},"69":{"Hausaufgaben betreuen":{"734":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"wöchentlich":{"71":{"Wechselkleidung prüfen":{"140":{"answer":"mache ich","points":"3.00","answer_type":"1"}}},"72":{"Turn- + Sportbekleidung packen\/mitgeben":{"142":{"answer":"mache ich","points":"3.00","answer_type":"1"},"143":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}}},"monatlich":{"73":{"Schul-\/Kita-\/ sonst. Bedarf besorgen":{"144":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"74":{"Dienste bei Sonderveranstaltungen":{"146":{"answer":"mache ich","points":"2.00","answer_type":"1"},"147":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"75":{"Ansprechpartner*in\/Notfallkontakt sein\r\n":{"740":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"jährlich":{"76":{"Teilnahme an Eltern-\/Angehörigenabenden":{"150":{"answer":"mache ich","points":"1.00","answer_type":"1"}}}}},"Kleidung + Transporthilfen":{"täglich":{"77":{"Kleidung auswählen":{"152":{"answer":"mache ich","points":"4.00","answer_type":"1"},"153":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}},"78":{"Kind(er) anziehen":{"154":{"answer":"mache ich","points":"4.00","answer_type":"1"},"155":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}}},"monatlich":{"79":{"Kleidergrößen prüfen + sortieren":{"156":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"80":{"Schuhe prüfen + einkaufen":{"158":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"81":{"Neue Kleidung einkaufen":{"160":{"answer":"mache ich","points":"2.00","answer_type":"1"},"161":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"82":{"Reparieren kaputter Kleidung":{"747":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"83":{"Fahrradhelmgrößen prüfen + kaufen":{"748":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"jährlich":{"84":{"Ungenutzte Kleidung verschenken\/verkaufen":{"166":{"answer":"mache ich","points":"1.00","answer_type":"1"}}},"85":{"Kinderwagen\/Tragehilfen waschen\/instandhalten\r\n":{"168":{"answer":"mache ich","points":"1.00","answer_type":"1"},"169":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"86":{"Kindersitze Auto + Rad":{"751":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}}},"Schlaf + Beziehung":{"täglich":{"87":{"Einschlafbegleitung":{"172":{"answer":"mache ich","points":"4.00","answer_type":"1"},"173":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}},"88":{"Wecken + Aufwachbegleitung":{"174":{"answer":"mache ich","points":"4.00","answer_type":"1"},"175":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}},"89":{"Emotionsbegleitung":{"176":{"answer":"mache ich","points":"4.00","answer_type":"1"}}}},"wöchentlich":{"90":{"Gespräche mit älteren Kindern (Liebeskummer, Zukunft, ...)":{"755":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"monatlich":{"91":{"Nachtschichten bei Krankheit":{"180":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"92":{"Regelvereinbarungen mit Kindern":{"182":{"answer":"mache ich","points":"2.00","answer_type":"1"},"183":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"93":{"Ratgeber lesen\/Erziehungsberatung suchen":{"758":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"jährlich":{"94":{"Erinnerungen\/Fotos aufbewahren":{"186":{"answer":"mache ich","points":"1.00","answer_type":"1"}}}}},"Körper + Pflege":{"täglich":{"95":{"Haare kämmen":{"188":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"96":{"Zähne putzen":{"190":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"97":{"Schnuller + Flaschen sterilisieren":{"762":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"wöchentlich":{"99":{"Wickelbedarf\/Drogerieeinkäufe\r\n":{"196":{"answer":"mache ich","points":"3.00","answer_type":"1"}}},"100":{"Nägel schneiden":{"199":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"101":{"Baden + Haare waschen":{"766":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"monatlich":{"102":{"Ärzt*innentermine vereinbaren":{"202":{"answer":"mache ich","points":"2.00","answer_type":"1"},"203":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"103":{"Ärzt*innenbesuche":{"204":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"104":{"Haarschneidebegleitung":{"206":{"answer":"mache ich","points":"2.00","answer_type":"1"}}}},"jährlich":{"105":{"Sehhilfe aktualisieren":{"208":{"answer":"mache ich","points":"1.00","answer_type":"1"}}}}},"Geburtstag + Feste":{"monatlich":{"106":{"Freund*innen\/Familie über Kinderwünsche informieren":{"771":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"107":{"Kindergeschenke besorgen":{"212":{"answer":"mache ich","points":"2.00","answer_type":"1"}}}},"jährlich":{"108":{"Kindergeburtstage planen + durchführen":{"214":{"answer":"mache ich","points":"1.00","answer_type":"1"}}}}},"Freizeit":{"täglich":{"109":{"Spielverabredungen treffen":{"216":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"110":{"Nachmittagsbetreuung + Fahrdienste":{"218":{"answer":"mache ich","points":"4.00","answer_type":"1"},"219":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}},"111":{"Begleitung von Medienkonsum":{"776":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"wöchentlich":{"112":{"BabysitterInnen (Orga + Kommunikation)":{"777":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"monatlich":{"113":{"Recherche für Sport\/Vereine\/Freizeitaktivitäten":{"224":{"answer":"mache ich","points":"2.00","answer_type":"1"}}},"114":{"Taschengeldausgabe\/-verwaltung":{"226":{"answer":"mache ich","points":"2.00","answer_type":"1"}}}}}},"... mit zu pflegenden Angehörigen":{"Körper + Pflege":{"täglich":{"115":{"Haare kämmen":{"228":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"116":{"Zähne putzen":{"230":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"117":{"Medikamente richten":{"232":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"118":{"Medikamentengabe":{"235":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}},"119":{"Anwendung + Pflege von Medizinprodukten wie z.B. Katheter":{"784":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"120":{"Lagerung + Mobilisierung\/Physio":{"785":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"121":{"Essen zubereiten":{"786":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"122":{"Hilfestellung beim Essen":{"787":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"123":{"Toilettengänge\/Inkontinenzversorgung":{"788":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"wöchentlich":{"124":{"Pflegeutensilien bestellen\/einkaufen":{"789":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"125":{"Nägel schneiden":{"248":{"answer":"mache ich","points":"3.00","answer_type":"1"},"249":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"126":{"Baden + Haare waschen":{"250":{"answer":"mache ich","points":"3.00","answer_type":"1"}}},"127":{"Apotheken- + Sanitätshausgänge":{"252":{"answer":"mache ich","points":"3.00","answer_type":"1"},"253":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"128":{"Therapie-Begleitung":{"793":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"129":{"Aufräumen + Putzen (sofern zusätzliche Räumlichkeiten)":{"257":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"130":{"Medikamentenvorräte prüfen":{"258":{"answer":"mache ich","points":"3.00","answer_type":"1"},"259":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"131":{"Tasche für draußen packen":{"796":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"monatlich":{"132":{"Ärzt*innenbesuche":{"262":{"answer":"mache ich","points":"2.00","answer_type":"1"},"263":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"133":{"Sanitätshauskontakte\/Hilfsmittel justieren":{"798":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"134":{"Haarschneidebegleitung":{"799":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"135":{"Nachtschichten":{"268":{"answer":"mache ich","points":"2.00","answer_type":"1"},"269":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"136":{"Einweisung anderer Menschen in Pflegeablauf":{"801":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"137":{"Pflegebett beziehen ":{"802":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"jährlich":{"138":{"Fachärzt*innenbesuche":{"274":{"answer":"mache ich","points":"1.00","answer_type":"1"}}},"139":{"Kurzzeitpflege organisieren":{"804":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"140":{"Klinikaufenthalte begleiten":{"805":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}}},"Beziehungspflege":{"täglich":{"141":{"Beschäftigung + Input":{"280":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"166":{"Sterbebegleitung":{"330":{"answer":"mache ich","points":"4.00","answer_type":"1"},"331":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}}},"wöchentlich":{"142":{"Organisation + Unterstützung von Freizeitaktiviatäten + sozialen Kontakten":{"282":{"answer":"mache ich","points":"3.00","answer_type":"1"},"283":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"167":{"Gespräche über den Tod, Krankheit, Ängste, Zukunft (betroffene Person\/Geschwister)":{"832":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"monatlich":{"143":{"Spielsachen kaufen":{"808":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"168":{"Begleitung bei KH-Aufenthalten":{"833":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"169":{"Vernetzung + regelmäßige Infos an Verwandte\/Freund*innen":{"834":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"jährlich":{"170":{"Feierlichkeiten organisieren":{"338":{"answer":"mache ich","points":"1.00","answer_type":"1"}}}}},"Kleidung + Transporthilfen":{"täglich":{"144":{"Kleidung auswählen":{"286":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"145":{"Person anziehen":{"288":{"answer":"mache ich","points":"4.00","answer_type":"1"}}},"146":{"Fahrdienste (organisieren)":{"290":{"answer":"mache ich","points":"4.00","answer_type":"1"},"291":{"answer":"denke ich dran","points":"4.00","answer_type":"2"}}}},"wöchentlich":{"147":{"Hilfsmittel prüfen + instand halten":{"292":{"answer":"mache ich","points":"3.00","answer_type":"1"},"293":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}}},"monatlich":{"148":{"Neue Kleidung einkaufen\r\n":{"813":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"149":{"Reparieren kaputter Kleidung":{"296":{"answer":"mache ich","points":"2.00","answer_type":"1"}}}},"jährlich":{"150":{"Barrierefreiheit sicherstellen":{"298":{"answer":"mache ich","points":"1.00","answer_type":"1"},"299":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}}}},"Organisation + Verwaltung":{"täglich":{"151":{"Kommunikation mit KK, med. Dienst, Pflegekasse, Ärzt*innen, Therapeut*innen":{"816":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"wöchentlich":{"152":{"Management + Monitoring von Terminen mit Dienstleister*innen\/Ärzt*innen":{"302":{"answer":"mache ich","points":"3.00","answer_type":"1"},"303":{"answer":"denke ich dran","points":"3.00","answer_type":"2"}}},"171":{"Finanzmanagement\/-monitoring":{"340":{"answer":"mache ich","points":"3.00","answer_type":"1"}}}},"monatlich":{"153":{"Antragstellung für Hilfsmittel":{"304":{"answer":"mache ich","points":"2.00","answer_type":"1"},"305":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"154":{"Widersprüche an die KK schreiben":{"819":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}},"172":{"Nachlassvorbereitung":{"343":{"answer":"denke ich dran","points":"2.00","answer_type":"2"}}},"173":{"Recherche + Weiterbildung":{"838":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}},"jährlich":{"155":{"Weiterbildung zu medizinischen Themen":{"308":{"answer":"mache ich","points":"1.00","answer_type":"1"},"309":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"156":{"Weiterbildung zu Hilfestellungen + Leistungen":{"310":{"answer":"mache ich","points":"1.00","answer_type":"1"},"311":{"answer":"denke ich dran","points":"1.00","answer_type":"2"}}},"174":{"Nachlassverwaltung":{"839":{"answer":"kommt nicht vor","points":"0.00","answer_type":"3"}}}}}}}
+{
+    "Alle Sorgegemeinschaften, z.B. Paare": {
+        "Haushalt + Wohnen": {
+            "täglich": {
+                "2": {
+                    "Wäsche waschen + aufhängen": {
+                        "2": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "3": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "3": {
+                    "Wäsche falten + wegräumen": {
+                        "4": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "4": {
+                    "Betten machen": {
+                        "6": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "7": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "5": {
+                    "Kochen": {
+                        "8": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "9": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "157": {
+                    "Backen": {
+                        "822": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "26": {
+                    "Küche aufräumen + spülen": {
+                        "50": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "51": {
+                            "answer": "denke ich dran",
+                            "points": "0.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "27": {
+                    "Einkaufsliste pflegen": {
+                        "692": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "29": {
+                    "Aufräumen": {
+                        "57": {
+                            "answer": "denke ich dran",
+                            "points": "0.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "30": {
+                    "Haustiere versorgen": {
+                        "58": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "6": {
+                    "Saugen": {
+                        "10": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "7": {
+                    "Wischen": {
+                        "12": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "8": {
+                    "Bad putzen": {
+                        "15": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "9": {
+                    "Blumen gießen": {
+                        "16": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "31": {
+                    "Staub wischen": {
+                        "60": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "61": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "32": {
+                    "Bügeln": {
+                        "697": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "33": {
+                    "Wocheneinkauf": {
+                        "64": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "65": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "34": {
+                    "Mahlzeiten planen": {
+                        "66": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "67": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "35": {
+                    "Obst\/Gemüse frisch nachkaufen": {
+                        "700": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "36": {
+                    "Monitoring der Familienfinanzen": {
+                        "70": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "28": {
+                    "Müll rausbringen": {
+                        "693": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "46": {
+                    "Betten frisch beziehen": {
+                        "90": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "37": {
+                    "Putzmittel\/Staubsaugerbeutel kaufen": {
+                        "72": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "38": {
+                    "Abflüsse reinigen": {
+                        "74": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "75": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "39": {
+                    "Kleinreparaturen": {
+                        "76": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "77": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "40": {
+                    "Zahlungen veranlassen (Miete, Strom, etc.)": {
+                        "705": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "41": {
+                    "Altglas wegbringen": {
+                        "80": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "81": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "42": {
+                    "Deko + Gemütlichkeit zuhause": {
+                        "707": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "43": {
+                    "Garten\/Balkon": {
+                        "84": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "44": {
+                    "Schrauben + Bohren": {
+                        "86": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "159": {
+                    "Ärzt*innentermine + Gesundheitsorganisation": {
+                        "317": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "45": {
+                    "Schuhe putzen": {
+                        "88": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "89": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "160": {
+                    "Fenster putzen": {
+                        "318": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "14": {
+                    "Küchenschränke abwischen": {
+                        "26": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "27": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "15": {
+                    "Steuererklärung": {
+                        "28": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "47": {
+                    "Maschinen entkalken": {
+                        "92": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "93": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "48": {
+                    "Kühlschrank + TK + Backofen putzen": {
+                        "94": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "49": {
+                    "Sperrmüll entsorgen": {
+                        "97": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "50": {
+                    "Recherchen für Strom\/Internet\/Versicherung": {
+                        "99": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "51": {
+                    "Medizinschrank sortieren + updaten": {
+                        "716": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "161": {
+                    "Kleinanzeigenverkäufe": {
+                        "826": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "162": {
+                    "Nachbarschaftshilfe": {
+                        "323": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            }
+        },
+        "Fahren + Freizeit": {
+            "wöchentlich": {
+                "52": {
+                    "Entertainment\/Familienausflüge am Wochenende planen": {
+                        "102": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "53": {
+                    "Fahrräder instandhalten": {
+                        "104": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "54": {
+                    "Tanken": {
+                        "719": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "55": {
+                    "Auto waschen": {
+                        "720": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "56": {
+                    "Feiertagsplanung (siehe MentalLoad@Christmas-Test)": {
+                        "110": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "13": {
+                    "Auto zum TÜV": {
+                        "678": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "57": {
+                    "Autoreparaturen": {
+                        "722": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "58": {
+                    "Urlaubsplanung": {
+                        "114": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "115": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "59": {
+                    "Koffer packen für Urlaub": {
+                        "116": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        },
+        "Beziehungspflege": {
+            "täglich": {
+                "158": {
+                    "Verhütung": {
+                        "823": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "60": {
+                    "Paartermine organisieren": {
+                        "118": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "61": {
+                    "Geburtstagsgrüße an Freund*innen + Familie senden": {
+                        "121": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "62": {
+                    "Emotionsbegleitung": {
+                        "122": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "123": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "63": {
+                    "Kontaktpflege zu Angehörigen": {
+                        "124": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "64": {
+                    "Geburtstagsgeschenke für Freund*innen + Familie besorgen": {
+                        "127": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "65": {
+                    "Sich mit partnerschaftlichen Konflikten befassen": {
+                        "128": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "129": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "163": {
+                    "Besuch bewirten\/Gästebetten machen": {
+                        "828": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "66": {
+                    "Erinnerungen + Fotos aufbewahren": {
+                        "130": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "131": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "164": {
+                    "Geburtstagsfeiern organisieren": {
+                        "326": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "327": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "165": {
+                    "Sonstige Familienfeste organisieren": {
+                        "328": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "... mit Kindern": {
+        "Kita + Schule": {
+            "täglich": {
+                "70": {
+                    "Brotboxen vorbereiten": {
+                        "138": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "67": {
+                    "Bringen": []
+                },
+                "68": {
+                    "Abholen": {
+                        "134": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "135": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "69": {
+                    "Hausaufgaben betreuen": {
+                        "734": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "71": {
+                    "Wechselkleidung prüfen": {
+                        "140": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "72": {
+                    "Turn- + Sportbekleidung packen\/mitgeben": {
+                        "142": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "143": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "73": {
+                    "Schul-\/Kita-\/ sonst. Bedarf besorgen": {
+                        "144": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "74": {
+                    "Dienste bei Sonderveranstaltungen": {
+                        "146": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "147": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "75": {
+                    "Ansprechpartner*in\/Notfallkontakt sein\r\n": {
+                        "740": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "76": {
+                    "Teilnahme an Eltern-\/Angehörigenabenden": {
+                        "150": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        },
+        "Kleidung + Transporthilfen": {
+            "täglich": {
+                "77": {
+                    "Kleidung auswählen": {
+                        "152": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "153": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "78": {
+                    "Kind(er) anziehen": {
+                        "154": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "155": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "79": {
+                    "Kleidergrößen prüfen + sortieren": {
+                        "156": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "80": {
+                    "Schuhe prüfen + einkaufen": {
+                        "158": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "81": {
+                    "Neue Kleidung einkaufen": {
+                        "160": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "161": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "82": {
+                    "Reparieren kaputter Kleidung": {
+                        "747": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "83": {
+                    "Fahrradhelmgrößen prüfen + kaufen": {
+                        "748": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "84": {
+                    "Ungenutzte Kleidung verschenken\/verkaufen": {
+                        "166": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "85": {
+                    "Kinderwagen\/Tragehilfen waschen\/instandhalten\r\n": {
+                        "168": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "169": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "86": {
+                    "Kindersitze Auto + Rad": {
+                        "751": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            }
+        },
+        "Schlaf + Beziehung": {
+            "täglich": {
+                "87": {
+                    "Einschlafbegleitung": {
+                        "172": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "173": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "88": {
+                    "Wecken + Aufwachbegleitung": {
+                        "174": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "175": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "89": {
+                    "Emotionsbegleitung": {
+                        "176": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "90": {
+                    "Gespräche mit älteren Kindern (Liebeskummer, Zukunft, ...)": {
+                        "755": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "91": {
+                    "Nachtschichten bei Krankheit": {
+                        "180": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "92": {
+                    "Regelvereinbarungen mit Kindern": {
+                        "182": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "183": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "93": {
+                    "Ratgeber lesen\/Erziehungsberatung suchen": {
+                        "758": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "94": {
+                    "Erinnerungen\/Fotos aufbewahren": {
+                        "186": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        },
+        "Körper + Pflege": {
+            "täglich": {
+                "95": {
+                    "Haare kämmen": {
+                        "188": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "96": {
+                    "Zähne putzen": {
+                        "190": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "97": {
+                    "Schnuller + Flaschen sterilisieren": {
+                        "762": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "99": {
+                    "Wickelbedarf\/Drogerieeinkäufe\r\n": {
+                        "196": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "100": {
+                    "Nägel schneiden": {
+                        "199": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "101": {
+                    "Baden + Haare waschen": {
+                        "766": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "102": {
+                    "Ärzt*innentermine vereinbaren": {
+                        "202": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "203": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "103": {
+                    "Ärzt*innenbesuche": {
+                        "204": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "104": {
+                    "Haarschneidebegleitung": {
+                        "206": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "105": {
+                    "Sehhilfe aktualisieren": {
+                        "208": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        },
+        "Geburtstag + Feste": {
+            "monatlich": {
+                "106": {
+                    "Freund*innen\/Familie über Kinderwünsche informieren": {
+                        "771": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "107": {
+                    "Kindergeschenke besorgen": {
+                        "212": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "108": {
+                    "Kindergeburtstage planen + durchführen": {
+                        "214": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        },
+        "Freizeit": {
+            "täglich": {
+                "109": {
+                    "Spielverabredungen treffen": {
+                        "216": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "110": {
+                    "Nachmittagsbetreuung + Fahrdienste": {
+                        "218": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "219": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "111": {
+                    "Begleitung von Medienkonsum": {
+                        "776": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "112": {
+                    "BabysitterInnen (Orga + Kommunikation)": {
+                        "777": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "113": {
+                    "Recherche für Sport\/Vereine\/Freizeitaktivitäten": {
+                        "224": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "114": {
+                    "Taschengeldausgabe\/-verwaltung": {
+                        "226": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "... mit zu pflegenden Angehörigen": {
+        "Körper + Pflege": {
+            "täglich": {
+                "115": {
+                    "Haare kämmen": {
+                        "228": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "116": {
+                    "Zähne putzen": {
+                        "230": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "117": {
+                    "Medikamente richten": {
+                        "232": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "118": {
+                    "Medikamentengabe": {
+                        "235": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "119": {
+                    "Anwendung + Pflege von Medizinprodukten wie z.B. Katheter": {
+                        "784": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "120": {
+                    "Lagerung + Mobilisierung\/Physio": {
+                        "785": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "121": {
+                    "Essen zubereiten": {
+                        "786": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "122": {
+                    "Hilfestellung beim Essen": {
+                        "787": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "123": {
+                    "Toilettengänge\/Inkontinenzversorgung": {
+                        "788": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "124": {
+                    "Pflegeutensilien bestellen\/einkaufen": {
+                        "789": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "125": {
+                    "Nägel schneiden": {
+                        "248": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "249": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "126": {
+                    "Baden + Haare waschen": {
+                        "250": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "127": {
+                    "Apotheken- + Sanitätshausgänge": {
+                        "252": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "253": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "128": {
+                    "Therapie-Begleitung": {
+                        "793": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "129": {
+                    "Aufräumen + Putzen (sofern zusätzliche Räumlichkeiten)": {
+                        "257": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "130": {
+                    "Medikamentenvorräte prüfen": {
+                        "258": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "259": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "131": {
+                    "Tasche für draußen packen": {
+                        "796": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "132": {
+                    "Ärzt*innenbesuche": {
+                        "262": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "263": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "133": {
+                    "Sanitätshauskontakte\/Hilfsmittel justieren": {
+                        "798": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "134": {
+                    "Haarschneidebegleitung": {
+                        "799": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "135": {
+                    "Nachtschichten": {
+                        "268": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "269": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "136": {
+                    "Einweisung anderer Menschen in Pflegeablauf": {
+                        "801": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "137": {
+                    "Pflegebett beziehen ": {
+                        "802": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "138": {
+                    "Fachärzt*innenbesuche": {
+                        "274": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "139": {
+                    "Kurzzeitpflege organisieren": {
+                        "804": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "140": {
+                    "Klinikaufenthalte begleiten": {
+                        "805": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            }
+        },
+        "Beziehungspflege": {
+            "täglich": {
+                "141": {
+                    "Beschäftigung + Input": {
+                        "280": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "166": {
+                    "Sterbebegleitung": {
+                        "330": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "331": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "142": {
+                    "Organisation + Unterstützung von Freizeitaktiviatäten + sozialen Kontakten": {
+                        "282": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "283": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "167": {
+                    "Gespräche über den Tod, Krankheit, Ängste, Zukunft (betroffene Person\/Geschwister)": {
+                        "832": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "143": {
+                    "Spielsachen kaufen": {
+                        "808": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "168": {
+                    "Begleitung bei KH-Aufenthalten": {
+                        "833": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "169": {
+                    "Vernetzung + regelmäßige Infos an Verwandte\/Freund*innen": {
+                        "834": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "170": {
+                    "Feierlichkeiten organisieren": {
+                        "338": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        },
+        "Kleidung + Transporthilfen": {
+            "täglich": {
+                "144": {
+                    "Kleidung auswählen": {
+                        "286": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "145": {
+                    "Person anziehen": {
+                        "288": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "146": {
+                    "Fahrdienste (organisieren)": {
+                        "290": {
+                            "answer": "mache ich",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "291": {
+                            "answer": "denke ich dran",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "147": {
+                    "Hilfsmittel prüfen + instand halten": {
+                        "292": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "293": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "148": {
+                    "Neue Kleidung einkaufen\r\n": {
+                        "813": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "149": {
+                    "Reparieren kaputter Kleidung": {
+                        "296": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "150": {
+                    "Barrierefreiheit sicherstellen": {
+                        "298": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "299": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            }
+        },
+        "Organisation + Verwaltung": {
+            "täglich": {
+                "151": {
+                    "Kommunikation mit KK, med. Dienst, Pflegekasse, Ärzt*innen, Therapeut*innen": {
+                        "816": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "wöchentlich": {
+                "152": {
+                    "Management + Monitoring von Terminen mit Dienstleister*innen\/Ärzt*innen": {
+                        "302": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "303": {
+                            "answer": "denke ich dran",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "171": {
+                    "Finanzmanagement\/-monitoring": {
+                        "340": {
+                            "answer": "mache ich",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "monatlich": {
+                "153": {
+                    "Antragstellung für Hilfsmittel": {
+                        "304": {
+                            "answer": "mache ich",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "305": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "154": {
+                    "Widersprüche an die KK schreiben": {
+                        "819": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "172": {
+                    "Nachlassvorbereitung": {
+                        "343": {
+                            "answer": "denke ich dran",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "173": {
+                    "Recherche + Weiterbildung": {
+                        "838": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "jährlich": {
+                "155": {
+                    "Weiterbildung zu medizinischen Themen": {
+                        "308": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "309": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "156": {
+                    "Weiterbildung zu Hilfestellungen + Leistungen": {
+                        "310": {
+                            "answer": "mache ich",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "311": {
+                            "answer": "denke ich dran",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "174": {
+                    "Nachlassverwaltung": {
+                        "839": {
+                            "answer": "kommt nicht vor",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
