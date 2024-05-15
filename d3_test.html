@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scatter Plot with D3.js</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
   </head>
 <body>
   
@@ -29,17 +28,20 @@
     // append the svg object to the body of the page
 
 
-d3.json("some_json.json").then(function(data_raw) {
-  //               ###############      variables   #################
-  //console.log(data_raw)
-  var keys = Object.keys(data_raw);
+d3.json("data/test_json.json").then(function(data_raw) {
+  //#region               ###############      variables   #################
   var all_cats = [];
-  var rhythms_mapping = {"daily":0,
-  "weekly":1,
+  var rhythms_points_mapping_en = {"daily":4,
+  "weekly":3,
   "monthly":2,
-  "yearly":3
+  "yearly":1
   }
-  var rhythms = Object.keys(rhythms_mapping);
+  var rhythms_points_mapping_de = {"täglich":4,
+  "wöchentlich":3,
+  "monatlich":2,
+  "jährlich":1
+  }
+  var rhythms = Object.keys(rhythms_points_mapping_de);
   var types = ["do_it", "remember", "not_apply", "partner"]
   var tasks = [];
   var done = 0;
@@ -64,8 +66,11 @@ d3.json("some_json.json").then(function(data_raw) {
     })
   });
   console.log(key_value)
+  var questions_final = [];
+  var quest_ID = 0;
+//#endregion
 
-//                       ##############      setup page    ########
+//#region                       ##############      setup page    ########
 // Initialize the button
 var dropdownButton = d3.select("#button")
   .append('select')
@@ -135,78 +140,225 @@ var svg2 = d3.select("#stacked_plot")
   var color = d3.scaleOrdinal()
     .domain(rhythms)
     .range(['#e41a1c','#377eb8','#4daf4a'])
+//#endregion
+//#region                    ###############      prep data            #################
+// target data shape
+// {
+//     "Wäsche waschen + aufhängen": {
+//         "Text": "Wäsche waschen + aufhängen",
+//         "ID": "2",
+//         "domain": "Alle Sorgegemeinschaften, z.B. Paare",
+//         "category":"Haushalt + Wohnen",
+//         "rhythm": "täglich",
+//         "points": "4.00",
+//         "do_it": true,
+//         "remember": false,
+//         "not_apply": false,
+//         "partner": false
+//         "do_it_and_remember": false
+//     }
+// }
+let domains = Object.keys(data_raw);
+//console.log(domains)
+for (let i = 0; i < domains.length; i++) {
+  let obj_cats = data_raw[domains[i]]
+  let cats = Object.keys(obj_cats)
+  //console.log(obj_cats)
+  //console.log(cats)
+  for (let catId = 0; catId < cats.length; catId++) {
+    let obj_rhthm = obj_cats[cats[catId]]
+    let rhthms = Object.keys(obj_rhthm)
+    //console.log(obj_rhthm)
+    //console.log(rhthms)
+    //something[catId] = []
+    for (let rhtmID = 0; rhtmID < rhthms.length; rhtmID++) {
+      let obj_question = obj_rhthm[rhthms[rhtmID]]
+      let questions = Object.keys(obj_question)
+      //console.log(obj_question)
+      //console.log(questions)
+      var done_points = 0
+      var done_numb = 0;
+      var do_it_points = 0
+      var do_it_numb = 0;
+      var not_apply_points = 0;
+      var not_apply_numb = 0;
 
-  
-
-//                    ###############      prep data            #################
-  for (let i = 0; i < keys.length; i++) {
-    for (let cat = 0; cat < data_raw[keys[i]].length; cat++) {
-      cats_area = Object.keys(data_raw[keys[i]][cat])
-      //console.log(cats_area)
-      something[cats_area] = []
-      for (let m = 0; m < cats_area.length; m++) {
-        array1 = data_raw[keys[i]][cat][cats_area[m]]
-        for (let j = 0; j < array1.length; j++) {
-          rhythm = Object.keys(array1[j])
-          //console.log(rhythm)
-          var done_rhm = 0
-          var remember_rhm = 0
-          var not_apply_rhm = 0
-          var partner_rhm = 0
-
-          for (let k = 0; k < rhythm.length; k++) {
-            array2 = array1[j][rhythm[k]]
-            //console.log(k)
-            for (let l = 0; l < array2.length; l++) {
-              task = Object.keys(array2[l])
-              tasks.push(task);
-              var answer = array2[l][task[0]];
-              //console.log(l);
-              if(answer.includes("a1")){
-                done += 1;
-                done_rhm += 1;
-              }
-              if(answer.includes("a2")){
-                remember += 1;
-                remember_rhm += 1;
-              }
-              if(answer.includes("a3")){
-                not_apply += 1;
-                not_apply_rhm += 1;
-              }
-              if(answer.length == 0){
-                partner +=1
-                partner_rhm +=1
+      // var done_rhm = 0
+      // var remember_rhm = 0
+      // var not_apply_rhm = 0
+      // var partner_rhm = 0
+        for (let quesID = 0; quesID < questions.length; quesID++) {
+          let obj_ques_level_2 = obj_question[questions[quesID]]
+          let ques_level_2 =Object.keys(obj_ques_level_2)
+          let obj_arr_answers = obj_ques_level_2[ques_level_2[0]]
+          //console.log(obj_ques_level_2)
+          //console.log(ques_level_2[0])
+          //add question to final array, and some more infos we know
+          questions_final[quest_ID[0]]=[]
+          questions_final.push({})
+          questions_final[quest_ID]["Text"] = ques_level_2[0]
+          questions_final[quest_ID]["ID"] = questions[quesID]
+          questions_final[quest_ID]["domain"] = domains[i]
+          questions_final[quest_ID]["category"] = cats[catId]
+          questions_final[quest_ID]["rhythm"] = rhthms[rhtmID]
+          questions_final[quest_ID]["points"] = rhythms_points_mapping_de[rhthms[rhtmID]]
+          
+          //either empty array: partner does it, or object with answers 
+          if(Array.isArray(obj_arr_answers)) {
+            //console.log("partner does it")
+            questions_final[quest_ID]["do_it"] = false;
+            questions_final[quest_ID]["remember"] = false;
+            questions_final[quest_ID]["partner"] = true;
+            questions_final[quest_ID]["not_apply"] = false;
+            questions_final[quest_ID]["do_it_and_remember"] = false;
+            //"do_it_and_remember": false//partner +=1
+            //partner_rhm +=1
+          }
+          else{
+            let obj_answers = obj_arr_answers //now an object
+            let answers =Object.keys(obj_answers)
+            questions_final[quest_ID]["partner"] = false;
+            //console.log(answers)
+            //console.log(obj_answers)
+            if (answers.length == 2) { //no need to go into answers, this must be "done" and "remembered"
+              questions_final[quest_ID]["do_it"] = true;
+              questions_final[quest_ID]["remember"] = true;
+              questions_final[quest_ID]["not_apply"] = false;
+              questions_final[quest_ID]["do_it_and_remember"] = true;
+            }
+            else {
+              questions_final[quest_ID]["do_it_and_remember"] = false;
+              let obj_single_answer = obj_answers[answers[0]] //only answer
+              //console.log(obj_single_answer)
+              //console.log(obj_single_answer["answer_type"])
+              switch (obj_single_answer["answer_type"]) {
+                case "1": //"do_it"
+                  questions_final[quest_ID]["do_it"] = true;
+                  questions_final[quest_ID]["remember"] = false;
+                  questions_final[quest_ID]["not_apply"] = false;
+                break;
+                case "2": //"remember"
+                  questions_final[quest_ID]["do_it"] = false;
+                  questions_final[quest_ID]["remember"] = true;
+                  questions_final[quest_ID]["not_apply"] = false;
+                break;
+                case "3": //"not_apply"
+                  questions_final[quest_ID]["do_it"] = false;
+                  questions_final[quest_ID]["remember"] = false;
+                  questions_final[quest_ID]["not_apply"] = true;
+                break;
               }
             }
           }
-          something[cats_area][rhythm] = done_rhm
-          //console.log(key_value[rhythms_mapping[rhythm[0]]]["types"][0])
-          key_value[rhythms_mapping[rhythm[0]]]["types"][0]["value"] += done_rhm
-          key_value[rhythms_mapping[rhythm[0]]]["types"][1]["value"] += remember_rhm
-          key_value[rhythms_mapping[rhythm[0]]]["types"][2]["value"] += not_apply_rhm
-          key_value[rhythms_mapping[rhythm[0]]]["types"][3]["value"] += partner_rhm
+          // sum_types[rhythm]["do_it"] += done_rhm
+          // sum_types[rhythm]["remember"] += remember_rhm
+          // sum_types[rhythm]["not_apply"] += not_apply_rhm
+          // sum_types[rhythm]["partner"] += partner_rhm
+
           
-          //key_value[rhythm]["types"]["do_it"]["value"] += done_rhm
-          sum_types[rhythm]["do_it"] += done_rhm
-          sum_types[rhythm]["remember"] += remember_rhm
-          sum_types[rhythm]["not_apply"] += not_apply_rhm
-          sum_types[rhythm]["partner"] += partner_rhm
+          // //console.log(key_value[rhythms_mapping[rhythm[0]]]["types"][0])
+          // key_value[rhythms_mapping[rhythm[0]]]["types"][0]["value"] += done_rhm
+          // key_value[rhythms_mapping[rhythm[0]]]["types"][1]["value"] += remember_rhm
+          // key_value[rhythms_mapping[rhythm[0]]]["types"][2]["value"] += not_apply_rhm
+          // key_value[rhythms_mapping[rhythm[0]]]["types"][3]["value"] += partner_rhm
           
+          // //key_value[rhythm]["types"]["do_it"]["value"] += done_rhm
+          quest_ID += 1;
         }
       }
-      all_cats.push(cats_area)
+      //all_cats.push(cats_area)
 
 
     }
-    all_cats = all_cats.flat(Infinity)
-    tasks = tasks.flat(Infinity)
+    //all_cats = all_cats.flat(Infinity)
+    //tasks = tasks.flat(Infinity)
     
   }
+  //questions_final.length = 5
+  //console.log(questions_final)
+  //questions_final.forEach((element) => console.log(element));
+  console.table(questions_final)
+  console.log(Array.isArray(questions_final))
+  console.log(questions_final.length)
+  console.table(questions_final.filter(function(d) {return d.remember == true}))
+  console.log(d3.sum(questions_final, (d) => d.points))
+  let remembered_questions = questions_final.filter(function(d) {return d.remember == true})
+  let remembered_points = d3.sum(remembered_questions, (d) => d.points)
+  console.log(remembered_points)
+//#endregion
+//#region                   ###############      prep data    - old version        #################
+//   for (let i = 0; i < domains.length; i++) {
+//     for (let cat = 0; cat < data_raw[domains[i]].length; cat++) {
+//       cats_area = Object.domains(data_raw[domains[i]][cat])
+//       //console.log(cats_area)
+//       something[cats_area] = []
+//       for (let m = 0; m < cats_area.length; m++) {
+//         array1 = data_raw[domains[i]][cat][cats_area[m]]
+//         for (let j = 0; j < array1.length; j++) {
+//           rhythm = Object.domains(array1[j])
+//           //console.log(rhythm)
+//           var done_rhm = 0
+//           var remember_rhm = 0
+//           var not_apply_rhm = 0
+//           var partner_rhm = 0
 
+//           for (let k = 0; k < rhythm.length; k++) {
+//             array2 = array1[j][rhythm[k]]
+//             //console.log(k)
+//             for (let l = 0; l < array2.length; l++) {
+//               task = Object.domains(array2[l])
+//               tasks.push(task);
+//               var answer = array2[l][task[0]];
+//               //console.log(l);
+//               if(answer.includes("a1")){
+//                 done += 1;
+//                 done_rhm += 1;
+//               }
+//               if(answer.includes("a2")){
+//                 remember += 1;
+//                 remember_rhm += 1;
+//               }
+//               if(answer.includes("a3")){
+//                 not_apply += 1;
+//                 not_apply_rhm += 1;
+//               }
+//               if(answer.length == 0){
+//                 partner +=1
+//                 partner_rhm +=1
+//               }
+//             }
+//           }
+//           something[cats_area][rhythm] = done_rhm
+//           //console.log(key_value[rhythms_mapping[rhythm[0]]]["types"][0])
+//           key_value[rhythms_mapping[rhythm[0]]]["types"][0]["value"] += done_rhm
+//           key_value[rhythms_mapping[rhythm[0]]]["types"][1]["value"] += remember_rhm
+//           key_value[rhythms_mapping[rhythm[0]]]["types"][2]["value"] += not_apply_rhm
+//           key_value[rhythms_mapping[rhythm[0]]]["types"][3]["value"] += partner_rhm
+          
+//           //key_value[rhythm]["types"]["do_it"]["value"] += done_rhm
+//           sum_types[rhythm]["do_it"] += done_rhm
+//           sum_types[rhythm]["remember"] += remember_rhm
+//           sum_types[rhythm]["not_apply"] += not_apply_rhm
+//           sum_types[rhythm]["partner"] += partner_rhm
+          
+//         }
+//       }
+//       all_cats.push(cats_area)
+
+
+//     }
+//     all_cats = all_cats.flat(Infinity)
+//     tasks = tasks.flat(Infinity)
+    
+//   }
+//#endregion
+
+
+//#region        ####### vis elements, main ##########
   console.log("number done: " + done + ", number remembered: " + remember +
     ", number not apply: " + not_apply
   )
+
   
   //todo
   num_valid_tasks = 0
@@ -219,31 +371,32 @@ var svg2 = d3.select("#stacked_plot")
   //console.log(data2)
 
   // data for stacked plot
-  var stackedData = d3.stack()
-    .keys(rhythms)
-    (key_value)
-  console.log(stackedData)
+  // var stackedData = d3.stack()
+  //   .keys(rhythms)
+  //   (key_value)
+  //console.log(stackedData)
 
-  svg2.append("g")
-    .selectAll("g")
-    // Enter in the stack data = loop key per key = group per group
-    .data(stackedData)
-    .enter().append("g")
-      .attr("fill", function(d) { return color(d.key); })
-      .selectAll("rect")
-      // enter a second time = loop subgroup per subgroup to add all rectangles
-      .data(function(d) { return d; })
-      .enter().append("rect")
-        .attr("x", function(d) { return x_stacked(d.data.group); })
-        .attr("y", function(d) { return y_stacked(d[1]); })
-        .attr("height", function(d) { return y_stacked(d[0]) - y(d[1]); })
-        .attr("width",x.bandwidth())
+  // svg2.append("g")
+  //   .selectAll("g")
+  //   // Enter in the stack data = loop key per key = group per group
+  //   .data(stackedData)
+  //   .enter().append("g")
+  //     .attr("fill", function(d) { return color(d.key); })
+  //     .selectAll("rect")
+  //     // enter a second time = loop subgroup per subgroup to add all rectangles
+  //     .data(function(d) { return d; })
+  //     .enter().append("rect")
+  //       .attr("x", function(d) { return x_stacked(d.data.group); })
+  //       .attr("y", function(d) { return y_stacked(d[1]); })
+  //       .attr("height", function(d) { return y_stacked(d[0]) - y(d[1]); })
+  //       .attr("width",x.bandwidth())
 
 
 
   update(key_value[0]["types"]);
+//#endregion
 
-  //                            #################   functions ##################
+  //#region                            #################   functions ##################
 
   // A function that create / update the plot for a given variable:
   function update(data) {
@@ -270,6 +423,7 @@ var svg2 = d3.select("#stacked_plot")
     // run the updateChart function with this selected option
     update(key_value[rhythms_mapping[selectedOption]]["types"])
   })
+  //#endregion
 })
 
 .catch(function(error){
