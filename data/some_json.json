@@ -1,0 +1,96 @@
+{
+"all":[
+    {"Haushalt + Wohnen":[
+        {"daily":[
+            {"Wäsche waschen + aufhängen":["a1", "a2"]},
+            {"Wäsche falten + wegräumen":["a3"]},
+            {"Betten machen":["a1", "a2"]},
+            {"Kochen":["a1"]},
+            {"Backen":["a1", "a2"]},
+            {"Küche aufräumen + spülen":["a3"]},
+            {"Einkaufsliste pflegen":[]},
+            {"Aufräumen":["a1", " a2"]},
+            {"Haustiere versorgen":["a3"]}      
+        ]},
+        {"weekly":[
+            {"Saugen":["a2"]},
+            {"Wischen":["a1"]},
+            {"Bad putzen":["a3"]},
+            {"Aufräumen":["a1", "a2"]}
+        ]},
+        {"monthly":[
+            {"Abflüsse reinigen":["a2"]},
+            {"Kleinreparaturen":["a1"]},
+            {"Altglas wegbringen":["a3"]},
+            {"Deko + Gemütlichkeit zuhause":["a1", "a2"]}
+        ]},
+        {"yearly":[
+            {"Fenster putzen":["a1", "a2"]},
+            {"Küchenschränke abwischen":["a1"]},
+            {"Steuererklärung":["a3"]},
+            {"Maschinen entkalken":["a1", "a2"]}
+        ]}]
+    },
+    {"Fahren + Freizeit":[
+        
+        {"weekly":[
+            {"Entertainment/Familienausflüge am Wochenende planen":["a1", "a2"]}   
+        ]},
+        {"monthly":[
+            {"Fahrräder instandhalten":["a2"]},
+            {"Tanken":["a1", "a2"]},
+            {"Auto waschen":["a1"]},
+            {"Kleinreparaturen":["a1"]}
+        ]},
+        {"yearly":[
+            {"Autoreparaturen":["a2"]},
+            {"Urlaubsplanung":[]},
+            {"Koffer packen für Urlaub":["a1"]}
+        ]}]
+    },
+    {"Beziehungspflege":[
+        {"daily":[
+            {"Verhütung":["a1", "a2"]} 
+        ]},
+        {"weekly":[
+            {"Paartermine organisieren":[]},
+            {"Geburtstagsgrüße an Freund*innen + Familie senden":["a2"]},
+            {"Emotionsbegleitung":["a3"]}    
+        ]},
+        {"monthly":[
+            {"Kontaktpflege zu Angehörigen":[]},
+            {"Geburtstagsgeschenke für Freund*innen + Familie besorgen":["a1", "a2"]},
+            {"Sich mit partnerschaftlichen Konflikten befassen":[]},
+            {"Besuch bewirten/Gästebetten machen":["a1"]}
+        ]},
+        {"yearly":[
+            {"Erinnerungen + Fotos aufbewahren":["a2"]},
+            {"Geburtstagsfeiern organisieren":["a1", "a2"]},
+            {"Sonstige Familienfeste organisieren":["a1"]}
+        ]}]
+    }
+],
+"children":[
+    {"Kita + Schule":[
+        {"daily":[
+            {"Brotboxen vorbereiten":["a1", "a2"]} 
+        ]},
+        {"weekly":[
+            {"Wechselkleidung prüfen":[]},
+            {"Turn- + Sportbekleidung packen/mitgeben":["a2"]}
+        ]},
+        {"monthly":[
+            {"Schul-/Kita-/ sonst. Bedarf besorgen":["a2"]},
+            {"Dienste bei Sonderveranstaltungen":["a1", "a2"]},
+            {"Ansprechpartner*in/Notfallkontakt sein":[]}
+        ]},
+        {"yearly":[
+            {"Teilnahme an Eltern-/Angehörigenabenden":[]}
+        ]}
+    ]
+    }
+],
+"elderly":[]
+
+}
+

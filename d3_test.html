@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scatter Plot with D3.js</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+  </head>
+<body>
+  
+  <!-- Add 2 buttons -->
+  <div id="button" height = 50></div>
+  <div id="div_template" height = 350></div>
+  <div id="stacked_plot" height = 350></div>
+  
+  
+  
+  
+
+
+<script>
+    
+    // Set up the SVG area and margins
+    var margin = { top: 30, right: 20, bottom: 20, left: 60 };
+    var width = 500 - margin.left - margin.right;
+    var height = 350 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+
+
+d3.json("some_json.json").then(function(data_raw) {
+  //               ###############      variables   #################
+  //console.log(data_raw)
+  var keys = Object.keys(data_raw);
+  var all_cats = [];
+  var rhythms_mapping = {"daily":0,
+  "weekly":1,
+  "monthly":2,
+  "yearly":3
+  }
+  var rhythms = Object.keys(rhythms_mapping);
+  var types = ["do_it", "remember", "not_apply", "partner"]
+  var tasks = [];
+  var done = 0;
+  var remember = 0;
+  var not_apply = 0;
+  var partner = 0
+  var something = [];
+  var sum_types = [];
+  rhythms.forEach(rh => {
+    sum_types[rh] = []
+    types.forEach(ty => {
+      sum_types[rh][ty] = 0;
+    })
+  });
+  key_value = [];
+  rhythms.forEach((rh, index) => {
+    //key_value[rh] = {"rhythm": rh, "types":[]}
+    key_value.push({"rhythm": rh, "types":[]})
+    types.forEach(ty => {
+      //key_value[rh]["types"][ty] = {"type":ty, "value": 0};
+      key_value[index]["types"].push({"type":ty, "value": 0});
+    })
+  });
+  console.log(key_value)
+
+//                       ##############      setup page    ########
+// Initialize the button
+var dropdownButton = d3.select("#button")
+  .append('select')
+dropdownButton // Add a button
+  .selectAll('myOptions') // Next 4 lines add 6 options = 6 colors
+ 	.data(rhythms)
+  .enter()
+	.append('option')
+  .text(function (d) { return d; }) // text showed in the menu
+  .attr("value", function (d) { return d; })
+  .attr("transform",
+"translate(" + margin.left + "," + margin.top + ")")
+
+// svg for plotting 
+var svg = d3.select("#div_template")
+.append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform",
+"translate(" + margin.left + "," + margin.top + ")")
+
+// X axis
+  var x = d3.scaleBand()
+    .range([ 0, width ])
+    .domain(types)
+    .padding(0.2);
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+  
+  // Add Y axis
+  var y = d3.scaleLinear()
+    .domain([0, 12])
+    .range([ height, 0]);
+  svg.append("g")
+    .attr("class", "myYaxis")
+    .call(d3.axisLeft(y));
+
+//              ##### stacked plot #####
+var svg2 = d3.select("#stacked_plot")
+.append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform",
+"translate(" + margin.left + "," + margin.top + ")")
+
+// X axis
+  var x_stacked = d3.scaleBand()
+    .range([ 0, width ])
+    .domain(rhythms)
+    .padding(0.2);
+  svg2.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x_stacked))
+  
+  // Add Y axis
+  var y_stacked = d3.scaleLinear()
+    .domain([0, 12])
+    .range([ height, 0]);
+  svg2.append("g")
+    .attr("class", "myYaxis")
+    .call(d3.axisLeft(y_stacked));
+
+    // color palette = one color per subgroup
+  var color = d3.scaleOrdinal()
+    .domain(rhythms)
+    .range(['#e41a1c','#377eb8','#4daf4a'])
+
+  
+
+//                    ###############      prep data            #################
+  for (let i = 0; i < keys.length; i++) {
+    for (let cat = 0; cat < data_raw[keys[i]].length; cat++) {
+      cats_area = Object.keys(data_raw[keys[i]][cat])
+      //console.log(cats_area)
+      something[cats_area] = []
+      for (let m = 0; m < cats_area.length; m++) {
+        array1 = data_raw[keys[i]][cat][cats_area[m]]
+        for (let j = 0; j < array1.length; j++) {
+          rhythm = Object.keys(array1[j])
+          //console.log(rhythm)
+          var done_rhm = 0
+          var remember_rhm = 0
+          var not_apply_rhm = 0
+          var partner_rhm = 0
+
+          for (let k = 0; k < rhythm.length; k++) {
+            array2 = array1[j][rhythm[k]]
+            //console.log(k)
+            for (let l = 0; l < array2.length; l++) {
+              task = Object.keys(array2[l])
+              tasks.push(task);
+              var answer = array2[l][task[0]];
+              //console.log(l);
+              if(answer.includes("a1")){
+                done += 1;
+                done_rhm += 1;
+              }
+              if(answer.includes("a2")){
+                remember += 1;
+                remember_rhm += 1;
+              }
+              if(answer.includes("a3")){
+                not_apply += 1;
+                not_apply_rhm += 1;
+              }
+              if(answer.length == 0){
+                partner +=1
+                partner_rhm +=1
+              }
+            }
+          }
+          something[cats_area][rhythm] = done_rhm
+          //console.log(key_value[rhythms_mapping[rhythm[0]]]["types"][0])
+          key_value[rhythms_mapping[rhythm[0]]]["types"][0]["value"] += done_rhm
+          key_value[rhythms_mapping[rhythm[0]]]["types"][1]["value"] += remember_rhm
+          key_value[rhythms_mapping[rhythm[0]]]["types"][2]["value"] += not_apply_rhm
+          key_value[rhythms_mapping[rhythm[0]]]["types"][3]["value"] += partner_rhm
+          
+          //key_value[rhythm]["types"]["do_it"]["value"] += done_rhm
+          sum_types[rhythm]["do_it"] += done_rhm
+          sum_types[rhythm]["remember"] += remember_rhm
+          sum_types[rhythm]["not_apply"] += not_apply_rhm
+          sum_types[rhythm]["partner"] += partner_rhm
+          
+        }
+      }
+      all_cats.push(cats_area)
+
+
+    }
+    all_cats = all_cats.flat(Infinity)
+    tasks = tasks.flat(Infinity)
+    
+  }
+
+  console.log("number done: " + done + ", number remembered: " + remember +
+    ", number not apply: " + not_apply
+  )
+  
+  //todo
+  num_valid_tasks = 0
+  // no answer -> change in json and new category "partner"
+
+  // key_value.forEach(element => {
+  //   console.log(element["types"]);
+  // });
+  // console.log(key_value[0]["types"][0]["value"]);
+  //console.log(data2)
+
+  // data for stacked plot
+  var stackedData = d3.stack()
+    .keys(rhythms)
+    (key_value)
+  console.log(stackedData)
+
+  svg2.append("g")
+    .selectAll("g")
+    // Enter in the stack data = loop key per key = group per group
+    .data(stackedData)
+    .enter().append("g")
+      .attr("fill", function(d) { return color(d.key); })
+      .selectAll("rect")
+      // enter a second time = loop subgroup per subgroup to add all rectangles
+      .data(function(d) { return d; })
+      .enter().append("rect")
+        .attr("x", function(d) { return x_stacked(d.data.group); })
+        .attr("y", function(d) { return y_stacked(d[1]); })
+        .attr("height", function(d) { return y_stacked(d[0]) - y(d[1]); })
+        .attr("width",x.bandwidth())
+
+
+
+  update(key_value[0]["types"]);
+
+  //                            #################   functions ##################
+
+  // A function that create / update the plot for a given variable:
+  function update(data) {
+  
+    var u = svg.selectAll("rect")
+      .data(data)
+    u
+      .enter()
+      .append("rect")
+      .merge(u)
+      .transition()
+      .duration(1000)
+        .attr("x", function(d) { return x(d.type); })
+        .attr("y", function(d) { return y(d.value); })
+        .attr("width", x.bandwidth())
+        .attr("height", function(d) { return height - y(d.value); })
+        .attr("fill", "#69b3a2")
+  }
+
+  dropdownButton.on("change", function(d) {
+    // recover the option that has been chosen
+    var selectedOption = d3.select(this).property("value")
+
+    // run the updateChart function with this selected option
+    update(key_value[rhythms_mapping[selectedOption]]["types"])
+  })
+})
+
+.catch(function(error){
+  // handle error
+  console.log(error)
+});
+
+</script>
+
+
+
+
+</body>
+</html>
+
+
