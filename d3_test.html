@@ -22,7 +22,7 @@
     
     // Set up the SVG area and margins
     var margin = { top: 30, right: 20, bottom: 20, left: 60 };
-    var width = 500 - margin.left - margin.right;
+    var width = 400 - margin.left - margin.right;
     var height = 350 - margin.top - margin.bottom;
 
     var language = "de"
@@ -207,7 +207,17 @@ for (let i = 0; i < domains.length; i++) {
 
 
   
-//#endregion
+  //stacked
+  
+  console.log(grouped_by_rhythm)
+  console.log(d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.rhythm))
+  console.log(d3.rollup(valid_questions, (D) => D.points, (d) => d.rhythm))
+  var stackedData = d3.stack()
+  .keys(rhythms)
+  (valid_questions)
+  console.log(stackedData)
+  //#endregion
+
 
 //#region                       ##############      setup page    ########
 // Initialize the button
@@ -246,14 +256,46 @@ svg.append("g")
 let filtered_data = grouped_by_rhythm.get(rhythms[0])
 let max_num_of_daily_points = d3.sum(filtered_data, (d) => d.points)
   var y = d3.scaleLinear()
-    .domain([0, max_num_of_daily_points])
+    .domain([0, max_num_of_daily_points+5])
     .range([ height, 0]);
   var yAxis = svg.append("g")
     .attr("class", "myYaxis")
     .call(d3.axisLeft(y));
 
+//              ##### stacked plot #####
+var svg2 = d3.select("#stacked_plot")
+.append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform",
+"translate(" + margin.left + "," + margin.top + ")")
+
+// X axis
+  var x_stacked = d3.scaleBand()
+    .range([ 0, width ])
+    .domain(rhythms)
+    .padding(0.2);
+  svg2.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x_stacked))
+  
+  // Add Y axis
+  var y_stacked = d3.scaleLinear()
+    .domain([0, 12])
+    .range([ height, 0]);
+  svg2.append("g")
+    .attr("class", "myYaxis")
+    .call(d3.axisLeft(y_stacked));
+
+    // color palette = one color per subgroup
+  var color = d3.scaleOrdinal()
+    .domain(rhythms)
+    .range(['#e41a1c','#377eb8','#4daf4a'])
+
 
 //#endregion
+
 
 //#region        ####### vis elements, main ##########
 
@@ -277,8 +319,18 @@ let max_num_of_daily_points = d3.sum(filtered_data, (d) => d.points)
   //build data array for the first time: "daily as initial"
   console.log(rhythms[0])
   let initial_data = build_data_for_chart(rhythms[0])
-
+  // svg.append("g").attr("class", "content");
+  
   update(initial_data, max_num_of_daily_points);
+  // g.append("line")
+  //       .style("stroke", "grey")
+  //       .style("stroke-dasharray", ("4, 4"))  // <== This line here!!
+  //       .attr("x1", 0)
+  //       .attr("x2", width)
+  //       .attr("y1", (d) => y(max_num_of_daily_points))
+  //       .attr("y2", (d) => y(max_num_of_daily_points));
+
+  console.log(y(max_num_of_daily_points))
 //#endregion
 
   //#region                            #################   functions ##################
@@ -286,15 +338,20 @@ let max_num_of_daily_points = d3.sum(filtered_data, (d) => d.points)
   // A function that create / update the plot for a given variable:
   function update(data, max_points) {
     
-    y.domain([0, max_points]);
+    y.domain([0, max_points+5]);
     yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
-    var u = svg.selectAll("rect")
+    var u = svg.selectAll(".content")
       .data(data)
-    u
-      .enter()
-      .append("rect")
-      .merge(u)
+    u.exit().remove();
+
+    var enter = u.enter().append("g").attr("class", "content");
+    console.log(u)
+    enter.append("rect").attr("class", "rectangle");
+    enter.append("line").attr("class", "myLine");
+      //.merge(u)
+
+    u.select(".rectangle")
       .transition()
       .duration(1000)
         .attr("x", function(d) { return x(d.type); })
@@ -302,6 +359,19 @@ let max_num_of_daily_points = d3.sum(filtered_data, (d) => d.points)
         .attr("width", x.bandwidth())
         .attr("height", function(d) { return height - y(d.value); })
         .attr("fill", "#69b3a2")
+
+    u.select(".myLine")
+      .transition()
+      .duration(1000)
+        .style("stroke", "grey")
+        .style("stroke-dasharray", ("4, 4"))
+        .attr("x1", 0 )
+        .attr("x2", width)
+        .attr("y1", (d) => y(max_points))
+        .attr("y2", (d) => y(max_points));
+    u = u.merge(enter)
+
+
 
   }
 
