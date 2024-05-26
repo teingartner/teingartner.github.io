@@ -8,7 +8,6 @@
   </head>
 <body>
   
-  <!-- Add 2 buttons -->
   <div id="button" height = 50></div>
   <div id="div_template" height = 350></div>
   <div id="stacked_plot" height = 350></div>
@@ -49,8 +48,8 @@ else if (language == "en") {
     }
     var rhythms = Object.keys(rhythms_points_mapping_en);
   }
-  var types = ["do_it", "remember"]
- 
+  const types = ["do_it", "remember"]
+  const partner_types = ["partner_does_it", "partner_remembers"]
   //#endregion
   
   
@@ -202,22 +201,52 @@ for (let i = 0; i < domains.length; i++) {
     throw "something is wrong with the dataset"
   }
 
-  // group by daily, monthly etc. for plots and analysis
-  let grouped_by_rhythm = d3.group(valid_questions, d => d.rhythm)
+// group by daily, monthly etc. for plots and analysis
+let grouped_by_rhythm = d3.group(valid_questions, d => d.rhythm)
 
+// Aggregate data
+const aggregatedData = {
+  do_it: {},
+  remember: {}
+};
+
+valid_questions.forEach(d => {
+  if (d.do_it) {
+    aggregatedData.do_it[d.rhythm] = (aggregatedData.do_it[d.rhythm] || 0) + d.points;
+  }
+  if (d.remember) {
+    aggregatedData.remember[d.rhythm] = (aggregatedData.remember[d.rhythm] || 0) + d.points;
+  }
+});
+
+
+const formattedData = types.map(type => {
+  const obj = { type };
+  rhythms.forEach(category => {
+    obj[category] = aggregatedData[type][category] || 0;
+  });
+  return obj;
+});
+
+
+const stack = d3.stack()
+.keys(rhythms)
+.order(d3.stackOrderNone)
+.offset(d3.stackOffsetNone);
+
+const series = stack(formattedData);
+console.table(series)
+
+
+  ///
 
   
   //stacked
-  
-  console.log(grouped_by_rhythm)
-  console.log(d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.rhythm))
-  console.log(d3.rollup(valid_questions, (D) => D.points, (d) => d.rhythm))
-  var stackedData = d3.stack()
-  .keys(rhythms)
-  (valid_questions)
-  console.log(stackedData)
-  //#endregion
-
+  console.table(grouped_by_rhythm)
+  console.table(d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.do_it, d => d.rhythm))
+  var interim = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.rhythm)
+  // console.table(d3.rollup(grouped_by_rhythm, v => d3.sum(v, d => d.points), d => d.rhythm))
+ 
 
 //#region                       ##############      setup page    ########
 // Initialize the button
@@ -256,7 +285,7 @@ svg.append("g")
 let filtered_data = grouped_by_rhythm.get(rhythms[0])
 let max_num_of_daily_points = d3.sum(filtered_data, (d) => d.points)
   var y = d3.scaleLinear()
-    .domain([0, max_num_of_daily_points+5])
+    .domain([0, max_num_of_daily_points])
     .range([ height, 0]);
   var yAxis = svg.append("g")
     .attr("class", "myYaxis")
@@ -274,7 +303,7 @@ var svg2 = d3.select("#stacked_plot")
 // X axis
   var x_stacked = d3.scaleBand()
     .range([ 0, width ])
-    .domain(rhythms)
+    .domain(types)
     .padding(0.2);
   svg2.append("g")
     .attr("transform", "translate(0," + height + ")")
@@ -282,7 +311,7 @@ var svg2 = d3.select("#stacked_plot")
   
   // Add Y axis
   var y_stacked = d3.scaleLinear()
-    .domain([0, 12])
+    .domain([0, Math.max(done_points,remembered_points )])
     .range([ height, 0]);
   svg2.append("g")
     .attr("class", "myYaxis")
@@ -291,7 +320,7 @@ var svg2 = d3.select("#stacked_plot")
     // color palette = one color per subgroup
   var color = d3.scaleOrdinal()
     .domain(rhythms)
-    .range(['#e41a1c','#377eb8','#4daf4a'])
+    .range(['#e41a1c','#377eb8','#4daf4a', '#536745'])
 
 
 //#endregion
@@ -300,37 +329,51 @@ var svg2 = d3.select("#stacked_plot")
 //#region        ####### vis elements, main ##########
 
 
-  // svg2.append("g")
-  //   .selectAll("g")
-  //   // Enter in the stack data = loop key per key = group per group
-  //   .data(stackedData)
-  //   .enter().append("g")
-  //     .attr("fill", function(d) { return color(d.key); })
-  //     .selectAll("rect")
-  //     // enter a second time = loop subgroup per subgroup to add all rectangles
-  //     .data(function(d) { return d; })
-  //     .enter().append("rect")
-  //       .attr("x", function(d) { return x_stacked(d.data.group); })
-  //       .attr("y", function(d) { return y_stacked(d[1]); })
-  //       .attr("height", function(d) { return y_stacked(d[0]) - y(d[1]); })
-  //       .attr("width",x.bandwidth())
+svg2.append("g")
+  .selectAll("g")
+  // Enter in the stack data = loop key per key = group per group
+  .data(series)
+  .enter().append("g")
+  .attr("class", "serie")
+    .attr("fill", d => color(d.key))
+    .selectAll("rect")
+    .data(d => d)
+    .enter().append("rect")
+    .attr("x", d => x_stacked(d.data.type))
+    .attr("y", d => y_stacked(d[1]))
+    .attr("height", d => y_stacked(d[0]) - y_stacked(d[1]))
+    .attr("width", x.bandwidth());
+
+const legend = svg2.selectAll(".legend")
+  .data(rhythms.slice().reverse())
+  .enter().append("g")
+  .attr("class", "legend")
+  .attr("transform", (d, i) => `translate(0,${i * 20})`);
+
+legend.append("rect")
+  .attr("x", width - 18)
+  .attr("width", 18)
+  .attr("height", 18)
+  .style("fill", color);
+
+legend.append("text")
+  .attr("x", width - 24)
+  .attr("y", 9)
+  .attr("dy", ".35em")
+  .style("text-anchor", "end")
+  .style("font-family", "calibri")
+  .style("font-size", "80%")
+  .text(d => d);
+  
   
  
   //build data array for the first time: "daily as initial"
-  console.log(rhythms[0])
+  // console.log(rhythms[0])
   let initial_data = build_data_for_chart(rhythms[0])
   // svg.append("g").attr("class", "content");
   
   update(initial_data, max_num_of_daily_points);
-  // g.append("line")
-  //       .style("stroke", "grey")
-  //       .style("stroke-dasharray", ("4, 4"))  // <== This line here!!
-  //       .attr("x1", 0)
-  //       .attr("x2", width)
-  //       .attr("y1", (d) => y(max_num_of_daily_points))
-  //       .attr("y2", (d) => y(max_num_of_daily_points));
 
-  console.log(y(max_num_of_daily_points))
 //#endregion
 
   //#region                            #################   functions ##################
@@ -338,19 +381,19 @@ var svg2 = d3.select("#stacked_plot")
   // A function that create / update the plot for a given variable:
   function update(data, max_points) {
     
-    y.domain([0, max_points+5]);
+    y.domain([0, max_points]);
     yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
     var u = svg.selectAll(".content")
-      .data(data)
+      .data(data);
     u.exit().remove();
 
     var enter = u.enter().append("g").attr("class", "content");
-    console.log(u)
     enter.append("rect").attr("class", "rectangle");
     enter.append("line").attr("class", "myLine");
-      //.merge(u)
+    enter.append("text").attr("class", "line_label");
 
+    u = u.merge(enter)
     u.select(".rectangle")
       .transition()
       .duration(1000)
@@ -367,9 +410,18 @@ var svg2 = d3.select("#stacked_plot")
         .style("stroke-dasharray", ("4, 4"))
         .attr("x1", 0 )
         .attr("x2", width)
-        .attr("y1", (d) => y(max_points))
-        .attr("y2", (d) => y(max_points));
-    u = u.merge(enter)
+        .attr("y1", (d) => y(max_points/2))
+        .attr("y2", (d) => y(max_points/2));
+
+    u.select(".line_label")
+       .transition()
+       .duration(1000)
+        .attr("x", width*(2/3) )
+        .attr("y", (d) => y(max_points/2))
+        .attr("dy", "-.35em")
+        .style("font-family", "calibri")
+        .style("font-size", "80%")
+        .text("50% of points")
 
 
 
