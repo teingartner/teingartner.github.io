@@ -12,7 +12,7 @@
 
   <div id="button" height=50></div>
   <div id="div_template" height=350></div>
-  <div id="stacked_plot" height=350></div>
+  <div id="small_multiples" height=350></div>
   <div id="explain_weights" height=350></div>
 
 
@@ -179,7 +179,7 @@
       //console.table(questions_final)
       //console.table(questions_final.filter(function(d) {return d.remember == true}))
       let valid_questions = questions_final.filter(function (d) { return d.not_apply == false })
-      console.table(valid_questions)
+      //console.table(valid_questions)
       let max_num_points = d3.sum(valid_questions, (d) => d.points)
 
       //print some stats of points
@@ -195,6 +195,7 @@
       let number_not_apply = d3.count(not_apply_questions, (d) => d.ID)
       // group by daily, monthly etc. for plots and analysis
       let grouped_by_rhythm = d3.group(valid_questions, d => d.rhythm)
+
       //console.log(remembered_points)
       console.log("points done: " + done_points + ", points remembered: " + remembered_points +
         ", points done of partner: " + partner_done_points +
@@ -210,9 +211,6 @@
 
 
       // Aggregate data
-      var which = "partner"
-      var formattedData = aggregate_data(valid_questions, which)
-      console.table(formattedData)
 
 
 
@@ -262,7 +260,7 @@
         .call(d3.axisLeft(y));
 
       //              ##### stacked plot #####
-      var svg2 = d3.select("#stacked_plot")
+      var svg2 = d3.select("#div_template")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -292,6 +290,57 @@
         .domain(rhythms)
         .range(['#e41a1c', '#377eb8', '#4daf4a', '#536745'])
 
+      //              ##### small_multiples plot #####
+      //console.table(grouped_by_rhythm)
+      let group_test = d3.group(valid_questions, d => d.rhythm, d => d.remember)
+      let group_test_do_it = d3.group(valid_questions, d => d.rhythm, d => d.do_it)
+      //console.table(group_test.get("täglich"))
+      group_test.forEach(function(value,key) {
+        value.delete(false)
+        let to_rename = value.get(true)
+        value.set("remember", to_rename)
+        value.delete(true)
+        let do_it = group_test_do_it.get(key)
+        //console.log(do_it)
+        value.set("do_it", do_it.get(true))
+        //console.log(value) 
+      })
+      //console.log(group_test) 
+      function myCallback({ quantity }) {
+       return quantity > 200 ? "ok" : "low";
+      }
+
+      var small_multiples_width = width/2
+      var svg_multiples = d3.select("small_multiples")
+        .data(group_test)
+        .enter()
+        .append("svg")
+          .attr("width", small_multiples_width + margin.left + margin.right)
+          .attr("height", small_multiples_width + margin.top + margin.bottom)
+          //.attr("class","multiples_svg")
+          //.text(function(d) {console.log(d[0])})
+          .text(function(d) {console.log(d);})
+        .append("g")
+          .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")")
+          .attr("class", function(d) { return d[0];})
+
+      // X axis
+      var x_multiples = d3.scaleBand()
+        .range([0, small_multiples_width])
+        .domain(types)
+        .padding(0.1);
+      svg_multiples.append("g")
+        .attr("transform", "translate(0," + small_multiples_width + ")")
+        .call(d3.axisBottom(x_multiples))
+
+      // Add Y axis
+      var y_multiples = d3.scaleLinear()
+        .domain([0, 60]) //TODO
+        .range([small_multiples_width, 0]);
+        svg_multiples.append("g")
+        .attr("class", "myYaxis_multiples")
+        .call(d3.axisLeft(y_multiples));
 
       //#endregion
 
@@ -306,8 +355,17 @@
 
       update(initial_data, max_num_of_daily_points);
 
-      var [series, type] = aggregate_data(valid_questions, "partner")
+      var [formattedData, type] = aggregate_data(valid_questions, "me")
+      var stack = d3.stack()
+          .keys(rhythms)
+          .order(d3.stackOrderNone)
+          .offset(d3.stackOffsetNone);
+
+        var series = stack(formattedData);
+      //console.table(formattedData)
       build_stacked_chart(series, type)
+
+      build_multiples_chart()
 
       //#endregion
 
@@ -334,6 +392,7 @@
           .duration(1000)
           .attr("x", function (d) { return x(d.type); })
           .attr("y", function (d) { return y(d.value); })
+          //.text(function(d) {console.log(d.type);})
           .attr("width", x.bandwidth())
           .attr("height", function (d) { return height - y(d.value); })
           .attr("fill", "#69b3a2")
@@ -401,7 +460,7 @@
           .attr("x", d => x_stacked(d.data.type))
           .attr("y", d => y_stacked(d[1]))
           .attr("height", d => y_stacked(d[0]) - y_stacked(d[1]))
-          .attr("width", x.bandwidth());
+          .attr("width", x_stacked.bandwidth());
 
         const legend = svg2.selectAll(".legend")
           .data(rhythms.slice().reverse())
@@ -426,6 +485,30 @@
 
       }
 
+      function build_multiples_chart() {
+
+        //svg_multiples.select(".multiples_svg")
+        group_test.forEach(function(data, i) {
+          //console.log(data, i)
+          d3.select("g." + i)
+            .selectAll('.bar')
+            .data(data)
+            .enter()
+              .append("rect")
+              //.text(function(d) {console.log(d)})
+              .attr("x", function (d) { return x_multiples(d[0]); })
+              .attr("y", function (d) { return y_multiples(d3.sum(d[1], (s) => s.points));})
+              // .text(function(d) {
+              //   console.log(d3.sum(d[1], (s) => s.points));
+              //   // d3.sum(remembered_questions, (d) => d.points)
+              //                   console.log(d)
+              // })
+              .attr("width", x_multiples.bandwidth())
+              .attr("height", function (d) { return small_multiples_width - y_multiples(d3.sum(d[1], (s) => s.points)); })
+              .attr("fill", d => color(i) )
+        }
+      ) 
+      }
 
       // ##### functions for data handling #### 
 
@@ -460,14 +543,9 @@
           });
           return obj;
         });
-        let stack = d3.stack()
-          .keys(rhythms)
-          .order(d3.stackOrderNone)
-          .offset(d3.stackOffsetNone);
+        
 
-        let series = stack(formattedData);
-
-        return [series, type_to_use]
+        return [formattedData, type_to_use]
       }
       //#endregion
     })
