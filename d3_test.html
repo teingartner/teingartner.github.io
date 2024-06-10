@@ -12,8 +12,8 @@
 
   <div id="button" height=50></div>
   <div id="div_template" height=350></div>
-  <div id="small_multiples" height=350></div>
   <div id="explain_weights" height=350></div>
+  <div id="small_multiples" height=350></div>
 
 
 
@@ -210,10 +210,274 @@
       }
 
 
-      // Aggregate data
+      //#region                       ##############      overview chart    ########
+
+      //#endregion
+
+      //#region                       ##############      explain points  ########
+
+      //#endregion
+
+      
+      //#region                       ##############      split by rhythm   ########
+      // color palette = one color per subgroup
+      var color = d3.scaleOrdinal()
+          .domain(rhythms)
+          .range(['#e41a1c', '#377eb8', '#4daf4a', '#536745'])
+
+      //             ##### stacked plot #####
+      var rhythms_button = d3.select("#small_multiples")
+      .append('select')
+      rhythms_button // Add a button
+      .selectAll('myOptions') //
+      .data(["stacked", "small_multiples"])
+      .enter()
+        .append('option')
+        .text(function (d) { return d; }) // text showed in the menu
+        .attr("value", function (d) { return d; })
+        .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")")
+
+
+      
+      rhythms_button.on("change", function (d) {
+        // recover the option that has been chosen
+        let selectedOption = d3.select(this).property("value")
+        build_rhythms_chart(selectedOption)
+      })
 
 
 
+      function build_rhythms_chart(option = "stacked") {
+      
+        // call functions 
+        var [formattedData, type] = aggregate_data(valid_questions, "me")
+        var stack = d3.stack()
+            .keys(rhythms)
+            .order(d3.stackOrderNone)
+            .offset(d3.stackOffsetNone);
+
+          var series = stack(formattedData);
+        //console.table(formattedData)
+        var something = d3.select("small_multiples");
+        var bla = d3.selectAll(".small_multiples_content")
+        console.log(bla)
+        bla.remove();
+        if (option == "stacked") {
+          build_stacked_chart(series, type)
+        }
+        else {
+          build_multiples_chart()
+        }
+      }
+
+      
+      // functions
+      function build_stacked_chart(series, type) {
+        var svg2 = d3.select("#small_multiples")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .attr("class", "small_multiples_content")
+          .append("g")
+          .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")")
+
+        // X axis
+        var x_stacked = d3.scaleBand()
+          .range([0, width])
+          .domain(partner_types)
+          .padding(0.2);
+        var xAxis_stacked = svg2.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x_stacked))
+
+        // Add Y axis
+        var y_stacked = d3.scaleLinear()
+          .domain([0, Math.max(done_points, remembered_points, max_num_points)])
+          .range([height, 0]);
+        svg2.append("g")
+          .attr("class", "myYaxis")
+          .call(d3.axisLeft(y_stacked));
+
+        x_stacked.domain(type)
+        xAxis_stacked.transition().duration(1000).call(d3.axisBottom(x_stacked));
+
+        svg2.append("g")
+          .selectAll("g")
+          // Enter in the stack data = loop key per key = group per group
+          .data(series)
+          .enter().append("g")
+          .attr("class", "serie")
+          .attr("fill", d => color(d.key))
+          .selectAll("rect")
+          .data(d => d)
+          .enter().append("rect")
+          .attr("x", d => x_stacked(d.data.type))
+          .attr("y", d => y_stacked(d[1]))
+          .attr("height", d => y_stacked(d[0]) - y_stacked(d[1]))
+          .attr("width", x_stacked.bandwidth());
+
+        const legend = svg2.selectAll(".legend")
+          .data(rhythms.slice().reverse())
+          .enter().append("g")
+          .attr("class", "legend")
+          .attr("transform", (d, i) => `translate(0,${i * 20})`);
+
+        legend.append("rect")
+          .attr("x", width - 18)
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", color);
+
+        legend.append("text")
+          .attr("x", width - 24)
+          .attr("y", 9)
+          .attr("dy", ".35em")
+          .style("text-anchor", "end")
+          .style("font-family", "calibri")
+          .style("font-size", "80%")
+          .text(d => d);
+      }
+
+      function aggregate_data(data, person) {
+        switch (person) {
+          case "me":
+            var type_to_use = types
+            break;
+
+          case "partner":
+            var type_to_use = partner_types
+            break;
+        }
+
+        let aggregatedData = {
+          [type_to_use[0]]: {},
+          [type_to_use[1]]: {}
+        };
+        data.forEach(d => {
+          if (d[type_to_use[0]]) {
+            aggregatedData[type_to_use[0]][d.rhythm] = (aggregatedData[type_to_use[0]][d.rhythm] || 0) + d.points;
+          }
+          if (d[type_to_use[1]]) {
+            aggregatedData[type_to_use[1]][d.rhythm] = (aggregatedData[type_to_use[1]][d.rhythm] || 0) + d.points;
+          }
+        });
+
+        let formattedData = type_to_use.map(type => {
+          const obj = { type };
+          rhythms.forEach(category => {
+            obj[category] = aggregatedData[type][category] || 0;
+          });
+          return obj;
+        });
+        
+
+        return [formattedData, type_to_use]
+      }
+
+      function build_multiples_chart() {
+      //console.table(grouped_by_rhythm)
+      let group_test = d3.group(valid_questions, d => d.rhythm, d => d.remember)
+        let group_test_do_it = d3.group(valid_questions, d => d.rhythm, d => d.do_it)
+        //console.table(group_test.get("täglich"))
+        let do_it_points = []
+        let remember_points = []
+        group_test.forEach(function(value,key) {
+          value.delete(false)
+          let to_rename = value.get(true)
+          value.set("remember", to_rename)
+          value.delete(true)
+          let do_it = group_test_do_it.get(key)
+          //console.log(do_it)
+          value.set("do_it", do_it.get(true))
+          do_it_points.push(d3.sum(value.get("do_it"), (d) => d.points))
+          remember_points.push(d3.sum(value.get("remember"), (d) => d.points))
+          
+        })
+        
+
+        var small_multiples_width = width/2
+        var svg_multiples = d3.select("small_multiples")
+          .data(group_test)
+          .enter()
+          .append("svg")
+            .attr("width", small_multiples_width + margin.left + margin.right)
+            .attr("height", small_multiples_width + margin.top + margin.bottom)
+            .attr("class","small_multiples_content")
+            //.text(function(d) {console.log(d[0])})
+            //.text(function(d) {console.log(d);})
+          .append("g")
+            .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")")
+            .attr("class", function(d) { return d[0];})
+
+        // X axis
+        var x_multiples = d3.scaleBand()
+          .range([0, small_multiples_width])
+          .domain(types)
+          .padding(0.1);
+        svg_multiples.append("g")
+          .attr("transform", "translate(0," + small_multiples_width + ")")
+          .call(d3.axisBottom(x_multiples))
+
+        
+        // Add Y axis
+        let max_reachable_points_per_rhythm = []
+        rhythms.forEach(function(v){
+          //console.log(v)
+          max_reachable_points_per_rhythm.push(d3.sum(grouped_by_rhythm.get(v), (d) => d.points))
+        })
+        console.log(Math.max(...do_it_points.concat(remember_points)))
+        var y_multiples = d3.scaleLinear()
+          .domain([0, Math.max(...do_it_points.concat(remember_points, max_reachable_points_per_rhythm))+3]) //TODO
+          .range([small_multiples_width, 0]);
+          svg_multiples.append("g")
+          .attr("class", "myYaxis_multiples")
+          .call(d3.axisLeft(y_multiples));
+
+      group_test.forEach(function(data, i) {
+      let max_points = d3.sum(grouped_by_rhythm.get(i), (d) => d.points)
+        //console.log(data, i)
+        d3.select("g." + i)
+          .selectAll('.bar')
+          .data(data)
+          .enter()
+            .append("rect")
+            //.text(function(d) {console.log(d)})
+            .attr("x", function (d) { return x_multiples(d[0]); })
+            .attr("y", function (d) { return y_multiples(d3.sum(d[1], (s) => s.points));})
+            // .text(function(d) {
+            //   console.log(d3.sum(d[1], (s) => s.points));
+            //   // d3.sum(remembered_questions, (d) => d.points)
+            //                   console.log(d)
+            // })
+            .attr("width", x_multiples.bandwidth())
+            .attr("height", function (d) { return small_multiples_width - y_multiples(d3.sum(d[1], (s) => s.points)); })
+            .attr("fill", d => color(i) )
+        
+        d3.select("g." + i)
+          .append("line")
+              .attr("class", "some_line")
+              //.text(function(d) {console.log(d)})
+          .style("stroke", "grey")
+          .attr("x1", 0)
+          .attr("x2", small_multiples_width)
+          .attr("y1", (d) => y_multiples(max_points))
+          .attr("y2", (d) => y_multiples(max_points));
+        
+          d3.select("g." + i).append("text")
+          .attr("x", (small_multiples_width / 2))             
+          .attr("y", 0 )
+          .attr("text-anchor", "middle")  
+          .style("font-family", "calibri")
+          .style("font-size", "16px") 
+          .text(i);
+        
+      }) 
+      }
+
+      //#endregion
 
 
       //#region                       ##############      setup page    ########
@@ -259,89 +523,7 @@
         .attr("class", "myYaxis")
         .call(d3.axisLeft(y));
 
-      //              ##### stacked plot #####
-      var svg2 = d3.select("#div_template")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")")
-
-      // X axis
-      var x_stacked = d3.scaleBand()
-        .range([0, width])
-        .domain(partner_types)
-        .padding(0.2);
-      var xAxis_stacked = svg2.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x_stacked))
-
-      // Add Y axis
-      var y_stacked = d3.scaleLinear()
-        .domain([0, Math.max(done_points, remembered_points, max_num_points)])
-        .range([height, 0]);
-      svg2.append("g")
-        .attr("class", "myYaxis")
-        .call(d3.axisLeft(y_stacked));
-
-      // color palette = one color per subgroup
-      var color = d3.scaleOrdinal()
-        .domain(rhythms)
-        .range(['#e41a1c', '#377eb8', '#4daf4a', '#536745'])
-
-      //              ##### small_multiples plot #####
-      //console.table(grouped_by_rhythm)
-      let group_test = d3.group(valid_questions, d => d.rhythm, d => d.remember)
-      let group_test_do_it = d3.group(valid_questions, d => d.rhythm, d => d.do_it)
-      //console.table(group_test.get("täglich"))
-      group_test.forEach(function(value,key) {
-        value.delete(false)
-        let to_rename = value.get(true)
-        value.set("remember", to_rename)
-        value.delete(true)
-        let do_it = group_test_do_it.get(key)
-        //console.log(do_it)
-        value.set("do_it", do_it.get(true))
-        //console.log(value) 
-      })
-      //console.log(group_test) 
-      function myCallback({ quantity }) {
-       return quantity > 200 ? "ok" : "low";
-      }
-
-      var small_multiples_width = width/2
-      var svg_multiples = d3.select("small_multiples")
-        .data(group_test)
-        .enter()
-        .append("svg")
-          .attr("width", small_multiples_width + margin.left + margin.right)
-          .attr("height", small_multiples_width + margin.top + margin.bottom)
-          //.attr("class","multiples_svg")
-          //.text(function(d) {console.log(d[0])})
-          .text(function(d) {console.log(d);})
-        .append("g")
-          .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")")
-          .attr("class", function(d) { return d[0];})
-
-      // X axis
-      var x_multiples = d3.scaleBand()
-        .range([0, small_multiples_width])
-        .domain(types)
-        .padding(0.1);
-      svg_multiples.append("g")
-        .attr("transform", "translate(0," + small_multiples_width + ")")
-        .call(d3.axisBottom(x_multiples))
-
-      // Add Y axis
-      var y_multiples = d3.scaleLinear()
-        .domain([0, 60]) //TODO
-        .range([small_multiples_width, 0]);
-        svg_multiples.append("g")
-        .attr("class", "myYaxis_multiples")
-        .call(d3.axisLeft(y_multiples));
-
+    
       //#endregion
 
 
@@ -354,18 +536,8 @@
       // svg.append("g").attr("class", "content");
 
       update(initial_data, max_num_of_daily_points);
-
-      var [formattedData, type] = aggregate_data(valid_questions, "me")
-      var stack = d3.stack()
-          .keys(rhythms)
-          .order(d3.stackOrderNone)
-          .offset(d3.stackOffsetNone);
-
-        var series = stack(formattedData);
-      //console.table(formattedData)
-      build_stacked_chart(series, type)
-
-      build_multiples_chart()
+      build_rhythms_chart("stacked")
+      
 
       //#endregion
 
@@ -442,118 +614,16 @@
         update(data_updated, max_points)
       })
 
-      function build_stacked_chart(series, type) {
-
-        x_stacked.domain(type)
-        xAxis_stacked.transition().duration(1000).call(d3.axisBottom(x_stacked));
-
-        svg2.append("g")
-          .selectAll("g")
-          // Enter in the stack data = loop key per key = group per group
-          .data(series)
-          .enter().append("g")
-          .attr("class", "serie")
-          .attr("fill", d => color(d.key))
-          .selectAll("rect")
-          .data(d => d)
-          .enter().append("rect")
-          .attr("x", d => x_stacked(d.data.type))
-          .attr("y", d => y_stacked(d[1]))
-          .attr("height", d => y_stacked(d[0]) - y_stacked(d[1]))
-          .attr("width", x_stacked.bandwidth());
-
-        const legend = svg2.selectAll(".legend")
-          .data(rhythms.slice().reverse())
-          .enter().append("g")
-          .attr("class", "legend")
-          .attr("transform", (d, i) => `translate(0,${i * 20})`);
-
-        legend.append("rect")
-          .attr("x", width - 18)
-          .attr("width", 18)
-          .attr("height", 18)
-          .style("fill", color);
-
-        legend.append("text")
-          .attr("x", width - 24)
-          .attr("y", 9)
-          .attr("dy", ".35em")
-          .style("text-anchor", "end")
-          .style("font-family", "calibri")
-          .style("font-size", "80%")
-          .text(d => d);
-
-      }
-
-      function build_multiples_chart() {
-
-        //svg_multiples.select(".multiples_svg")
-        group_test.forEach(function(data, i) {
-          //console.log(data, i)
-          d3.select("g." + i)
-            .selectAll('.bar')
-            .data(data)
-            .enter()
-              .append("rect")
-              //.text(function(d) {console.log(d)})
-              .attr("x", function (d) { return x_multiples(d[0]); })
-              .attr("y", function (d) { return y_multiples(d3.sum(d[1], (s) => s.points));})
-              // .text(function(d) {
-              //   console.log(d3.sum(d[1], (s) => s.points));
-              //   // d3.sum(remembered_questions, (d) => d.points)
-              //                   console.log(d)
-              // })
-              .attr("width", x_multiples.bandwidth())
-              .attr("height", function (d) { return small_multiples_width - y_multiples(d3.sum(d[1], (s) => s.points)); })
-              .attr("fill", d => color(i) )
-        }
-      ) 
-      }
-
       // ##### functions for data handling #### 
 
-      function aggregate_data(data, person) {
-        switch (person) {
-          case "me":
-            var type_to_use = types
-            break;
-
-          case "partner":
-            var type_to_use = partner_types
-            break;
-        }
-
-        let aggregatedData = {
-          [type_to_use[0]]: {},
-          [type_to_use[1]]: {}
-        };
-        data.forEach(d => {
-          if (d[type_to_use[0]]) {
-            aggregatedData[type_to_use[0]][d.rhythm] = (aggregatedData[type_to_use[0]][d.rhythm] || 0) + d.points;
-          }
-          if (d[type_to_use[1]]) {
-            aggregatedData[type_to_use[1]][d.rhythm] = (aggregatedData[type_to_use[1]][d.rhythm] || 0) + d.points;
-          }
-        });
-
-        let formattedData = type_to_use.map(type => {
-          const obj = { type };
-          rhythms.forEach(category => {
-            obj[category] = aggregatedData[type][category] || 0;
-          });
-          return obj;
-        });
-        
-
-        return [formattedData, type_to_use]
-      }
+      
       //#endregion
     })
 
-      .catch(function (error) {
-        // handle error
-        console.log(error)
-      });
+      // .catch(function (error) {
+      //   // handle error
+      //   console.log(error)
+      // });
 
   </script>
 
