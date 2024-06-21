@@ -8,9 +8,33 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
+<style>
+html *
+{
+   font-family: "Ubuntu" !important;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    font-size: 12px;
+    background: rgb(237, 234, 234);
+    border: 0px;
+    border-radius: 2px;
+    pointer-events: none;
+    visibility: hidden; /* Initially hidden */
+}
+
+
+</style>
+
 <body>
 
   <div id="confusion" height=350></div>
+  <div id="tooltip" class="tooltip"></div>
   <div id="button" height=50></div>
   <div id="div_template" height=350></div>
   <p> How are the points calculated? We wanted to weigh the tasks more that are done one a daily basis - 
@@ -68,7 +92,7 @@
           .range(['#e41a1c', '#377eb8', '#4daf4a', '#536745'])
 
 
-      //#region                    ###############      prep and reshape data            #################
+    //#region                    ###############      prep and reshape data            #################
       var questions_final = []; //reshaped data
       var quest_ID = 0;
       // target data shape
@@ -204,7 +228,9 @@
       // group by daily, monthly etc. for plots and analysis
       let grouped_by_rhythm = d3.group(valid_questions, d => d.rhythm)
 
-      //console.log(remembered_points)
+      const uniqueCategories = Array.from(new Set(valid_questions.map(d => d.category)));
+      const uniqueDomains = Array.from(new Set(valid_questions.map(d => d.domain)));
+      console.log(uniqueDomains)
       console.log("points done: " + done_points + ", points remembered: " + remembered_points +
         ", points done of partner: " + partner_done_points +
         ", points remembered of partner: " + partner_remembers_points +
@@ -217,16 +243,200 @@
         throw "something is wrong with the dataset"
       }
 
+      //#endregion
+
+    //#region        ########## confusion matrix ###########
       console.table(valid_questions)
+      var conf_margin = { top: 30, right: 250, bottom: 20, left: 20 };
+      var conf_width = 800 - conf_margin.left - conf_margin.right;
+      var conf_height = 400 - conf_margin.top - conf_margin.bottom;
+      
+      var domainColor = d3.scaleOrdinal()
+          .domain(uniqueDomains)
+          .range(['#F0E15B', '#5BD8F0', '#9B966E', '#F05B9B'])
+
+      const innerWidth = conf_width - conf_margin.left - conf_margin.right;
+      const innerHeight = conf_height - conf_margin.top - conf_margin.bottom;
+
+      const x_confusion = d3.scaleBand()
+        .domain(['remember', 'partner_remembers'])
+        .range([0, innerWidth]);
+
+      const y_confusion = d3.scaleBand()
+        .domain(['do_it', 'partner_does_it'])
+        .range([0, innerHeight]);
+
+      const svg_confusion  = d3.select("#confusion")
+      .append("svg")
+        .attr("width", conf_width)
+        .attr("height", conf_height)
+        .append("g")
+        .attr("transform", `translate(${conf_margin.left},${conf_margin.top})`);
+
+      // const gridSize = x_confusion.bandwidth();
+      // const cells = svg_confusion.selectAll(".cell")
+      //   .data(y_confusion.domain().flatMap(row => x_confusion.domain().map(col => ({row, col}))))
+      //   .enter().append("rect")
+      //   .attr("class", "cell")
+      //   .attr("x", d => x_confusion(d.col))
+      //   .attr("y", d => y_confusion(d.row))
+      //   .attr("width", gridSize)
+      //   .attr("height", gridSize);
+
+      // Add column labels
+      svg_confusion.selectAll(".column-label")
+        .data(x_confusion.domain())
+        .enter().append("text")
+        .attr("class", "column-label")
+        .attr("x", d => x_confusion(d) + x_confusion.bandwidth() / 2)
+        .attr("y", -10) // Position above the grid
+        .attr("text-anchor", "middle")
+        .text(d => d);
+
+      // Add row labels
+      svg_confusion.selectAll(".row-label")
+        .data(y_confusion.domain())
+        .enter().append("text")
+        .attr("class", "row-label")
+        .attr('transform', d => 'translate('+ -10 +','+ (y_confusion(d) + y_confusion.bandwidth() / 2) +'),'+ 'rotate(-90)')
+        //.text(function(d) {console.log(y_confusion.bandwidth() / 2)})
+        .attr("text-anchor", "middle")
+        .attr("dy", "0.35em") // Vertical alignment
+        .text(d => d);
+
+      // calculate radius based on points
+      const radiusScale = d3.scaleSqrt()
+        .domain([0, d3.max(valid_questions, d => d.points)])
+        .range([0, 10]);
+
+      // Map data to cell positions
+      const mappedData = valid_questions.map(d => ({
+        ...d,
+        x: x_confusion(d.remember ? "remember" : "partner_remembers") + x_confusion.bandwidth() / 2,
+        y: y_confusion(d.do_it ? "do_it" : "partner_does_it") + y_confusion.bandwidth() / 2,
+        r: radiusScale(d.points)
+      }));
+
+      // Create simulation
+      const simulation = d3.forceSimulation(mappedData)
+        .force("x", d3.forceX(d => d.x).strength(1))
+        .force("y", d3.forceY(d => d.y).strength(1))
+        .force("collide", d3.forceCollide(d => d.r))
+        .stop();
+
+      for (let i = 0; i < 500; ++i) simulation.tick(); // Run the simulation
+      const tooltip = d3.select("#tooltip");
+      // Draw points
+      svg_confusion.append("g").selectAll(".point")
+        .data(mappedData)
+        .enter().append("circle")
+        .attr("class", "point")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", d => d.r)
+        .style("fill", d => domainColor(d.domain))
+        .on("mouseover", function(event, d) {
+          tooltip.style("visibility", "visible").text(d.Text);
+          d3.select(this).attr("stroke", "darkgrey").attr("stroke-width", 1.5)
+          })
+        .on("mousemove", function(event, d) {
+          tooltip.style("top", (event.pageY - 10) + "px")
+          .style("left", (event.pageX + 10) + "px");
+        })
+        .on("mouseout", function(event, d) {
+          d3.select(this).attr("stroke", "none");
+          tooltip.style("visibility", "hidden");
+  });
+
+
+      // legend
+      const legend = svg_confusion.append("g")
+        .attr("class", "legend")
+        .attr("transform", `translate(${innerWidth + 40}, 20)`);
+
+      // Add size legend
+      const sizeLegend = legend.append("g")
+        .attr("class", "size-legend");
+
+      sizeLegend.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .text("Size (Frequency):")
+        .style("font-size", "12px")
+        .style("font-weight", "bold");
+
+      const sizeValues = [...new Set(valid_questions.map(d => d.points))];
+
+      sizeLegend.selectAll("circle")
+        .data(sizeValues)
+        .enter().append("circle")
+        .attr("cx", 10)
+        .attr("cy", (d, i) => 20 + i * 25)
+        .attr("r", d => radiusScale(d))
+        .attr("fill", "none")
+        .attr("stroke", "black");
+
+      sizeLegend.selectAll("text.size-label")
+        .data(sizeValues)
+        .enter().append("text")
+        .attr("class", "size-label")
+        .attr("x", 30)
+        .attr("y", (d, i) => 20 + i * 25)
+        .attr("dy", "0.35em")
+        .style("font-size", "12px")
+        .text(d => rhythms[Math.abs(d-4)]);
+
+      // Add color legend
+      const colorLegend = legend.append("g")
+        .attr("class", "color-legend")
+        .attr("transform", "translate(0, 150)");
+
+      colorLegend.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .text("Color (Domain):")
+        .style("font-size", "12px")
+        .style("font-weight", "bold");
+
+      const domainValues = [...new Set(valid_questions.map(d => d.domain))];
+
+      colorLegend.selectAll("rect")
+        .data(domainValues)
+        .enter().append("rect")
+        .attr("x", 10)
+        .attr("y", (d, i) => 20 + i * 20)
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("fill", d => domainColor(d));
+
+      colorLegend.selectAll("text.color-label")
+        .data(domainValues)
+        .enter().append("text")
+        .attr("class", "color-label")
+        .attr("x", 30)
+        .attr("y", (d, i) => 25 + i * 20) // Adjust y to vertically center with the rect
+        .attr("dy", "0.35em")
+        .text(d => d)
+        .style("font-size", "12px"); // Ensure the text size is visible
+  
+
+      var mouseleave = function(d) {
+        //textSvg1.style("opacity", 0)
+        d3.select(this)
+          .style("stroke", "none")
+          .style("opacity", 0.8)
+      }
+
+
+
+    //#endregion
+
+
+    //#region                       ##############      overview chart    ########
+
       //#endregion
 
-
-
-      //#region                       ##############      overview chart    ########
-
-      //#endregion
-
-      //#region                       ##############      explain points  ########
+    //#region                       ##############      explain points  ########
       var svg3 = d3.select("#explain_weights")
           .append("svg")
           .attr("width", width + margin.left + margin.right)
@@ -274,7 +484,7 @@
         formatted_ticks[rhythm] = ticks_by_rhythm.get(rhythm) || 0;
         done_ticks += ticks_by_rhythm.get(rhythm) || 0
       });
-      console.log(done_ticks)
+      //console.log(done_ticks)
       //join ticks and points
       formattedData[1] = formatted_ticks
       var series = stack(formattedData) //stack data
@@ -404,7 +614,7 @@
         .enter()
         .append("text")
         .attr("class", "sum")
-        .text(function(d) {console.log(d)})
+        //.text(function(d) {console.log(d)})
         .attr("x", (d) => x_explain(d.type) + x_explain.bandwidth()/2)
         .attr("y", (d) => y_explain(d.sum))
         .attr("dy", "1.2em")
