@@ -21,7 +21,7 @@ html *
     height: auto;
     padding: 5px;
     font-size: 12px;
-    background: rgb(237, 234, 234);
+    background: #F2F2F2;
     border: 0px;
     border-radius: 2px;
     pointer-events: none;
@@ -42,7 +42,9 @@ html *
     set in the test:
   </p>
   <div id="explain_weights" height=350></div>
-  <div id="small_multiples" height=350></div>
+  <div id="stacked_chart"  height=350></div>
+  <div id="small_multiples"  height=350></div>
+  <div id="small_multiples_categories" height=350></div>
   
 
 
@@ -57,12 +59,12 @@ html *
     var width = 400 - margin.left - margin.right;
     var height = 350 - margin.top - margin.bottom;
 
-    var language = "de"
+    var language = "en"
 
     // append the svg object to the body of the page
 
 
-    d3.json("data/test_json.json").then(function (data_raw) {
+    d3.json("data/test_json_en.json").then(function (data_raw) {
       //#region               ###############      variables   #################
       var all_cats = [];
       if (language == "de") {
@@ -89,9 +91,12 @@ html *
 
       var color = d3.scaleOrdinal()
           .domain(rhythms)
-          .range(['#e41a1c', '#377eb8', '#4daf4a', '#536745'])
+          .range(['#346B91', '#6EA0C4', '#BCDFF7', '#D6EEFF'])
 
-
+      var mntlld_darkblue = "#0F3D5F"
+      var mntlld_lightblue = "#0A92BA"
+      var mntlld_green = "#7FB701"
+      var mntlld_grey = "#F2F2F2"
     //#region                    ###############      prep and reshape data            #################
       var questions_final = []; //reshaped data
       var quest_ID = 0;
@@ -141,10 +146,15 @@ html *
               questions_final.push({})
               questions_final[quest_ID]["Text"] = ques_level_2[0]
               questions_final[quest_ID]["ID"] = questions[quesID]
-              questions_final[quest_ID]["domain"] = domains[i]
+              questions_final[quest_ID]["domain"] = domains[i].replace('... ', '')
               questions_final[quest_ID]["category"] = cats[catId]
               questions_final[quest_ID]["rhythm"] = rhthms[rhtmID]
-              questions_final[quest_ID]["points"] = rhythms_points_mapping_de[rhthms[rhtmID]]
+              if(language == "de") {
+                questions_final[quest_ID]["points"] = rhythms_points_mapping_de[rhthms[rhtmID]]
+              }
+              else if (language == "en") {
+                questions_final[quest_ID]["points"] = rhythms_points_mapping_en[rhthms[rhtmID]]
+              }
 
               //either empty array: partner does it, or object with answers 
               if (Array.isArray(obj_arr_answers)) {
@@ -230,7 +240,7 @@ html *
 
       const uniqueCategories = Array.from(new Set(valid_questions.map(d => d.category)));
       const uniqueDomains = Array.from(new Set(valid_questions.map(d => d.domain)));
-      console.log(uniqueDomains)
+      //console.log(uniqueDomains)
       console.log("points done: " + done_points + ", points remembered: " + remembered_points +
         ", points done of partner: " + partner_done_points +
         ", points remembered of partner: " + partner_remembers_points +
@@ -632,57 +642,28 @@ html *
       
 
       //             ##### stacked plot #####
-      var rhythms_button = d3.select("#small_multiples")
-      .append('select')
-      rhythms_button // Add a button
-      .selectAll('myOptions') //
-      .data(["stacked", "small_multiples"])
-      .enter()
-        .append('option')
-        .text(function (d) { return d; }) // text showed in the menu
-        .attr("value", function (d) { return d; })
-        .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")")
-
-      rhythms_button.on("change", function (d) {
-        // recover the option that has been chosen
-        let selectedOption = d3.select(this).property("value")
-        build_rhythms_chart(selectedOption)
-      })
-
-
-
-      function build_rhythms_chart(option = "stacked") {
-      
-        // call functions 
-        var [formattedData, type, categories] = aggregate_data(valid_questions, grouping = "rhythm")
+      var [formattedData, type, categories] = aggregate_data(valid_questions, grouping = "rhythm")
         var stack = d3.stack()
             .keys(categories)
             .order(d3.stackOrderNone)
             .offset(d3.stackOffsetNone);
 
         var series = stack(formattedData);
-        console.table(series)
-        let div_class = "#small_multiples";
-        let new_class = "small_multiples_content";
-        d3.selectAll(".small_multiples_content").remove()
+        build_stacked_chart(series, type)
+        build_multiples_chart(grouping = "rhythm", div_class="#small_multiples", svg_class="small_multiples_svgs")
 
-        if (option == "stacked") {
-          build_stacked_chart(series, type, div_class, new_class)
-        }
-        else {
-          build_multiples_chart()
-        }
-      }
+
+
 
       
       // functions
-      function build_stacked_chart(series, type, div_class, new_class) {
-        var svg2 = d3.select(div_class)
+      function build_stacked_chart(series, type) {
+        
+        var svg2 = d3.select("#stacked_chart")
           .append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
-          .attr("class", new_class)
+          .attr("class", "stacked_svg")
           .append("g")
           .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")")
@@ -748,7 +729,7 @@ html *
         
       }
       
-      function aggregate_data(data,grouping, person = "me" , aggr = "points") {
+      function aggregate_data(data,grouping, person = "me" ) {
         switch (person) {
           case "me":
             var type_to_use = types
@@ -788,7 +769,7 @@ html *
       }
 
 
-      function build_multiples_chart() {
+      function build_multiples_chart(grouping, div_class, svg_class) {
 
       // var multiples_button = d3.select("#small_multiples")
       // .append('input')
@@ -805,39 +786,42 @@ html *
       //   }
       // })
       //console.table(grouped_by_rhythm)
-      let group_test = d3.group(valid_questions, d => d.rhythm, d => d.remember)
-        let group_test_do_it = d3.group(valid_questions, d => d.rhythm, d => d.do_it)
+      let grouped_data = d3.group(valid_questions, d => d[grouping], d => d.remember)
+      let grouped_do_it_data = d3.group(valid_questions, d => d[grouping], d => d.do_it)
+      //console.log(grouped_do_it_data)
         //console.table(group_test.get("täglich"))
         let do_it_points = []
         let remember_points = []
-        group_test.forEach(function(value,key) {
+      grouped_data.forEach(function(value,key) {
           value.delete(false)
           let to_rename = value.get(true)
+          if(!to_rename) {to_rename = [{"points":0}]}
           value.set("remember", to_rename)
           value.delete(true)
-          let do_it = group_test_do_it.get(key)
-          //console.log(do_it)
+          let do_it = grouped_do_it_data.get(key)
+          if(!do_it) {do_it = [{"points":0}]}
           value.set("do_it", do_it.get(true))
           do_it_points.push(d3.sum(value.get("do_it"), (d) => d.points))
           remember_points.push(d3.sum(value.get("remember"), (d) => d.points))
           
         })
-        
 
         var small_multiples_width = width/2
-        var svg_multiples = d3.select("small_multiples")
-          .data(group_test)
+        var svg_multiples = d3.select(div_class)
+          .append("g")
+          .selectAll("g")
+          .data(grouped_data)
           .enter()
           .append("svg")
+          .attr("class",svg_class)
             .attr("width", small_multiples_width + margin.left + margin.right)
             .attr("height", small_multiples_width + margin.top + margin.bottom)
-            .attr("class","small_multiples_content")
-            //.text(function(d) {console.log(d[0])})
+            .text(function(d) {console.log(remove_weird_symbols(d[0]))})
             //.text(function(d) {console.log(d);})
           .append("g")
             .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")")
-            .attr("class", function(d) { return d[0];})
+            .attr("class", function(d) { return remove_weird_symbols(d[0]);})
 
         // X axis
         var x_multiples = d3.scaleBand()
@@ -850,40 +834,40 @@ html *
 
         
         // Add Y axis
-        let max_reachable_points_per_rhythm = []
-        rhythms.forEach(function(v){
-          //console.log(v)
-          max_reachable_points_per_rhythm.push(d3.sum(grouped_by_rhythm.get(v), (d) => d.points))
-        })
-        console.log(Math.max(...do_it_points.concat(remember_points)))
-        var y_multiples = d3.scaleLinear()
-          .domain([0, Math.max(...do_it_points.concat(remember_points, max_reachable_points_per_rhythm))+20]) 
+          var y_multiples = d3.scaleLinear()
+          // .domain([0, Math.max(...do_it_points.concat(remember_points, max_reachable_points_per_rhythm))+20]) 
+          .domain([0, 1]) 
           .range([small_multiples_width, 0]);
           svg_multiples.append("g")
           .attr("class", "myYaxis_multiples")
           .call(d3.axisLeft(y_multiples));
-
-      group_test.forEach(function(data, i) {
-      let max_points = d3.sum(grouped_by_rhythm.get(i), (d) => d.points)
-        //console.log(data, i)
-        d3.select("g." + i)
+      let grouped_by_grouping = d3.group(valid_questions, d => d[grouping])
+      
+      grouped_data.forEach(function(data, i) {
+      let max_points = d3.sum(grouped_by_grouping.get(i), (d) => d.points)
+      let classname = remove_weird_symbols(i);
+      console.log(d3.select("g." + classname))
+      console.log(classname) 
+      d3.select("g." + classname)
         .selectAll('.bar')
         .data(data)
           .enter()
             .append("rect")
             //.text(function(d) {console.log(d)})
             .attr("x", function (d) { return x_multiples(d[0]); })
-            .attr("y", function (d) { return y_multiples(d3.sum(d[1], (s) => s.points));})
+            .attr("y", function (d) { return y_multiples((d3.sum(d[1], (s) => s.points))/max_points)})
             // .text(function(d) {
-            //   console.log(d3.sum(d[1], (s) => s.points));
-            //   // d3.sum(remembered_questions, (d) => d.points)
-            //                   console.log(d)
-            // })
+            //    console.log((d3.sum(d[1], (s) => s.points)/max_points));
+            //   d3.sum(remembered_questions, (d) => d.points)
+            //                   //  console.log(d)
+            //  })
             .attr("width", x_multiples.bandwidth())
-            .attr("height", function (d) { return small_multiples_width - y_multiples(d3.sum(d[1], (s) => s.points)); })
-            .attr("fill", d => color(i) )
+            .attr("height", function (d) { return small_multiples_width - y_multiples((d3.sum(d[1], (s) => s.points))/max_points); })
+            .attr("fill", function (d) { return grouping == "domain" ? domainColor(i) : color(i)} );
         
-        d3.select("g." + i)
+        //console.log(max_points)
+        
+        d3.select("g." + classname)
           .append("line")
               .attr("class", "some_line")
               //.text(function(d) {console.log(d)})
@@ -893,7 +877,7 @@ html *
           .attr("y1", (d) => y_multiples(max_points))
           .attr("y2", (d) => y_multiples(max_points));
         
-          d3.select("g." + i).append("text")
+          d3.select("g." + classname).append("text")
           .attr("x", (small_multiples_width / 2))             
           .attr("y", 0 - (margin.top / 3))
           .attr("text-anchor", "middle")  
@@ -901,7 +885,7 @@ html *
           .style("font-size", "100%") 
           .text(i);
 
-          d3.select("g." + i).append("text")
+          d3.select("g." + classname).append("text")
           .attr("x", small_multiples_width * (1 / 2))
           .attr("y", (d) => y_multiples(max_points))
           .attr("dy", "-.35em")
@@ -927,13 +911,13 @@ html *
         var series = stack(formattedData);
         //console.table(formattedData)
         d3.selectAll(".summet").remove()
-        let div_class = "small_multiples_categories"
+        let div_class = "#small_multiples_categories"
         let new_class = "summet"
         if (option == "stacked") {
           build_stacked_chart(series, type, div_class, new_class)
         }
         else {
-          build_multiples_chart()
+          build_multiples_chart("domain", div_class, new_class)
         }
       }
       
@@ -994,7 +978,7 @@ html *
 
       update(initial_data, max_num_of_daily_points);
       // build_rhythms_chart("stacked")
-      build_categories_chart("stacked")
+      build_categories_chart("bla")
 
       
 
@@ -1060,6 +1044,10 @@ html *
           data_updated.push({ "type": ty, "value": num_points });
         })
         return data_updated
+      }
+
+      function remove_weird_symbols(str) {
+        return str.replace(/\s/g, "").replace("-", "").replace(",", "").replace("+", "")
       }
 
       dropdownButton.on("change", function (d) {
