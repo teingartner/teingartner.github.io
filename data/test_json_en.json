@@ -1,0 +1,1177 @@
+{
+    "All care-communities, for example couples": {
+        "Household + living": {
+            "daily": {
+                "2": {
+                    "Doing the laundry": {
+                        "2": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "3": {
+                    "Folding laundry + putting away": []
+                },
+                "4": {
+                    "Making beds": {
+                        "6": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "7": {
+                            "answer": "remember",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "5": {
+                    "Cooking": []
+                },
+                "157": {
+                    "Baking": {
+                        "822": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "26": {
+                    "Cleaning the kitchen + doing dishes": []
+                },
+                "27": {
+                    "Maintaining shopping list": []
+                },
+                "29": {
+                    "Cleaning up": {
+                        "694": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "30": {
+                    "Taking care of pets": {
+                        "58": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "59": {
+                            "answer": "remember",
+                            "points": "0.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "weekly": {
+                "6": {
+                    "Vacuuming": {
+                        "10": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "11": {
+                            "answer": "remember",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "7": {
+                    "Wiping floors": []
+                },
+                "8": {
+                    "Cleaning bathroom": {
+                        "673": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "9": {
+                    "Watering flowers": {
+                        "16": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "31": {
+                    "Dusting + wiping": {
+                        "60": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "61": {
+                            "answer": "remember",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "32": {
+                    "Bügeln": []
+                },
+                "33": {
+                    "Wocheneinkauf": {
+                        "65": {
+                            "answer": "remember",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "34": {
+                    "Mahlzeiten planen": {
+                        "699": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "35": {
+                    "Obst\/Gemüse frisch nachkaufen": []
+                },
+                "36": {
+                    "Monitoring der Familienfinanzen": {
+                        "70": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "28": {
+                    "Müll rausbringen": []
+                }
+            },
+            "monthly": {
+                "46": {
+                    "Betten frisch beziehen": {
+                        "90": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "37": {
+                    "Putzmittel\/Staubsaugerbeutel kaufen": {
+                        "73": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "38": {
+                    "Abflüsse reinigen": {
+                        "74": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "75": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "39": {
+                    "Kleinreparaturen": {
+                        "704": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "40": {
+                    "Zahlungen veranlassen (Miete, Strom, etc.)": {
+                        "79": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "41": {
+                    "Altglas wegbringen": {
+                        "706": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "42": {
+                    "Deko + Gemütlichkeit zuhause": []
+                },
+                "43": {
+                    "Garten\/Balkon": []
+                },
+                "44": {
+                    "Schrauben + Bohren": []
+                },
+                "159": {
+                    "Ärzt*innentermine + Gesundheitsorganisation": []
+                },
+                "45": {
+                    "Schuhe putzen": []
+                }
+            },
+            "yearly": {
+                "160": {
+                    "Fenster putzen": []
+                },
+                "14": {
+                    "Küchenschränke abwischen": {
+                        "27": {
+                            "answer": "remember",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "15": {
+                    "Steuererklärung": {
+                        "28": {
+                            "answer": "do it",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "47": {
+                    "Maschinen entkalken": []
+                },
+                "48": {
+                    "Kühlschrank + TK + Backofen putzen": []
+                },
+                "49": {
+                    "Sperrmüll entsorgen": {
+                        "97": {
+                            "answer": "remember",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "50": {
+                    "Recherchen für Strom\/Internet\/Versicherung": {
+                        "98": {
+                            "answer": "do it",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "99": {
+                            "answer": "remember",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "51": {
+                    "Medizinschrank sortieren + updaten": []
+                },
+                "161": {
+                    "Kleinanzeigenverkäufe": []
+                },
+                "162": {
+                    "Nachbarschaftshilfe": []
+                }
+            }
+        },
+        "Fahren + Freizeit": {
+            "weekly": {
+                "52": {
+                    "Entertainment\/Familienausflüge am Wochenende planen": []
+                }
+            },
+            "monthly": {
+                "53": {
+                    "Fahrräder instandhalten": {
+                        "104": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "105": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "54": {
+                    "Tanken": []
+                },
+                "55": {
+                    "Auto waschen": []
+                },
+                "56": {
+                    "Feiertagsplanung (siehe MentalLoad@Christmas-Test)": {
+                        "110": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "yearly": {
+                "13": {
+                    "Auto zum TÜV": []
+                },
+                "57": {
+                    "Autoreparaturen": {
+                        "112": {
+                            "answer": "do it",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "113": {
+                            "answer": "remember",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "58": {
+                    "Urlaubsplanung": []
+                },
+                "59": {
+                    "Koffer packen für Urlaub": []
+                }
+            }
+        },
+        "Beziehungspflege": {
+            "daily": {
+                "158": {
+                    "Verhütung": {
+                        "314": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "weekly": {
+                "60": {
+                    "Paartermine organisieren": {
+                        "118": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "119": {
+                            "answer": "remember",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "61": {
+                    "Geburtstagsgrüße an Freund*innen + Familie senden": []
+                },
+                "62": {
+                    "Emotionsbegleitung": []
+                }
+            },
+            "monthly": {
+                "63": {
+                    "Kontaktpflege zu Angehörigen": []
+                },
+                "64": {
+                    "Geburtstagsgeschenke für Freund*innen + Familie besorgen": {
+                        "729": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "65": {
+                    "Sich mit partnerschaftlichen Konflikten befassen": []
+                },
+                "163": {
+                    "Besuch bewirten\/Gästebetten machen": []
+                }
+            },
+            "yearly": {
+                "66": {
+                    "Erinnerungen + Fotos aufbewahren": {
+                        "130": {
+                            "answer": "do it",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "164": {
+                    "Geburtstagsfeiern organisieren": {
+                        "326": {
+                            "answer": "do it",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "327": {
+                            "answer": "remember",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "165": {
+                    "Sonstige Familienfeste organisieren": []
+                }
+            }
+        }
+    },
+    "... with children": {
+        "Kita + Schule": {
+            "daily": {
+                "70": {
+                    "Brotboxen vorbereiten": {
+                        "138": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "139": {
+                            "answer": "remember",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "67": {
+                    "Bringen": []
+                },
+                "68": {
+                    "Abholen": []
+                },
+                "69": {
+                    "Hausaufgaben betreuen": {
+                        "136": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "137": {
+                            "answer": "remember",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "weekly": {
+                "71": {
+                    "Wechselkleidung prüfen": []
+                },
+                "72": {
+                    "Turn- + Sportbekleidung packen\/mitgeben": {
+                        "737": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monthly": {
+                "73": {
+                    "Schul-\/Kita-\/ sonst. Bedarf besorgen": []
+                },
+                "74": {
+                    "Dienste bei Sonderveranstaltungen": []
+                },
+                "75": {
+                    "Ansprechpartner*in\/Notfallkontakt sein\r\n": []
+                }
+            },
+            "yearly": {
+                "76": {
+                    "Teilnahme an Eltern-\/Angehörigenabenden": []
+                }
+            }
+        },
+        "Kleidung + Transporthilfen": {
+            "daily": {
+                "77": {
+                    "Kleidung auswählen": []
+                },
+                "78": {
+                    "Kind(er) anziehen": {
+                        "743": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monthly": {
+                "79": {
+                    "Kleidergrößen prüfen + sortieren": {
+                        "157": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "80": {
+                    "Schuhe prüfen + einkaufen": []
+                },
+                "81": {
+                    "Neue Kleidung einkaufen": {
+                        "160": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "161": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "82": {
+                    "Reparieren kaputter Kleidung": []
+                },
+                "83": {
+                    "Fahrradhelmgrößen prüfen + kaufen": {
+                        "748": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "yearly": {
+                "84": {
+                    "Ungenutzte Kleidung verschenken\/verkaufen": {
+                        "166": {
+                            "answer": "do it",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        },
+                        "167": {
+                            "answer": "remember",
+                            "points": "1.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "85": {
+                    "Kinderwagen\/Tragehilfen waschen\/instandhalten\r\n": []
+                },
+                "86": {
+                    "Kindersitze Auto + Rad": []
+                }
+            }
+        },
+        "Schlaf + Beziehung": {
+            "daily": {
+                "87": {
+                    "Einschlafbegleitung": []
+                },
+                "88": {
+                    "Wecken + Aufwachbegleitung": []
+                },
+                "89": {
+                    "Emotionsbegleitung": []
+                }
+            },
+            "weekly": {
+                "90": {
+                    "Gespräche mit älteren Kindern (Liebeskummer, Zukunft, ...)": {
+                        "178": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "monthly": {
+                "91": {
+                    "Nachtschichten bei Krankheit": {
+                        "181": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "92": {
+                    "Regelvereinbarungen mit Kindern": []
+                },
+                "93": {
+                    "Ratgeber lesen\/Erziehungsberatung suchen": []
+                }
+            },
+            "yearly": {
+                "94": {
+                    "Erinnerungen\/Fotos aufbewahren": []
+                }
+            }
+        },
+        "Körper + Pflege": {
+            "daily": {
+                "95": {
+                    "Haare kämmen": {
+                        "189": {
+                            "answer": "remember",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "96": {
+                    "Zähne putzen": {
+                        "190": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "191": {
+                            "answer": "remember",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "97": {
+                    "Schnuller + Flaschen sterilisieren": {
+                        "192": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "weekly": {
+                "99": {
+                    "Wickelbedarf\/Drogerieeinkäufe\r\n": {
+                        "196": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "100": {
+                    "Nägel schneiden": []
+                },
+                "101": {
+                    "Baden + Haare waschen": {
+                        "200": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "monthly": {
+                "102": {
+                    "Ärzt*innentermine vereinbaren": []
+                },
+                "103": {
+                    "Ärzt*innenbesuche": []
+                },
+                "104": {
+                    "Haarschneidebegleitung": []
+                }
+            },
+            "yearly": {
+                "105": {
+                    "Sehhilfe aktualisieren": []
+                }
+            }
+        },
+        "Geburtstag + Feste": {
+            "monthly": {
+                "106": {
+                    "Freund*innen\/Familie über Kinderwünsche informieren": []
+                },
+                "107": {
+                    "Kindergeschenke besorgen": {
+                        "772": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "yearly": {
+                "108": {
+                    "Kindergeburtstage planen + durchführen": {
+                        "214": {
+                            "answer": "do it",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        },
+        "Freizeit": {
+            "daily": {
+                "109": {
+                    "Spielverabredungen treffen": {
+                        "216": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "217": {
+                            "answer": "remember",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "110": {
+                    "Nachmittagsbetreuung + Fahrdienste": []
+                },
+                "111": {
+                    "Begleitung von Medienkonsum": []
+                }
+            },
+            "weekly": {
+                "112": {
+                    "BabysitterInnen (Orga + Kommunikation)": []
+                }
+            },
+            "monthly": {
+                "113": {
+                    "Recherche für Sport\/Vereine\/Freizeitaktivitäten": {
+                        "224": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "114": {
+                    "Taschengeldausgabe\/-verwaltung": {
+                        "226": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "227": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "... with other family members to care for": {
+        "Körper + Pflege": {
+            "daily": {
+                "115": {
+                    "Haare kämmen": {
+                        "228": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "116": {
+                    "Zähne putzen": {
+                        "230": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        },
+                        "231": {
+                            "answer": "remember",
+                            "points": "4.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "117": {
+                    "Medikamente richten": {
+                        "782": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "118": {
+                    "Medikamentengabe": {
+                        "783": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "119": {
+                    "Anwendung + Pflege von Medizinprodukten wie z.B. Katheter": []
+                },
+                "120": {
+                    "Lagerung + Mobilisierung\/Physio": {
+                        "785": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "121": {
+                    "Essen zubereiten": {
+                        "786": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "122": {
+                    "Hilfestellung beim Essen": {
+                        "787": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "123": {
+                    "Toilettengänge\/Inkontinenzversorgung": []
+                }
+            },
+            "weekly": {
+                "124": {
+                    "Pflegeutensilien bestellen\/einkaufen": {
+                        "246": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "247": {
+                            "answer": "remember",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "125": {
+                    "Nägel schneiden": []
+                },
+                "126": {
+                    "Baden + Haare waschen": {
+                        "250": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        },
+                        "251": {
+                            "answer": "remember",
+                            "points": "3.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "127": {
+                    "Apotheken- + Sanitätshausgänge": {
+                        "792": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "128": {
+                    "Therapie-Begleitung": {
+                        "793": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "129": {
+                    "Aufräumen + Putzen (sofern zusätzliche Räumlichkeiten)": []
+                },
+                "130": {
+                    "Medikamentenvorräte prüfen": {
+                        "795": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "131": {
+                    "Tasche für draußen packen": {
+                        "796": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monthly": {
+                "132": {
+                    "Ärzt*innenbesuche": {
+                        "262": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "133": {
+                    "Sanitätshauskontakte\/Hilfsmittel justieren": []
+                },
+                "134": {
+                    "Haarschneidebegleitung": []
+                },
+                "135": {
+                    "Nachtschichten": []
+                },
+                "136": {
+                    "Einweisung anderer Menschen in Pflegeablauf": []
+                },
+                "137": {
+                    "Pflegebett beziehen ": {
+                        "273": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "yearly": {
+                "138": {
+                    "Fachärzt*innenbesuche": []
+                },
+                "139": {
+                    "Kurzzeitpflege organisieren": []
+                },
+                "140": {
+                    "Klinikaufenthalte begleiten": []
+                }
+            }
+        },
+        "Beziehungspflege": {
+            "daily": {
+                "141": {
+                    "Beschäftigung + Input": {
+                        "280": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "166": {
+                    "Sterbebegleitung": []
+                }
+            },
+            "weekly": {
+                "142": {
+                    "Organisation + Unterstützung von Freizeitaktiviatäten + sozialen Kontakten": {
+                        "282": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "167": {
+                    "Gespräche über den Tod, Krankheit, Ängste, Zukunft (betroffene Person\/Geschwister)": {
+                        "832": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "monthly": {
+                "143": {
+                    "Spielsachen kaufen": []
+                },
+                "168": {
+                    "Begleitung bei KH-Aufenthalten": []
+                },
+                "169": {
+                    "Vernetzung + regelmäßige Infos an Verwandte\/Freund*innen": []
+                }
+            },
+            "yearly": {
+                "170": {
+                    "Feierlichkeiten organisieren": []
+                }
+            }
+        },
+        "Kleidung + Transporthilfen": {
+            "daily": {
+                "144": {
+                    "Kleidung auswählen": []
+                },
+                "145": {
+                    "Person anziehen": {
+                        "288": {
+                            "answer": "do it",
+                            "points": "4.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "146": {
+                    "Fahrdienste (organisieren)": []
+                }
+            },
+            "weekly": {
+                "147": {
+                    "Hilfsmittel prüfen + instand halten": {
+                        "292": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            },
+            "monthly": {
+                "148": {
+                    "Neue Kleidung einkaufen\r\n": []
+                },
+                "149": {
+                    "Reparieren kaputter Kleidung": {
+                        "814": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                }
+            },
+            "yearly": {
+                "150": {
+                    "Barrierefreiheit sicherstellen": []
+                }
+            }
+        },
+        "Organisation + Verwaltung": {
+            "daily": {
+                "151": {
+                    "Kommunikation mit KK, med. Dienst, Pflegekasse, Ärzt*innen, Therapeut*innen": []
+                }
+            },
+            "weekly": {
+                "152": {
+                    "Management + Monitoring von Terminen mit Dienstleister*innen\/Ärzt*innen": {
+                        "302": {
+                            "answer": "do it",
+                            "points": "3.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "171": {
+                    "Finanzmanagement\/-monitoring": []
+                }
+            },
+            "monthly": {
+                "153": {
+                    "Antragstellung für Hilfsmittel": []
+                },
+                "154": {
+                    "Widersprüche an die KK schreiben": {
+                        "306": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "307": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                },
+                "172": {
+                    "Nachlassvorbereitung": []
+                },
+                "173": {
+                    "Recherche + Weiterbildung": {
+                        "344": {
+                            "answer": "do it",
+                            "points": "2.00",
+                            "answer_type": "1"
+                        },
+                        "345": {
+                            "answer": "remember",
+                            "points": "2.00",
+                            "answer_type": "2"
+                        }
+                    }
+                }
+            },
+            "yearly": {
+                "155": {
+                    "Weiterbildung zu medizinischen Themen": {
+                        "308": {
+                            "answer": "do it",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                },
+                "156": {
+                    "Weiterbildung zu Hilfestellungen + Leistungen": {
+                        "821": {
+                            "answer": "does not apply",
+                            "points": "0.00",
+                            "answer_type": "3"
+                        }
+                    }
+                },
+                "174": {
+                    "Nachlassverwaltung": {
+                        "346": {
+                            "answer": "do it",
+                            "points": "1.00",
+                            "answer_type": "1"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
