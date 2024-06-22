@@ -9,12 +9,11 @@
 </head>
 
 <style>
-html *
-{
-   font-family: "Ubuntu" !important;
-}
+  html * {
+    font-family: "Ubuntu" !important;
+  }
 
-.tooltip {
+  .tooltip {
     position: absolute;
     text-align: center;
     width: auto;
@@ -25,28 +24,30 @@ html *
     border: 0px;
     border-radius: 2px;
     pointer-events: none;
-    visibility: hidden; /* Initially hidden */
-}
+    visibility: hidden;
+    /* Initially hidden */
+  }
 
-.axislabel, .tick, .annotation, .label {
-  font-size: 13px;
-}
+  .axislabel,
+  .tick,
+  .annotation,
+  .label {
+    font-size: 13px;
+  }
 
-.dashed_line {
-  stroke: black;
-  stroke-dasharray: 4 4;
-  stroke-width:  1;
-}
+  .dashed_line {
+    stroke: black;
+    stroke-dasharray: 4 4;
+    stroke-width: 1;
+  }
 
-/* .tick {
+  /* .tick {
   font-size: 13px;
 } */
-
-
 </style>
 
 <body>
-  
+
 
   <script>
 
@@ -62,236 +63,237 @@ html *
 
     d3.json("data/test_json_en.json").then(function (data_raw) {
       //#region               ###############      variables   #################
-        var all_cats = [];
-        if (language == "de") {
-          var rhythms_points_mapping_de = {
-            "täglich": 4,
-            "wöchentlich": 3,
-            "monatlich": 2,
-            "jährlich": 1
-          }
-          var rhythms = Object.keys(rhythms_points_mapping_de);
+      var all_cats = [];
+      if (language == "de") {
+        var rhythms_points_mapping_de = {
+          "täglich": 4,
+          "wöchentlich": 3,
+          "monatlich": 2,
+          "jährlich": 1
         }
-        else if (language == "en") {
-          var rhythms_points_mapping_en = {
-            "daily": 4,
-            "weekly": 3,
-            "monthly": 2,
-            "yearly": 1
-          }
-          var rhythms = Object.keys(rhythms_points_mapping_en);
+        var rhythms = Object.keys(rhythms_points_mapping_de);
+      }
+      else if (language == "en") {
+        var rhythms_points_mapping_en = {
+          "daily": 4,
+          "weekly": 3,
+          "monthly": 2,
+          "yearly": 1
         }
-        const types = ["do_it", "remember"]
-        const partner_types = ["partner_does_it", "partner_remembers"]
-        
-        
+        var rhythms = Object.keys(rhythms_points_mapping_en);
+      }
+      const types = ["do_it", "remember"]
+      const partner_types = ["partner_does_it", "partner_remembers"]
+
+
       //#endregion
 
 
       //#region                    ###############      prep and reshape data            #################
-        var questions_final = []; //reshaped data
-        var quest_ID = 0;
-        // target data shape
-        // {
-        //     "Wäsche waschen + aufhängen": {
-        //         "Text": "Wäsche waschen + aufhängen",
-        //         "ID": "2",
-        //         "domain": "Alle Sorgegemeinschaften, z.B. Paare",
-        //         "category":"Haushalt + Wohnen",
-        //         "rhythm": "täglich",
-        //         "points": "4.00",
-        //         "do_it": true,
-        //         "remember": false,
-        //         "not_apply": false,
-        //         "partner_does_it": false,
-        //         "partner_remembers": true,
-        //         "do_it_and_remember": false
-        //     }
-        // }
-        let domains = Object.keys(data_raw);
-        //console.log(domains)
-        for (let i = 0; i < domains.length; i++) {
-          let obj_cats = data_raw[domains[i]]
-          let cats = Object.keys(obj_cats)
-          //console.log(obj_cats)
-          //console.log(cats)
-          for (let catId = 0; catId < cats.length; catId++) {
-            let obj_rhthm = obj_cats[cats[catId]]
-            let rhthms = Object.keys(obj_rhthm)
-            //console.log(obj_rhthm)
-            //console.log(rhthms)
-            //something[catId] = []
-            for (let rhtmID = 0; rhtmID < rhthms.length; rhtmID++) {
-              let obj_question = obj_rhthm[rhthms[rhtmID]]
-              let questions = Object.keys(obj_question)
-              //console.log(obj_question)
-              //console.log(questions)
-              for (let quesID = 0; quesID < questions.length; quesID++) {
-                let obj_ques_level_2 = obj_question[questions[quesID]]
-                let ques_level_2 = Object.keys(obj_ques_level_2)
-                let obj_arr_answers = obj_ques_level_2[ques_level_2[0]]
-                //console.log(obj_ques_level_2)
-                //console.log(ques_level_2[0])
-                //add question to final array, and some more infos we know
-                questions_final[quest_ID[0]] = []
-                questions_final.push({})
-                questions_final[quest_ID]["Text"] = ques_level_2[0]
-                questions_final[quest_ID]["ID"] = questions[quesID]
-                questions_final[quest_ID]["domain"] = domains[i].replace('... ', '')
-                questions_final[quest_ID]["category"] = cats[catId]
-                questions_final[quest_ID]["rhythm"] = rhthms[rhtmID]
-                if(language == "de") {
-                  questions_final[quest_ID]["points"] = rhythms_points_mapping_de[rhthms[rhtmID]]
-                }
-                else if (language == "en") {
-                  questions_final[quest_ID]["points"] = rhythms_points_mapping_en[rhthms[rhtmID]]
-                }
+      var questions_final = []; //reshaped data
+      var quest_ID = 0;
+      // target data shape
+      // {
+      //     "Wäsche waschen + aufhängen": {
+      //         "Text": "Wäsche waschen + aufhängen",
+      //         "ID": "2",
+      //         "domain": "Alle Sorgegemeinschaften, z.B. Paare",
+      //         "category":"Haushalt + Wohnen",
+      //         "rhythm": "täglich",
+      //         "points": "4.00",
+      //         "do_it": true,
+      //         "remember": false,
+      //         "not_apply": false,
+      //         "partner_does_it": false,
+      //         "partner_remembers": true,
+      //         "do_it_and_remember": false
+      //     }
+      // }
+      let domains = Object.keys(data_raw);
+      //console.log(domains)
+      for (let i = 0; i < domains.length; i++) {
+        let obj_cats = data_raw[domains[i]]
+        let cats = Object.keys(obj_cats)
+        //console.log(obj_cats)
+        //console.log(cats)
+        for (let catId = 0; catId < cats.length; catId++) {
+          let obj_rhthm = obj_cats[cats[catId]]
+          let rhthms = Object.keys(obj_rhthm)
+          //console.log(obj_rhthm)
+          //console.log(rhthms)
+          //something[catId] = []
+          for (let rhtmID = 0; rhtmID < rhthms.length; rhtmID++) {
+            let obj_question = obj_rhthm[rhthms[rhtmID]]
+            let questions = Object.keys(obj_question)
+            //console.log(obj_question)
+            //console.log(questions)
+            for (let quesID = 0; quesID < questions.length; quesID++) {
+              let obj_ques_level_2 = obj_question[questions[quesID]]
+              let ques_level_2 = Object.keys(obj_ques_level_2)
+              let obj_arr_answers = obj_ques_level_2[ques_level_2[0]]
+              //console.log(obj_ques_level_2)
+              //console.log(ques_level_2[0])
+              //add question to final array, and some more infos we know
+              questions_final[quest_ID[0]] = []
+              questions_final.push({})
+              questions_final[quest_ID]["Text"] = ques_level_2[0]
+              questions_final[quest_ID]["ID"] = questions[quesID]
+              questions_final[quest_ID]["domain"] = domains[i].replace('... ', '')
+              questions_final[quest_ID]["category"] = cats[catId]
+              questions_final[quest_ID]["rhythm"] = rhthms[rhtmID]
+              if (language == "de") {
+                questions_final[quest_ID]["points"] = rhythms_points_mapping_de[rhthms[rhtmID]]
+              }
+              else if (language == "en") {
+                questions_final[quest_ID]["points"] = rhythms_points_mapping_en[rhthms[rhtmID]]
+              }
 
-                //either empty array: partner does it, or object with answers 
-                if (Array.isArray(obj_arr_answers)) {
-                  //console.log("partner does it")
-                  questions_final[quest_ID]["do_it"] = false;
-                  questions_final[quest_ID]["remember"] = false;
-                  questions_final[quest_ID]["partner_does_it"] = true;
-                  questions_final[quest_ID]["partner_remembers"] = true;
+              //either empty array: partner does it, or object with answers 
+              if (Array.isArray(obj_arr_answers)) {
+                //console.log("partner does it")
+                questions_final[quest_ID]["do_it"] = false;
+                questions_final[quest_ID]["remember"] = false;
+                questions_final[quest_ID]["partner_does_it"] = true;
+                questions_final[quest_ID]["partner_remembers"] = true;
+                questions_final[quest_ID]["not_apply"] = false;
+                questions_final[quest_ID]["do_it_and_remember"] = false;
+                //"do_it_and_remember": false//partner +=1
+                //partner_rhm +=1
+              }
+              else {
+                let obj_answers = obj_arr_answers //now an object
+                let answers = Object.keys(obj_answers)
+                //console.log(answers)
+                //console.log(obj_answers)
+                if (answers.length == 2) { //no need to go into answers, this must be "done" and "remembered"
+                  questions_final[quest_ID]["do_it"] = true;
+                  questions_final[quest_ID]["remember"] = true;
                   questions_final[quest_ID]["not_apply"] = false;
-                  questions_final[quest_ID]["do_it_and_remember"] = false;
-                  //"do_it_and_remember": false//partner +=1
-                  //partner_rhm +=1
+                  questions_final[quest_ID]["partner_does_it"] = false;
+                  questions_final[quest_ID]["partner_remembers"] = false;
+                  questions_final[quest_ID]["do_it_and_remember"] = true;
                 }
                 else {
-                  let obj_answers = obj_arr_answers //now an object
-                  let answers = Object.keys(obj_answers)
-                  //console.log(answers)
-                  //console.log(obj_answers)
-                  if (answers.length == 2) { //no need to go into answers, this must be "done" and "remembered"
-                    questions_final[quest_ID]["do_it"] = true;
-                    questions_final[quest_ID]["remember"] = true;
-                    questions_final[quest_ID]["not_apply"] = false;
-                    questions_final[quest_ID]["partner_does_it"] = false;
-                    questions_final[quest_ID]["partner_remembers"] = false;
-                    questions_final[quest_ID]["do_it_and_remember"] = true;
-                  }
-                  else {
-                    questions_final[quest_ID]["do_it_and_remember"] = false;
-                    let obj_single_answer = obj_answers[answers[0]] //only answer
-                    //console.log(obj_single_answer)
-                    //console.log(obj_single_answer["answer_type"])
-                    switch (obj_single_answer["answer_type"]) {
-                      case "1": //"do_it"
-                        questions_final[quest_ID]["do_it"] = true;
-                        questions_final[quest_ID]["remember"] = false;
-                        questions_final[quest_ID]["not_apply"] = false;
-                        questions_final[quest_ID]["partner_does_it"] = false;
-                        questions_final[quest_ID]["partner_remembers"] = true;
-                        break;
-                      case "2": //"remember"
-                        questions_final[quest_ID]["do_it"] = false;
-                        questions_final[quest_ID]["remember"] = true;
-                        questions_final[quest_ID]["not_apply"] = false;
-                        questions_final[quest_ID]["partner_does_it"] = true;
-                        questions_final[quest_ID]["partner_remembers"] = false;
-                        break;
-                      case "3": //"not_apply"
-                        questions_final[quest_ID]["do_it"] = false;
-                        questions_final[quest_ID]["remember"] = false;
-                        questions_final[quest_ID]["not_apply"] = true;
-                        questions_final[quest_ID]["partner_does_it"] = false;
-                        questions_final[quest_ID]["partner_remembers"] = false;
-                        break;
-                    }
+                  questions_final[quest_ID]["do_it_and_remember"] = false;
+                  let obj_single_answer = obj_answers[answers[0]] //only answer
+                  //console.log(obj_single_answer)
+                  //console.log(obj_single_answer["answer_type"])
+                  switch (obj_single_answer["answer_type"]) {
+                    case "1": //"do_it"
+                      questions_final[quest_ID]["do_it"] = true;
+                      questions_final[quest_ID]["remember"] = false;
+                      questions_final[quest_ID]["not_apply"] = false;
+                      questions_final[quest_ID]["partner_does_it"] = false;
+                      questions_final[quest_ID]["partner_remembers"] = true;
+                      break;
+                    case "2": //"remember"
+                      questions_final[quest_ID]["do_it"] = false;
+                      questions_final[quest_ID]["remember"] = true;
+                      questions_final[quest_ID]["not_apply"] = false;
+                      questions_final[quest_ID]["partner_does_it"] = true;
+                      questions_final[quest_ID]["partner_remembers"] = false;
+                      break;
+                    case "3": //"not_apply"
+                      questions_final[quest_ID]["do_it"] = false;
+                      questions_final[quest_ID]["remember"] = false;
+                      questions_final[quest_ID]["not_apply"] = true;
+                      questions_final[quest_ID]["partner_does_it"] = false;
+                      questions_final[quest_ID]["partner_remembers"] = false;
+                      break;
                   }
                 }
-                quest_ID += 1;
               }
+              quest_ID += 1;
             }
           }
-
         }
-        //questions_final.forEach((element) => console.log(element));
-        //console.table(questions_final)
-        //console.table(questions_final.filter(function(d) {return d.remember == true}))
-        let valid_questions = questions_final.filter(function (d) { return d.not_apply == false })
-        //console.table(valid_questions)
-        let max_num_points = d3.sum(valid_questions, (d) => d.points)
 
-        //print some stats of points
-        let remembered_questions = questions_final.filter(function (d) { return d.remember == true })
-        let done_questions = questions_final.filter(function (d) { return d.do_it == true })
-        let not_apply_questions = questions_final.filter(function (d) { return d.not_apply == true })
-        let partner_does_it_questions = questions_final.filter(function (d) { return d.partner_does_it == true })
-        let partner_remembers_questions = questions_final.filter(function (d) { return d.partner_remembers == true })
-        let remembered_points = d3.sum(remembered_questions, (d) => d.points)
-        let done_points = d3.sum(done_questions, (d) => d.points)
-        let partner_done_points = d3.sum(partner_does_it_questions, (d) => d.points)
-        let partner_remembers_points = d3.sum(partner_remembers_questions, (d) => d.points)
-        let number_not_apply = d3.count(not_apply_questions, (d) => d.ID)
-        // group by daily, monthly etc. for plots and analysis
-        let grouped_by_rhythm = d3.group(valid_questions, d => d.rhythm)
+      }
+      //questions_final.forEach((element) => console.log(element));
+      //console.table(questions_final)
+      //console.table(questions_final.filter(function(d) {return d.remember == true}))
+      let valid_questions = questions_final.filter(function (d) { return d.not_apply == false })
+      //console.table(valid_questions)
+      let max_num_points = d3.sum(valid_questions, (d) => d.points)
 
-        const uniqueCategories = Array.from(new Set(valid_questions.map(d => d.category)));
-        const uniqueDomains = Array.from(new Set(valid_questions.map(d => d.domain)));
-        //console.log(uniqueDomains)
-        console.log("points done: " + done_points + ", points remembered: " + remembered_points +
-          ", points done of partner: " + partner_done_points +
-          ", points remembered of partner: " + partner_remembers_points +
-          ", number not apply: " + number_not_apply +
-          ", max sum of points reachable, for each category: " + max_num_points
-        )
-        // check validity of data
-        if (done_points + partner_done_points != remembered_points + partner_remembers_points ||
-          done_points + partner_done_points != max_num_points) {
-          throw "something is wrong with the dataset"
-        }
+      //print some stats of points
+      let remembered_questions = questions_final.filter(function (d) { return d.remember == true })
+      let done_questions = questions_final.filter(function (d) { return d.do_it == true })
+      let not_apply_questions = questions_final.filter(function (d) { return d.not_apply == true })
+      let partner_does_it_questions = questions_final.filter(function (d) { return d.partner_does_it == true })
+      let partner_remembers_questions = questions_final.filter(function (d) { return d.partner_remembers == true })
+      let remembered_points = d3.sum(remembered_questions, (d) => d.points)
+      let done_points = d3.sum(done_questions, (d) => d.points)
+      let partner_done_points = d3.sum(partner_does_it_questions, (d) => d.points)
+      let partner_remembers_points = d3.sum(partner_remembers_questions, (d) => d.points)
+      let number_not_apply = d3.count(not_apply_questions, (d) => d.ID)
+      // group by daily, monthly etc. for plots and analysis
+      let grouped_by_rhythm = d3.group(valid_questions, d => d.rhythm)
+
+      const uniqueCategories = Array.from(new Set(valid_questions.map(d => d.category)));
+      const uniqueDomains = Array.from(new Set(valid_questions.map(d => d.domain)));
+      //console.log(uniqueDomains)
+      console.log("points done: " + done_points + ", points remembered: " + remembered_points +
+        ", points done of partner: " + partner_done_points +
+        ", points remembered of partner: " + partner_remembers_points +
+        ", number not apply: " + number_not_apply +
+        ", max sum of points reachable, for each category: " + max_num_points
+      )
+      // check validity of data
+      if (done_points + partner_done_points != remembered_points + partner_remembers_points ||
+        done_points + partner_done_points != max_num_points) {
+        throw "something is wrong with the dataset"
+      }
 
       //#endregion
 
       //#region           ############    colours    ##############
-        var color = d3.scaleOrdinal()
+      var color = d3.scaleOrdinal()
         .domain(rhythms)
         .range(['#346B91', '#6EA0C4', '#BCDFF7', '#D6EEFF'])
 
-        
-        var domainColor = d3.scaleOrdinal()
-            .domain(uniqueDomains)
-            .range(['#F0E15B', '#5BD8F0', '#9B966E', '#F05B9B'])
-        
-        var mntlld_darkblue = "#0F3D5F"
-        var mntlld_lightblue = "#0A92BA"
-        var mntlld_green = "#7FB701"
-        var mntlld_grey = "#F2F2F2"
+
+      var domainColor = d3.scaleOrdinal()
+        .domain(uniqueDomains)
+        .range(['#F0E15B', '#5BD8F0', '#9B966E', '#F05B9B'])
+
+      var mntlld_darkblue = "#0F3D5F"
+      var mntlld_lightblue = "#0A92BA"
+      var mntlld_green = "#7FB701"
+      var mntlld_grey = "#F2F2F2"
       //#endregion
 
 
       //#region                ##########  main, structure and layout ##########
-        console.table(valid_questions)
-        
-        var [formattedData, type, categories] = aggregate_data(valid_questions, grouping = "rhythm")
-        var stack = d3.stack()
-          .keys(categories)
-          .order(d3.stackOrderNone)
-          .offset(d3.stackOffsetNone);
-        
-        var series = stack(formattedData);
-        // add text
-        d3.select("body").append("p").html("Here's your score: You have " + done_points + " of " +  max_num_points +
-        " I-do-it points and " + remembered_points + " of " +  max_num_points + " I-remember-to-do-it points. " + 
-        "Your total score is " + (remembered_points + done_points) + ".")
-        build_overview_chart()
-        d3.select("body").append("p").html("How are the points calculated? We wanted to weigh the tasks more that are done one a daily basis - in contrast to those which are done only yearly.\n This is explained with your do-it checkmarks that you set in the test:")
-        build_explain_weights_chart()
-        build_stacked_chart(series, type)
-        build_multiples_chart(grouping = "rhythm")
-        build_multiples_chart(grouping = "domain")
-        build_confusion_matrix ()
+      console.table(valid_questions)
+
+      var [formattedData, type, categories] = aggregate_data(valid_questions, grouping = "rhythm")
+      var stack = d3.stack()
+        .keys(categories)
+        .order(d3.stackOrderNone)
+        .offset(d3.stackOffsetNone);
+
+      var series = stack(formattedData);
+      // add text
+      d3.select("body").append("p").html("Here's your score: You have " + done_points + " of " + max_num_points +
+      " I-do-it points and " + remembered_points + " of " + max_num_points + " I-remember-to-do-it points. " +
+      "Your total score is " + (remembered_points + done_points) + ".")
+      build_overview_chart()
+      d3.select("body").append("p").html("How are the points calculated? We wanted to weigh the tasks more that are done one a daily basis - in contrast to those which are done only yearly.\n This is explained with your do-it checkmarks that you set in the test:")
+      build_explain_weights_chart()
+      build_stacked_chart(series, type)
+      build_multiples_chart(grouping = "rhythm")
+      build_multiples_chart(grouping = "domain")
+      build_confusion_matrix()
+      build_bar_comparison_charts(grouping = "rhythm")
       //#endregion
 
 
 
       //#region             ##### build charts functions #####
-        
-        function build_overview_chart() {
-          d3.select("body").append("div").attr("class", "overview_chart")
+
+      function build_overview_chart() {
+        d3.select("body").append("div").attr("class", "overview_chart")
 
         // svg for plotting 
         var svg = d3.select(".overview_chart")
@@ -314,7 +316,7 @@ html *
         // Add Y axis
         //initial with max number of points for daily tasks
         var y = d3.scaleLinear()
-          .domain([0, 1.1*max_num_points])
+          .domain([0, 1.1 * max_num_points])
           .range([height, 0]);
         var yAxis = svg.append("g")
           .attr("class", "myYaxis")
@@ -328,690 +330,808 @@ html *
           //.attr("transform", "translate(-40," + height/2 + "),rotate(-90)")
           .text("points");
 
-          let rolled_up_do_it = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.do_it)
-          let rolled_up_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.remember)
-          let data_overview = [
-            { "type" : "do_it", "value": rolled_up_do_it.get(true)},
-            { "type" : "remember", "value": rolled_up_remember.get(true)},
-          ];
-        console.log(data_overview)
+        let rolled_up_do_it = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.do_it)
+        let rolled_up_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.remember)
+        let data_overview = [
+          { "type": "do_it", "value": rolled_up_do_it.get(true) },
+          { "type": "remember", "value": rolled_up_remember.get(true) },
+        ];
+        //console.log(data_overview)
 
         svg.append("g").attr("class", "bars")
           .selectAll("rect")
           .data(data_overview)
           .enter().append("rect")
-          .text(function(d) {console.log(d.type);})
+          //.text(function (d) { console.log(d.type); })
           .attr("x", function (d) { return x(d.type); })
-            .attr("y", function (d) { return y(d.value); })
-            //.text(function(d) {console.log(d.type);})
-            .attr("width", x.bandwidth())
-            .attr("height", function (d) { return height - y(d.value); })
-            .attr("fill", mntlld_darkblue)
+          .attr("y", function (d) { return y(d.value); })
+          //.text(function(d) {console.log(d.type);})
+          .attr("width", x.bandwidth())
+          .attr("height", function (d) { return height - y(d.value); })
+          .attr("fill", mntlld_darkblue)
 
         //add bar labels
         svg.append("g").attr("class", "label")
           .selectAll("text.sum")
-          .data([{"sum":done_points, "type":"do_it"}, {"sum":remembered_points, "type":"remember"}])
+          .data([{ "sum": done_points, "type": "do_it" }, { "sum": remembered_points, "type": "remember" }])
           .enter()
           .append("text")
           .attr("class", "sum")
           //.text(function(d) {console.log(d)})
-          .attr("x", (d) => x(d.type) + x.bandwidth()/2)
+          .attr("x", (d) => x(d.type) + x.bandwidth() / 2)
           .attr("y", (d) => y(d.sum))
           .attr("dy", "-1em")
           .style("text-anchor", "middle")
           .text(d => d.sum);
-        
-          //add 50% line
-          svg.selectAll(".dashed_line")
-            .data([max_num_points/2, max_num_points])
-            .enter()
-            .append("line")
-            .attr("class", "dashed_line")
-            .attr("x1", 0)
-            .attr("x2", width)
-            .attr("y1",  d => y(d))
-            .attr("y2", d => y(d));
 
-          svg.append("g").attr("class", "line_labels")
-            .selectAll("label")
-            .data([
-              {"value": max_num_points/2, "text":"50% of reachable points"},
-              {"value":max_num_points, "text":"reachable points: " + max_num_points}
-            ])
-            .enter()
-            .append("text")
-            .attr("class", "label")
-            .attr("x", width)
-            .attr("y", d => y(d.value))
-            .attr("dy", "-.35em")
-            .style("text-anchor", "end")
-            .text(d => d.text)
-        }
-   
+        //add 50% line
+        svg.selectAll(".dashed_line")
+          .data([max_num_points / 2, max_num_points])
+          .enter()
+          .append("line")
+          .attr("class", "dashed_line")
+          .attr("x1", 0)
+          .attr("x2", width)
+          .attr("y1", d => y(d))
+          .attr("y2", d => y(d));
 
-        function build_explain_weights_chart() {
-          d3.select("body").append("div").attr("class", "explain_weights")
-          var svg3 = d3.select(".explain_weights")
-              .append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
-              .attr("class", "explain_svg")
-              .attr("position", "absolute")
-              .append("g")
-              .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")")
-          
-          var x_explain = d3.scaleBand()
-              .range([0, width])
-              .domain(["checkmarks", "points"])
-              .paddingInner(0.5)
-              .paddingOuter(0.5)
-              
-
-          var xAxis_explain = svg3.append("g")
-              //.attr("transform", "translate(0,)")
-              .call(d3.axisTop(x_explain))
-          xAxis_explain.selectAll("path")
-              .style("stroke", "none");
-
-          var y_explain = d3.scaleLinear()
-              .domain([done_points, 0])
-              .range([height, 0]);
-          svg3.append("g")
-              .attr("transform", "translate(" + (width - 0.8*x_explain.paddingOuter()*x_explain.step()) + ",0)")
-              .call(d3.axisRight(y_explain));
-          
-          //aggregate according to points
-          var [formattedData, type, categories] = aggregate_data(valid_questions, grouping = "rhythm")
-          
-          
-          var stack = d3.stack()
-            .keys(categories)
-            .order(d3.stackOrderReverse)
-            .offset(d3.stackOffsetNone);
-
-          // aggregate by number of checkmarks
-          var ticks_by_rhythm = d3.rollup(done_questions, v  => v.length, d => d.rhythm)
-          let formatted_ticks = { };
-          let done_ticks = 0;
-          rhythms.forEach(rhythm => {
-            formatted_ticks[rhythm] = ticks_by_rhythm.get(rhythm) || 0;
-            done_ticks += ticks_by_rhythm.get(rhythm) || 0
-          });
-          //console.log(done_ticks)
-          //join checkmarks and points
-          formattedData[1] = formatted_ticks
-          var series = stack(formattedData) //stack data
-          series.forEach(item => {
-            item[0].data["type"] = "points"
-            item[1].data["type"] = "checkmarks"
-          })
-
-          // data for lines
-          var connection_lines = []
-          series.forEach((item, index) => {
-            connection_lines[index]=[item[1][1], item[0][1]]
-          })
-          var fraction_lines = []
-          let i = 0;
-          series.forEach((item, index) => {
-            switch (item.key) {
-              case rhythms[3]: //yearly
-                fraction_lines[i] = item[0][1]
-                i++;
-                break;
-              case rhythms[2]: //monthly
-                fraction_lines[i] = item[0][1]
-                fraction_lines[i+1] = item[0][0] + (item[1][1]-item[1][0])
-                i+=2;
-                break;
-              case rhythms[1]: //weekly
-                fraction_lines[i] = item[0][1]
-                fraction_lines[i+1] = item[0][0] + (item[1][1]-item[1][0])
-                fraction_lines[i+2] = item[0][0] + 2*(item[1][1]-item[1][0])
-                i+=3;
-                break;
-              case rhythms[0]: //daily
-                fraction_lines[i] = item[0][1]
-                fraction_lines[i+1] = item[0][0] + (item[1][1]-item[1][0])
-                fraction_lines[i+2] = item[0][0] + 2*(item[1][1]-item[1][0])
-                fraction_lines[i+3] = item[0][0] + 3*(item[1][1]-item[1][0])
-                i+=4;
-                break;
-              default:
-                break;
-            }
-            //fraction_lines[i]=[item[1][1], item[0][1]]
-          
-          })
-
-          svg3.append("g").attr("class", "rectangles")
-            .selectAll("g")
-            .data(series)
-            .enter().append("g")
-            .attr("class", d => "rects_" + d.key)
-            .attr("fill", d => color(d.key))
-            //.text(function(d) {console.log(d)})
-            .selectAll("rect")
-            .data(d => d)
-            .enter().append("rect")
-            .attr("x", d => x_explain(d.data.type))
-            .attr("y", d => y_explain(d[0]))
-            .attr("height", d => y_explain(d[1]) - y_explain(d[0]))
-            .attr("width", x_explain.bandwidth());
-
-          //lines
-          svg3
-            .append("g").attr("class", "connection_lines")
-            .selectAll("line.connection_line")
-            .data(connection_lines)
-            .enter()
-            .append("line")
-              .attr("class", "connection_line")
-              //.text(function(d) {console.log(d)})
-              .style("stroke", "black")
-              .attr("x1", x_explain.paddingOuter()*x_explain.step() + x_explain.bandwidth())
-              .attr("x2", x_explain.paddingOuter()*x_explain.step() + x_explain.bandwidth() + x_explain.paddingInner()*x_explain.step())
-              .attr("y1", (d) => y_explain(d[0]))
-              .attr("y2", (d) => y_explain(d[1]));
-
-          svg3.append("g").attr("class", "fraction_lines")
-            .selectAll("line.fraction_line")
-            .data(fraction_lines)
-            .enter()
-            .append("line")
-              .attr("class", "dashed_line")
-              //.text(function(d) {console.log(d)})
-              // .style("stroke", "black")
-              // .style("stroke-dasharray", ("4, 4"))
-              // .style("stroke-width", 0.5)
-              // .attr("x1", x_explain.paddingOuter()*x_explain.step() + x_explain.bandwidth() + x_explain.paddingInner()*x_explain.step())
-              // .attr("x2", x_explain.paddingOuter()*x_explain.step() + 2*x_explain.bandwidth() + x_explain.paddingInner()*x_explain.step())
-              .attr("x1", x_explain.paddingOuter()*x_explain.step() + x_explain.bandwidth() + x_explain.bandwidth())
-              .attr("x2", x_explain.paddingOuter()*x_explain.step() + 2*x_explain.bandwidth() + x_explain.paddingInner()*x_explain.step())
-              .attr("y1", (d) => y_explain(d))
-              .attr("y2", (d) => y_explain(d));
-
-          svg3.append("g").attr("class", "annotation")
-            .selectAll("text.multiplier")
-            .data(series)
-            .enter()
-            .append("text")
-            .attr("class", "multiplier")
-            .attr("x", width/2)
-            .attr("y", (d) => y_explain(((d[1][0] + (d[1][1]-d[1][0])/2) +(d[0][0] + (d[0][1]-d[0][0])/2))/2 ))
-            .attr("dy", ".35em")
-            .style("text-anchor", "middle")
-            .text(d => "x" + (d.index+1));
-
-          svg3.append("g").attr("class", "label")
-            .selectAll("text.legend")
-            .data(series)
-            .enter()
-            .append("text")
-            .attr("class", "legend")
-            //.text(function(d) {console.log(d)})
-            .attr("x",x_explain.paddingOuter()*x_explain.step())
-            .attr("y", (d) => y_explain(d[1][0] + (d[1][1]-d[1][0])/2))
-            .attr("dx", "-.35em")
-            .attr("dy", ".35em")
-            .style("text-anchor", "end")
-            .text(d => d.key);
-          
-          svg3.append("g").attr("class", "label")
-            .selectAll("text.sum")
-            .data([{"sum":done_points, "type":"points"}, {"sum":done_ticks, "type":"checkmarks"}])
-            .enter()
-            .append("text")
-            .attr("class", "sum")
-            //.text(function(d) {console.log(d)})
-            .attr("x", (d) => x_explain(d.type) + x_explain.bandwidth()/2)
-            .attr("y", (d) => y_explain(d.sum))
-            .attr("dy", "1.2em")
-            .style("text-anchor", "middle")
-            .text(d => d.sum);
-        }
-        
-
-        
-        function build_confusion_matrix () {
-          d3.select("body").append("div").attr("class", "confusion_matrix")
-          d3.select("body").append("div").attr("class", "tooltip")
-          var conf_margin = { top: 30, right: 400, bottom: 20, left: 20 };
-          var conf_width = 1200 - conf_margin.left - conf_margin.right;
-          var conf_height = 400 - conf_margin.top - conf_margin.bottom;
-          
-
-          const innerWidth = conf_width - conf_margin.left - conf_margin.right;
-          const innerHeight = conf_height - conf_margin.top - conf_margin.bottom;
-
-          const x_confusion = d3.scaleBand()
-            .domain(['remember', 'partner_remembers'])
-            .range([0, innerWidth]);
-
-          const y_confusion = d3.scaleBand()
-            .domain(['do_it', 'partner_does_it'])
-            .range([0, innerHeight]);
-
-          const svg_confusion  = d3.select(".confusion_matrix")
-          .append("svg")
-            .attr("width", conf_width)
-            .attr("height", conf_height)
-            .append("g")
-            .attr("transform", `translate(${conf_margin.left},${conf_margin.top})`);
-
-          // Add column labels
-          svg_confusion.selectAll(".column-label")
-            .data(x_confusion.domain())
-            .enter().append("text")
-            .attr("class", "column-label")
-            .attr("x", d => x_confusion(d) + x_confusion.bandwidth() / 2)
-            .attr("y", -10) // Position above the grid
-            .attr("text-anchor", "middle")
-            .text(d => d);
-
-          // Add row labels
-          svg_confusion.selectAll(".row-label")
-            .data(y_confusion.domain())
-            .enter().append("text")
-            .attr("class", "row-label")
-            .attr('transform', d => 'translate('+ -10 +','+ (y_confusion(d) + y_confusion.bandwidth() / 2) +'),'+ 'rotate(-90)')
-            //.text(function(d) {console.log(y_confusion.bandwidth() / 2)})
-            .attr("text-anchor", "middle")
-            .attr("dy", "0.35em") // Vertical alignment
-            .text(d => d);
-
-          // calculate radius based on points
-          const radiusScale = d3.scaleSqrt()
-            .domain([0, d3.max(valid_questions, d => d.points)])
-            .range([0, 10]);
-
-          // Map data to cell positions
-          const mappedData = valid_questions.map(d => ({
-            ...d,
-            x: x_confusion(d.remember ? "remember" : "partner_remembers") + x_confusion.bandwidth() / 2,
-            y: y_confusion(d.do_it ? "do_it" : "partner_does_it") + y_confusion.bandwidth() / 2,
-            r: radiusScale(d.points)
-          }));
-
-          // Create simulation
-          const simulation = d3.forceSimulation(mappedData)
-            .force("x", d3.forceX(d => d.x).strength(1))
-            .force("y", d3.forceY(d => d.y).strength(1))
-            .force("collide", d3.forceCollide(d => d.r))
-            .stop();
-
-          for (let i = 0; i < 500; ++i) simulation.tick(); // Run the simulation
-          const tooltip = d3.select(".tooltip");
-          // Draw points
-          svg_confusion.append("g").selectAll(".point")
-            .data(mappedData)
-            .enter().append("circle")
-            .attr("class", "point")
-            .attr("cx", d => d.x)
-            .attr("cy", d => d.y)
-            .attr("r", d => d.r)
-            .style("fill", d => domainColor(d.domain))
-            .on("mouseover", function(event, d) {
-              tooltip.style("visibility", "visible").text(d.Text);
-              d3.select(this).attr("stroke", "darkgrey").attr("stroke-width", 1.5)
-              })
-            .on("mousemove", function(event, d) {
-              tooltip.style("top", (event.pageY - 10) + "px")
-              .style("left", (event.pageX + 10) + "px");
-            })
-            .on("mouseout", function(event, d) {
-              d3.select(this).attr("stroke", "none");
-              tooltip.style("visibility", "hidden");
-            });
-
-
-          // legend
-          const legend = svg_confusion.append("g")
-            .attr("class", "legend")
-            .attr("transform", `translate(${innerWidth + 40}, 20)`);
-
-          // Add size legend
-          const sizeLegend = legend.append("g")
-            .attr("class", "size-legend");
-
-          sizeLegend.append("text")
-            .attr("x", 0)
-            .attr("y", 0)
-            .text("Size (Frequency):")
-            .style("font-size", "12px")
-            .style("font-weight", "bold");
-
-          const sizeValues = [...new Set(valid_questions.map(d => d.points))];
-
-          sizeLegend.selectAll("circle")
-            .data(sizeValues)
-            .enter().append("circle")
-            .attr("cx", 10)
-            .attr("cy", (d, i) => 20 + i * 25)
-            .attr("r", d => radiusScale(d))
-            .attr("fill", "none")
-            .attr("stroke", "black");
-
-          sizeLegend.selectAll("text.size-label")
-            .data(sizeValues)
-            .enter().append("text")
-            .attr("class", "size-label")
-            .attr("x", 30)
-            .attr("y", (d, i) => 20 + i * 25)
-            .attr("dy", "0.35em")
-            .style("font-size", "12px")
-            .text(d => rhythms[Math.abs(d-4)]);
-
-          // Add color legend
-          const colorLegend = legend.append("g")
-            .attr("class", "color-legend")
-            .attr("transform", "translate(0, 150)");
-
-          colorLegend.append("text")
-            .attr("x", 0)
-            .attr("y", 0)
-            .text("Color (Domain):")
-            .style("font-size", "12px")
-            .style("font-weight", "bold");
-
-          const domainValues = [...new Set(valid_questions.map(d => d.domain))];
-
-          colorLegend.selectAll("rect")
-            .data(domainValues)
-            .enter().append("rect")
-            .attr("x", 10)
-            .attr("y", (d, i) => 20 + i * 20)
-            .attr("width", 10)
-            .attr("height", 10)
-            .attr("fill", d => domainColor(d));
-
-          colorLegend.selectAll("text.color-label")
-            .data(domainValues)
-            .enter().append("text")
-            .attr("class", "color-label")
-            .attr("x", 30)
-            .attr("y", (d, i) => 25 + i * 20) // Adjust y to vertically center with the rect
-            .attr("dy", "0.35em")
-            .text(d => d)
-            .style("font-size", "12px"); // Ensure the text size is visible
-
-        }
-
-
-        function build_stacked_chart(series, type) {
-    
-          var svg2 = d3.select(".explain_weights")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .attr("transform",
-              "translate(" + margin.left + ",0)")
-            .attr("class", "stacked_svg")
-            .append("g")
-            .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")")
-
-          // X axis
-          var x_stacked = d3.scaleBand()
-            .range([0, width])
-            .domain(type)
-            .padding(0.2);
-          var xAxis_stacked = svg2.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x_stacked))
-
-          // Add Y axis
-          var y_stacked = d3.scaleLinear()
-            .domain([0, Math.max(done_points, remembered_points) +20])
-            .range([height, 0]);
-          svg2.append("g")
-            .attr("class", "myYaxis")
-            .call(d3.axisLeft(y_stacked));
-          svg2.append("text")
-            .attr("class", "y axislabel")
-            .attr("text-anchor", "end")
-            .attr("y", -20)
-            .attr("dy", ".75em")
-            //.attr("transform", "translate(-40," + height/2 + "),rotate(-90)")
-            .text("points");
-
-
-          svg2.append("g")
-            .selectAll("g")
-            // Enter in the stack data = loop key per key = group per group
-            .data(series)
-            .enter().append("g")
-            .attr("class", "serie")
-            .attr("fill", d => color(d.key))
-            //.text(function(d) {console.log(d)})
-            .selectAll("rect")
-            .data(d => d)
-            .enter().append("rect")
-            .attr("x", d => x_stacked(d.data.type))
-            .attr("y", d => y_stacked(d[1]))
-            //.text(function(d) {console.log(d)})
-            .attr("height", d => y_stacked(d[0]) - y_stacked(d[1]))
-            .attr("width", x_stacked.bandwidth());
-        
-          svg2.append("g").attr("class", "label")
-            .selectAll("text.sum")
-            .data([{"sum":done_points, "type":"do_it"}, {"sum":remembered_points, "type":"remember"}])
-            .enter()
-            .append("text")
-            .attr("class", "sum")
-            //.text(function(d) {console.log(d)})
-            .attr("x", (d) => x_stacked(d.type) + x_stacked.bandwidth()/2)
-            .attr("y", (d) => y_stacked(d.sum))
-            .attr("dy", "-1em")
-            .style("text-anchor", "middle")
-            .text(d => d.sum);
-        
-          //title
-          svg2
+        svg.append("g").attr("class", "line_labels")
+          .selectAll("label")
+          .data([
+            { "value": max_num_points / 2, "text": "50% of reachable points" },
+            { "value": max_num_points, "text": "reachable points: " + max_num_points }
+          ])
+          .enter()
           .append("text")
-            .attr("class", "chart_title")
-            .attr("x", (width / 2))             
-            .attr("y", -30)
-            .attr("text-anchor", "middle")  
-            .text("composition of points");
+          .attr("class", "label")
+          .attr("x", width)
+          .attr("y", d => y(d.value))
+          .attr("dy", "-.35em")
+          .style("text-anchor", "end")
+          .text(d => d.text)
+      }
+
+
+      function build_explain_weights_chart() {
+        d3.select("body").append("div").attr("class", "explain_weights")
+        var svg3 = d3.select(".explain_weights")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .attr("class", "explain_svg")
+          .attr("position", "absolute")
+          .append("g")
+          .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")")
+
+        var x_explain = d3.scaleBand()
+          .range([0, width])
+          .domain(["checkmarks", "points"])
+          .paddingInner(0.5)
+          .paddingOuter(0.5)
+
+
+        var xAxis_explain = svg3.append("g")
+          //.attr("transform", "translate(0,)")
+          .call(d3.axisTop(x_explain))
+        xAxis_explain.selectAll("path")
+          .style("stroke", "none");
+
+        var y_explain = d3.scaleLinear()
+          .domain([done_points, 0])
+          .range([height, 0]);
+        svg3.append("g")
+          .attr("transform", "translate(" + (width - 0.8 * x_explain.paddingOuter() * x_explain.step()) + ",0)")
+          .call(d3.axisRight(y_explain));
+
+        //aggregate according to points
+        var [formattedData, type, categories] = aggregate_data(valid_questions, grouping = "rhythm")
+
+
+        var stack = d3.stack()
+          .keys(categories)
+          .order(d3.stackOrderReverse)
+          .offset(d3.stackOffsetNone);
+
+        // aggregate by number of checkmarks
+        var ticks_by_rhythm = d3.rollup(done_questions, v => v.length, d => d.rhythm)
+        let formatted_ticks = {};
+        let done_ticks = 0;
+        rhythms.forEach(rhythm => {
+          formatted_ticks[rhythm] = ticks_by_rhythm.get(rhythm) || 0;
+          done_ticks += ticks_by_rhythm.get(rhythm) || 0
+        });
+        //console.log(done_ticks)
+        //join checkmarks and points
+        formattedData[1] = formatted_ticks
+        var series = stack(formattedData) //stack data
+        series.forEach(item => {
+          item[0].data["type"] = "points"
+          item[1].data["type"] = "checkmarks"
+        })
+
+        // data for lines
+        var connection_lines = []
+        series.forEach((item, index) => {
+          connection_lines[index] = [item[1][1], item[0][1]]
+        })
+        var fraction_lines = []
+        let i = 0;
+        series.forEach((item, index) => {
+          switch (item.key) {
+            case rhythms[3]: //yearly
+              fraction_lines[i] = item[0][1]
+              i++;
+              break;
+            case rhythms[2]: //monthly
+              fraction_lines[i] = item[0][1]
+              fraction_lines[i + 1] = item[0][0] + (item[1][1] - item[1][0])
+              i += 2;
+              break;
+            case rhythms[1]: //weekly
+              fraction_lines[i] = item[0][1]
+              fraction_lines[i + 1] = item[0][0] + (item[1][1] - item[1][0])
+              fraction_lines[i + 2] = item[0][0] + 2 * (item[1][1] - item[1][0])
+              i += 3;
+              break;
+            case rhythms[0]: //daily
+              fraction_lines[i] = item[0][1]
+              fraction_lines[i + 1] = item[0][0] + (item[1][1] - item[1][0])
+              fraction_lines[i + 2] = item[0][0] + 2 * (item[1][1] - item[1][0])
+              fraction_lines[i + 3] = item[0][0] + 3 * (item[1][1] - item[1][0])
+              i += 4;
+              break;
+            default:
+              break;
+          }
+          //fraction_lines[i]=[item[1][1], item[0][1]]
+
+        })
+
+        svg3.append("g").attr("class", "rectangles")
+          .selectAll("g")
+          .data(series)
+          .enter().append("g")
+          .attr("class", d => "rects_" + d.key)
+          .attr("fill", d => color(d.key))
+          //.text(function(d) {console.log(d)})
+          .selectAll("rect")
+          .data(d => d)
+          .enter().append("rect")
+          .attr("x", d => x_explain(d.data.type))
+          .attr("y", d => y_explain(d[0]))
+          .attr("height", d => y_explain(d[1]) - y_explain(d[0]))
+          .attr("width", x_explain.bandwidth());
+
+        //lines
+        svg3
+          .append("g").attr("class", "connection_lines")
+          .selectAll("line.connection_line")
+          .data(connection_lines)
+          .enter()
+          .append("line")
+          .attr("class", "connection_line")
+          //.text(function(d) {console.log(d)})
+          .style("stroke", "black")
+          .attr("x1", x_explain.paddingOuter() * x_explain.step() + x_explain.bandwidth())
+          .attr("x2", x_explain.paddingOuter() * x_explain.step() + x_explain.bandwidth() + x_explain.paddingInner() * x_explain.step())
+          .attr("y1", (d) => y_explain(d[0]))
+          .attr("y2", (d) => y_explain(d[1]));
+
+        svg3.append("g").attr("class", "fraction_lines")
+          .selectAll("line.fraction_line")
+          .data(fraction_lines)
+          .enter()
+          .append("line")
+          .attr("class", "dashed_line")
+          //.text(function(d) {console.log(d)})
+          // .style("stroke", "black")
+          // .style("stroke-dasharray", ("4, 4"))
+          // .style("stroke-width", 0.5)
+          // .attr("x1", x_explain.paddingOuter()*x_explain.step() + x_explain.bandwidth() + x_explain.paddingInner()*x_explain.step())
+          // .attr("x2", x_explain.paddingOuter()*x_explain.step() + 2*x_explain.bandwidth() + x_explain.paddingInner()*x_explain.step())
+          .attr("x1", x_explain.paddingOuter() * x_explain.step() + x_explain.bandwidth() + x_explain.bandwidth())
+          .attr("x2", x_explain.paddingOuter() * x_explain.step() + 2 * x_explain.bandwidth() + x_explain.paddingInner() * x_explain.step())
+          .attr("y1", (d) => y_explain(d))
+          .attr("y2", (d) => y_explain(d));
+
+        svg3.append("g").attr("class", "annotation")
+          .selectAll("text.multiplier")
+          .data(series)
+          .enter()
+          .append("text")
+          .attr("class", "multiplier")
+          .attr("x", width / 2)
+          .attr("y", (d) => y_explain(((d[1][0] + (d[1][1] - d[1][0]) / 2) + (d[0][0] + (d[0][1] - d[0][0]) / 2)) / 2))
+          .attr("dy", ".35em")
+          .style("text-anchor", "middle")
+          .text(d => "x" + (d.index + 1));
+
+        svg3.append("g").attr("class", "label")
+          .selectAll("text.legend")
+          .data(series)
+          .enter()
+          .append("text")
+          .attr("class", "legend")
+          //.text(function(d) {console.log(d)})
+          .attr("x", x_explain.paddingOuter() * x_explain.step())
+          .attr("y", (d) => y_explain(d[1][0] + (d[1][1] - d[1][0]) / 2))
+          .attr("dx", "-.35em")
+          .attr("dy", ".35em")
+          .style("text-anchor", "end")
+          .text(d => d.key);
+
+        svg3.append("g").attr("class", "label")
+          .selectAll("text.sum")
+          .data([{ "sum": done_points, "type": "points" }, { "sum": done_ticks, "type": "checkmarks" }])
+          .enter()
+          .append("text")
+          .attr("class", "sum")
+          //.text(function(d) {console.log(d)})
+          .attr("x", (d) => x_explain(d.type) + x_explain.bandwidth() / 2)
+          .attr("y", (d) => y_explain(d.sum))
+          .attr("dy", "1.2em")
+          .style("text-anchor", "middle")
+          .text(d => d.sum);
+      }
+
+
+      function build_confusion_matrix() {
+        d3.select("body").append("div").attr("class", "confusion_matrix")
+        d3.select("body").append("div").attr("class", "tooltip")
+        var conf_margin = { top: 30, right: 400, bottom: 20, left: 20 };
+        var conf_width = 1200 - conf_margin.left - conf_margin.right;
+        var conf_height = 400 - conf_margin.top - conf_margin.bottom;
+
+
+        const innerWidth = conf_width - conf_margin.left - conf_margin.right;
+        const innerHeight = conf_height - conf_margin.top - conf_margin.bottom;
+
+        const x_confusion = d3.scaleBand()
+          .domain(['remember', 'partner_remembers'])
+          .range([0, innerWidth]);
+
+        const y_confusion = d3.scaleBand()
+          .domain(['do_it', 'partner_does_it'])
+          .range([0, innerHeight]);
+
+        const svg_confusion = d3.select(".confusion_matrix")
+          .append("svg")
+          .attr("width", conf_width)
+          .attr("height", conf_height)
+          .append("g")
+          .attr("transform", `translate(${conf_margin.left},${conf_margin.top})`);
+
+        // Add column labels
+        svg_confusion.selectAll(".column-label")
+          .data(x_confusion.domain())
+          .enter().append("text")
+          .attr("class", "column-label")
+          .attr("x", d => x_confusion(d) + x_confusion.bandwidth() / 2)
+          .attr("y", -10) // Position above the grid
+          .attr("text-anchor", "middle")
+          .text(d => d);
+
+        // Add row labels
+        svg_confusion.selectAll(".row-label")
+          .data(y_confusion.domain())
+          .enter().append("text")
+          .attr("class", "row-label")
+          .attr('transform', d => 'translate(' + -10 + ',' + (y_confusion(d) + y_confusion.bandwidth() / 2) + '),' + 'rotate(-90)')
+          //.text(function(d) {console.log(y_confusion.bandwidth() / 2)})
+          .attr("text-anchor", "middle")
+          .attr("dy", "0.35em") // Vertical alignment
+          .text(d => d);
+
+        // calculate radius based on points
+        const radiusScale = d3.scaleSqrt()
+          .domain([0, d3.max(valid_questions, d => d.points)])
+          .range([0, 10]);
+
+        // Map data to cell positions
+        const mappedData = valid_questions.map(d => ({
+          ...d,
+          x: x_confusion(d.remember ? "remember" : "partner_remembers") + x_confusion.bandwidth() / 2,
+          y: y_confusion(d.do_it ? "do_it" : "partner_does_it") + y_confusion.bandwidth() / 2,
+          r: radiusScale(d.points)
+        }));
+
+        // Create simulation
+        const simulation = d3.forceSimulation(mappedData)
+          .force("x", d3.forceX(d => d.x).strength(1))
+          .force("y", d3.forceY(d => d.y).strength(1))
+          .force("collide", d3.forceCollide(d => d.r))
+          .stop();
+
+        for (let i = 0; i < 500; ++i) simulation.tick(); // Run the simulation
+        const tooltip = d3.select(".tooltip");
+        // Draw points
+        svg_confusion.append("g").selectAll(".point")
+          .data(mappedData)
+          .enter().append("circle")
+          .attr("class", "point")
+          .attr("cx", d => d.x)
+          .attr("cy", d => d.y)
+          .attr("r", d => d.r)
+          .style("fill", d => domainColor(d.domain))
+          .on("mouseover", function (event, d) {
+            tooltip.style("visibility", "visible").text(d.Text);
+            d3.select(this).attr("stroke", "darkgrey").attr("stroke-width", 1.5)
+          })
+          .on("mousemove", function (event, d) {
+            tooltip.style("top", (event.pageY - 10) + "px")
+              .style("left", (event.pageX + 10) + "px");
+          })
+          .on("mouseout", function (event, d) {
+            d3.select(this).attr("stroke", "none");
+            tooltip.style("visibility", "hidden");
+          });
+
+
+        // legend
+        const legend = svg_confusion.append("g")
+          .attr("class", "legend")
+          .attr("transform", `translate(${innerWidth + 40}, 20)`);
+
+        // Add size legend
+        const sizeLegend = legend.append("g")
+          .attr("class", "size-legend");
+
+        sizeLegend.append("text")
+          .attr("x", 0)
+          .attr("y", 0)
+          .text("Size (Frequency):")
+          .style("font-size", "12px")
+          .style("font-weight", "bold");
+
+        const sizeValues = [...new Set(valid_questions.map(d => d.points))];
+
+        sizeLegend.selectAll("circle")
+          .data(sizeValues)
+          .enter().append("circle")
+          .attr("cx", 10)
+          .attr("cy", (d, i) => 20 + i * 25)
+          .attr("r", d => radiusScale(d))
+          .attr("fill", "none")
+          .attr("stroke", "black");
+
+        sizeLegend.selectAll("text.size-label")
+          .data(sizeValues)
+          .enter().append("text")
+          .attr("class", "size-label")
+          .attr("x", 30)
+          .attr("y", (d, i) => 20 + i * 25)
+          .attr("dy", "0.35em")
+          .style("font-size", "12px")
+          .text(d => rhythms[Math.abs(d - 4)]);
+
+        // Add color legend
+        const colorLegend = legend.append("g")
+          .attr("class", "color-legend")
+          .attr("transform", "translate(0, 150)");
+
+        colorLegend.append("text")
+          .attr("x", 0)
+          .attr("y", 0)
+          .text("Color (Domain):")
+          .style("font-size", "12px")
+          .style("font-weight", "bold");
+
+        const domainValues = [...new Set(valid_questions.map(d => d.domain))];
+
+        colorLegend.selectAll("rect")
+          .data(domainValues)
+          .enter().append("rect")
+          .attr("x", 10)
+          .attr("y", (d, i) => 20 + i * 20)
+          .attr("width", 10)
+          .attr("height", 10)
+          .attr("fill", d => domainColor(d));
+
+        colorLegend.selectAll("text.color-label")
+          .data(domainValues)
+          .enter().append("text")
+          .attr("class", "color-label")
+          .attr("x", 30)
+          .attr("y", (d, i) => 25 + i * 20) // Adjust y to vertically center with the rect
+          .attr("dy", "0.35em")
+          .text(d => d)
+          .style("font-size", "12px"); // Ensure the text size is visible
+
+      }
+
+
+      function build_stacked_chart(series, type) {
+
+        var svg2 = d3.select(".explain_weights")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .attr("transform",
+            "translate(" + margin.left + ",0)")
+          .attr("class", "stacked_svg")
+          .append("g")
+          .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")")
+
+        // X axis
+        var x_stacked = d3.scaleBand()
+          .range([0, width])
+          .domain(type)
+          .padding(0.2);
+        var xAxis_stacked = svg2.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x_stacked))
+
+        // Add Y axis
+        var y_stacked = d3.scaleLinear()
+          .domain([0, Math.max(done_points, remembered_points) + 20])
+          .range([height, 0]);
+        svg2.append("g")
+          .attr("class", "myYaxis")
+          .call(d3.axisLeft(y_stacked));
+        svg2.append("text")
+          .attr("class", "y axislabel")
+          .attr("text-anchor", "end")
+          .attr("y", -20)
+          .attr("dy", ".75em")
+          //.attr("transform", "translate(-40," + height/2 + "),rotate(-90)")
+          .text("points");
+
+
+        svg2.append("g")
+          .selectAll("g")
+          // Enter in the stack data = loop key per key = group per group
+          .data(series)
+          .enter().append("g")
+          .attr("class", "serie")
+          .attr("fill", d => color(d.key))
+          //.text(function(d) {console.log(d)})
+          .selectAll("rect")
+          .data(d => d)
+          .enter().append("rect")
+          .attr("x", d => x_stacked(d.data.type))
+          .attr("y", d => y_stacked(d[1]))
+          //.text(function(d) {console.log(d)})
+          .attr("height", d => y_stacked(d[0]) - y_stacked(d[1]))
+          .attr("width", x_stacked.bandwidth());
+
+        svg2.append("g").attr("class", "label")
+          .selectAll("text.sum")
+          .data([{ "sum": done_points, "type": "do_it" }, { "sum": remembered_points, "type": "remember" }])
+          .enter()
+          .append("text")
+          .attr("class", "sum")
+          //.text(function(d) {console.log(d)})
+          .attr("x", (d) => x_stacked(d.type) + x_stacked.bandwidth() / 2)
+          .attr("y", (d) => y_stacked(d.sum))
+          .attr("dy", "-1em")
+          .style("text-anchor", "middle")
+          .text(d => d.sum);
+
+        //title
+        svg2
+          .append("text")
+          .attr("class", "chart_title")
+          .attr("x", (width / 2))
+          .attr("y", -30)
+          .attr("text-anchor", "middle")
+          .text("composition of points");
         // legend
 
-          let legend =  svg2.append("g")
+        let legend = svg2.append("g")
           .attr("class", "legend")
           .attr("transform", `translate( ${width - 18} , 0)`);
 
-          legend.append("g").attr("class", "legend_rectangles")
-            .selectAll("rect")
-            .data(rhythms.slice().reverse())
-            .enter().append("rect")
-            .attr("transform", (d, i) => `translate(0, ${i*20})`)
-            .attr("width", 18)
-            .attr("height", 18)
-            .style("fill", color);
-      
-          
-          legend.append("g").attr("class", "legend_text")
-            .selectAll("text")
-            .data(rhythms.slice().reverse())
-            .enter().append("text")
-            .attr("transform", (d, i) => `translate(-5, ${i*20+9})`)
-            .attr("dy", ".35em")
-            .style("text-anchor", "end")
-            .style("font-size", "80%")
-            .text(d => d)
-          
-        }
+        legend.append("g").attr("class", "legend_rectangles")
+          .selectAll("rect")
+          .data(rhythms.slice().reverse())
+          .enter().append("rect")
+          .attr("transform", (d, i) => `translate(0, ${i * 20})`)
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", color);
 
 
-        function build_multiples_chart(grouping) {
+        legend.append("g").attr("class", "legend_text")
+          .selectAll("text")
+          .data(rhythms.slice().reverse())
+          .enter().append("text")
+          .attr("transform", (d, i) => `translate(-5, ${i * 20 + 9})`)
+          .attr("dy", ".35em")
+          .style("text-anchor", "end")
+          .style("font-size", "80%")
+          .text(d => d)
 
-          //prep data
-          let grouped_data = d3.group(valid_questions, d => d[grouping], d => d.remember)
-          let grouped_do_it_data = d3.group(valid_questions, d => d[grouping], d => d.do_it)
-          //console.log(grouped_do_it_data)
-            //console.table(group_test.get("täglich"))
-            let do_it_points = []
-            let remember_points = []
+      }
 
-          grouped_data.forEach(function(value,key) {
-              value.delete(false)
-              let to_rename = value.get(true)
-              if(!to_rename) {to_rename = [{"points":0}]}
-              value.set("remember", to_rename)
-              value.delete(true)
-              let do_it = grouped_do_it_data.get(key)
-              if(!do_it) {do_it = [{"points":0}]}
-              value.set("do_it", do_it.get(true))
-              do_it_points.push(d3.sum(value.get("do_it"), (d) => d.points))
-              remember_points.push(d3.sum(value.get("remember"), (d) => d.points))
-              
-            })
 
-            // create svg
-            var small_multiples_width = width/2
-            d3.select("body").append("div").attr("class", grouping + "_small_multiples")
-            var svg_multiples = d3.select("." + grouping + "_small_multiples")
-              .append("g")
-              .selectAll("g")
-              .data(grouped_data)
-              .enter()
-              .append("svg")
-              .attr("class","small_multiples_svg")
-                .attr("width", small_multiples_width + margin.left + margin.right)
-                .attr("height", small_multiples_width + margin.top + margin.bottom)
-                // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
-                //.text(function(d) {console.log(d);})
-              .append("g")
-                .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")")
-                .attr("class", function(d) { return remove_weird_symbols(d[0]);})
+      function build_multiples_chart(grouping) {
 
-            // X axis
-            var x_multiples = d3.scaleBand()
-              .range([0, small_multiples_width])
-              .domain(types)
-              .padding(0.1);
-            svg_multiples.append("g")
-              .attr("transform", "translate(0," + small_multiples_width + ")")
-              .call(d3.axisBottom(x_multiples))
+        //prep data
+        let grouped_data = d3.group(valid_questions, d => d[grouping], d => d.remember)
+        let grouped_do_it_data = d3.group(valid_questions, d => d[grouping], d => d.do_it)
+        //console.log(grouped_do_it_data)
+        //console.table(group_test.get("täglich"))
+        let do_it_points = []
+        let remember_points = []
 
-            
-            // Add Y axis
-              var y_multiples = d3.scaleLinear()
-              // .domain([0, Math.max(...do_it_points.concat(remember_points, max_reachable_points_per_rhythm))+20]) 
-              .domain([0, 1]) 
-              .range([small_multiples_width, 0]);
-              svg_multiples.append("g")
-              .attr("class", "myYaxis_multiples")
-              .call(d3.axisLeft(y_multiples));
-          let grouped_by_grouping = d3.group(valid_questions, d => d[grouping])
-          
-          grouped_data.forEach(function(data, i) {
+        grouped_data.forEach(function (value, key) {
+          value.delete(false)
+          let to_rename = value.get(true)
+          if (!to_rename) { to_rename = [{ "points": 0 }] }
+          value.set("remember", to_rename)
+          value.delete(true)
+          let do_it = grouped_do_it_data.get(key)
+          if (!do_it) { do_it = [{ "points": 0 }] }
+          value.set("do_it", do_it.get(true))
+          do_it_points.push(d3.sum(value.get("do_it"), (d) => d.points))
+          remember_points.push(d3.sum(value.get("remember"), (d) => d.points))
+
+        })
+        // console.log(grouped_data)
+
+        // create svg
+        var small_multiples_width = width / 2
+        d3.select("body").append("div").attr("class", grouping + "_small_multiples")
+        var svg_multiples = d3.select("." + grouping + "_small_multiples")
+          .append("g")
+          .selectAll("g")
+          .data(grouped_data)
+          .enter()
+          .append("svg")
+          .attr("class", "small_multiples_svg")
+          .attr("width", small_multiples_width + margin.left + margin.right)
+          .attr("height", small_multiples_width + margin.top + margin.bottom)
+          // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
+          //.text(function(d) {console.log(d);})
+          .append("g")
+          .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")")
+          .attr("class", function (d) { return remove_weird_symbols(d[0]); })
+
+        // X axis
+        var x_multiples = d3.scaleBand()
+          .range([0, small_multiples_width])
+          .domain(types)
+          .padding(0.1);
+        svg_multiples.append("g")
+          .attr("transform", "translate(0," + small_multiples_width + ")")
+          .call(d3.axisBottom(x_multiples))
+
+
+        // Add Y axis
+        var y_multiples = d3.scaleLinear()
+          // .domain([0, Math.max(...do_it_points.concat(remember_points, max_reachable_points_per_rhythm))+20]) 
+          .domain([0, 1])
+          .range([small_multiples_width, 0]);
+        svg_multiples.append("g")
+          .attr("class", "myYaxis_multiples")
+          .call(d3.axisLeft(y_multiples));
+        let grouped_by_grouping = d3.group(valid_questions, d => d[grouping])
+
+        grouped_data.forEach(function (data, i) {
           let max_points = d3.sum(grouped_by_grouping.get(i), (d) => d.points)
           let classname = remove_weird_symbols(i);
           d3.select("g." + classname)
             .selectAll('.bar')
             .data(data)
-              .enter()
-                .append("rect")
-                //.text(function(d) {console.log(d)})
-                .attr("x", function (d) { return x_multiples(d[0]); })
-                .attr("y", function (d) { return y_multiples((d3.sum(d[1], (s) => s.points))/max_points)})
-                // .text(function(d) {
-                //    console.log((d3.sum(d[1], (s) => s.points)/max_points));
-                //   d3.sum(remembered_questions, (d) => d.points)
-                //                   //  console.log(d)
-                //  })
-                .attr("width", x_multiples.bandwidth())
-                .attr("height", function (d) { return small_multiples_width - y_multiples((d3.sum(d[1], (s) => s.points))/max_points); })
-                .attr("fill", function (d) { return grouping == "domain" ? domainColor(i) : color(i)} );
-            
-            //console.log(max_points)
-            
-            d3.select("g." + classname)
-              .append("line")
-                  .attr("class", "some_line")
-                  //.text(function(d) {console.log(d)})
-              .style("stroke", "grey")
-              .attr("x1", 0)
-              .attr("x2", small_multiples_width)
-              .attr("y1", (d) => y_multiples(max_points))
-              .attr("y2", (d) => y_multiples(max_points));
-            
-            //title
-            d3.select("g." + classname)
-              .append("text")
-              .attr("class", "chart_title")
-              .attr("x", (small_multiples_width / 2))             
-              .attr("y", 0 - (margin.top / 3))
-              .attr("text-anchor", "middle")  
-              .text(i);
+            .enter()
+            .append("rect")
+            //.text(function(d) {console.log(d)})
+            .attr("x", function (d) { return x_multiples(d[0]); })
+            .attr("y", function (d) { return y_multiples((d3.sum(d[1], (s) => s.points)) / max_points) })
+            // .text(function(d) {
+            //    console.log((d3.sum(d[1], (s) => s.points)/max_points));
+            //   d3.sum(remembered_questions, (d) => d.points)
+            //                   //  console.log(d)
+            //  })
+            .attr("width", x_multiples.bandwidth())
+            .attr("height", function (d) { return small_multiples_width - y_multiples((d3.sum(d[1], (s) => s.points)) / max_points); })
+            .attr("fill", function (d) { return grouping == "domain" ? domainColor(i) : color(i) });
 
-            d3.select("g." + classname).append("text")
-              .attr("x", small_multiples_width * (1 / 2))
-              .attr("y", (d) => y_multiples(max_points))
-              .attr("dy", "-.35em")
-              .attr("text-anchor", "middle")
-              .style("font-family", "calibri")
-              .style("font-size", "80%")
-              .text("max reachable points")
-            
-          })
-        }
+          //console.log(max_points)
 
-        //#endregion
-      
+          d3.select("g." + classname)
+            .append("line")
+            .attr("class", "some_line")
+            //.text(function(d) {console.log(d)})
+            .style("stroke", "grey")
+            .attr("x1", 0)
+            .attr("x2", small_multiples_width)
+            .attr("y1", (d) => y_multiples(max_points))
+            .attr("y2", (d) => y_multiples(max_points));
 
-      //#region                            #################   functions ##################
-        
-        function aggregate_data(data,grouping, person = "me" ) {
-          switch (person) {
-            case "me":
-              var type_to_use = types
-              break;
+          //title
+          d3.select("g." + classname)
+            .append("text")
+            .attr("class", "chart_title")
+            .attr("x", (small_multiples_width / 2))
+            .attr("y", 0 - (margin.top / 3))
+            .attr("text-anchor", "middle")
+            .text(i);
 
-            case "partner":
-              var type_to_use = partner_types
-              break;
-          }
+          d3.select("g." + classname).append("text")
+            .attr("x", small_multiples_width * (1 / 2))
+            .attr("y", (d) => y_multiples(max_points))
+            .attr("dy", "-.35em")
+            .attr("text-anchor", "middle")
+            .style("font-family", "calibri")
+            .style("font-size", "80%")
+            .text("max reachable points")
 
-          let aggregatedData = {
-            [type_to_use[0]]: {},
-            [type_to_use[1]]: {}
-          };
-          data.forEach(d => {
-            if (d[type_to_use[0]]) {
-              aggregatedData[type_to_use[0]][d[grouping]] = (aggregatedData[type_to_use[0]][d[grouping]] || 0) + d.points;
-            }
-            if (d[type_to_use[1]]) {
-              aggregatedData[type_to_use[1]][d[grouping]] = (aggregatedData[type_to_use[1]][d[grouping]] || 0) + d.points;
-            }
-          });
-          let categories = Object.keys(aggregatedData[type_to_use[0]]).concat(Object.keys(aggregatedData[type_to_use[1]])).filter((value, index, self) => self.indexOf(value) === index);
+        })
+      }
 
-          
-
-          let formattedData = type_to_use.map(type => {
-            const obj = { type };
-            categories.forEach(category => {
-              obj[category] = aggregatedData[type][category] || 0;
-            });
-            return obj;
-          });
-          
-
-          return [formattedData, type_to_use, categories]
-        }
-
+      function build_bar_comparison_charts(grouping) {
+        d3.select("body").append("div").attr("class", grouping + "_bar_comp")
+        //prep data
+        let grouped_data_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.remember, d => d[grouping])
+        let grouped_do_it_data = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.do_it, d => d[grouping])
+        let grouped_data = new Map();
+        grouped_data.set("remember", normaliseMap(grouped_data_remember));
+        grouped_data.set("do_it", normaliseMap(grouped_do_it_data));
   
 
-        function remove_weird_symbols(str) {
-          return str.replace(/\s/g, "").replace("-", "").replace(",", "").replace("+", "")
+        // create svg
+        var small_multiples_width = width
+        var small_multiples_height = height/1.5
+        
+        let svg_multiples = d3.select("." + grouping + "_bar_comp")
+          .append("g")
+          .selectAll("g")
+          .data(grouped_data)
+          .enter()
+          .append("svg")
+          .attr("class", "small_multiples_svg")
+          .attr("width", small_multiples_width + margin.left + margin.right)
+          .attr("height", small_multiples_width + margin.top + margin.bottom)
+          // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
+          //.text(function(d) {console.log(d);})
+          .append("g")
+          .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")")
+          .attr("class", function (d) { return remove_weird_symbols(d[0]); })
+
+        // X axis
+        let x_multiples = d3.scaleBand()
+          .range([0, small_multiples_width])
+          .domain(rhythms)
+          .padding(0.1);
+
+
+
+        // Add Y axis
+        let y_multiples = d3.scaleLinear()
+          // .domain([0, Math.max(...do_it_points.concat(remember_points, max_reachable_points_per_rhythm))+20]) 
+          .domain([0, 100])
+          .range([small_multiples_height, 0]);
+        svg_multiples.append("g")
+          .attr("class", "myYaxis_multiples")
+          .call(d3.axisLeft(y_multiples));
+        
+
+        grouped_data.forEach(function (data, i) {
+
+          let classname = remove_weird_symbols(i);
+          d3.select("g." + classname)
+            .selectAll('.bar')
+            .data(data)
+            .enter()
+            .append("rect")
+            //.text(function(d) {console.log(d)})
+            .attr("x", function (d) { return x_multiples(d[0]); })
+            .attr("y", function (d) { return y_multiples(d[1]); })
+            // .text(function(d) {
+            //    console.log((d3.sum(d[1], (s) => s.points)/max_points));
+            //   d3.sum(remembered_questions, (d) => d.points)
+            //                   //  console.log(d)
+            //  })
+            .attr("width", x_multiples.bandwidth())
+            .attr("height", function (d) { return small_multiples_height - y_multiples(d[1]); })
+            .attr("fill", function (d) { return grouping == "domain" ? domainColor(i) : color(d[0]) });
+
+          //console.log(max_points)
+
+          d3.select("g." + classname)
+            .append("line")
+            .attr("class", "dashed_line")
+            //.text(function(d) {console.log(d)})
+            .attr("x1", 0)
+            .attr("x2", small_multiples_width)
+            .attr("y1", (d) => y_multiples(50))
+            .attr("y2", (d) => y_multiples(50));
+
+          //title
+          d3.select("g." + classname)
+            .append("text")
+            .attr("class", "chart_title")
+            .attr("x", (small_multiples_width / 2))
+            .attr("y", 0 - (margin.top / 3))
+            .attr("text-anchor", "middle")
+            .text(i);
+
+          d3.select("g." + classname).append("text")
+            .attr("class", "label")
+            .attr("x", small_multiples_width)
+            .attr("y", (d) => y_multiples(50))
+            .attr("dy", "-.35em")
+            .attr("text-anchor", "end")
+            .text("50%")
+
+          //x-Axis
+          svg_multiples.append("g")
+            .attr("transform", "translate(0," + small_multiples_height + ")")
+            .call(d3.axisBottom(x_multiples))
+
+        })
+      }
+      //#endregion
+
+
+      //#region                            #################   functions ##################
+
+      function aggregate_data(data, grouping, person = "me") {
+        switch (person) {
+          case "me":
+            var type_to_use = types
+            break;
+
+          case "partner":
+            var type_to_use = partner_types
+            break;
         }
 
+        let aggregatedData = {
+          [type_to_use[0]]: {},
+          [type_to_use[1]]: {}
+        };
+        data.forEach(d => {
+          if (d[type_to_use[0]]) {
+            aggregatedData[type_to_use[0]][d[grouping]] = (aggregatedData[type_to_use[0]][d[grouping]] || 0) + d.points;
+          }
+          if (d[type_to_use[1]]) {
+            aggregatedData[type_to_use[1]][d[grouping]] = (aggregatedData[type_to_use[1]][d[grouping]] || 0) + d.points;
+          }
+        });
+        let categories = Object.keys(aggregatedData[type_to_use[0]]).concat(Object.keys(aggregatedData[type_to_use[1]])).filter((value, index, self) => self.indexOf(value) === index);
+
+
+
+        let formattedData = type_to_use.map(type => {
+          const obj = { type };
+          categories.forEach(category => {
+            obj[category] = aggregatedData[type][category] || 0;
+          });
+          return obj;
+        });
+
+
+        return [formattedData, type_to_use, categories]
+      }
+
+
+
+      function remove_weird_symbols(str) {
+        return str.replace(/\s/g, "").replace("-", "").replace(",", "").replace("+", "")
+      }
+
+      function normaliseMap(map) {
+        let map1 = map.get(true);
+        let map2 = map.get(false);
+        let normalised = new Map ()
+        for (let [key, value] of map2.entries()) {
+          if (map1.has(key)) {
+            normalised.set(key, 100*(map1.get(key) / (map1.get(key) + value)));
+          } else {
+            normalised.set(key, value);
+          }
+        }
+        return normalised;
         
+      }
+
+
       //#endregion
     })
 
