@@ -283,16 +283,6 @@ html *
         .append("g")
         .attr("transform", `translate(${conf_margin.left},${conf_margin.top})`);
 
-      // const gridSize = x_confusion.bandwidth();
-      // const cells = svg_confusion.selectAll(".cell")
-      //   .data(y_confusion.domain().flatMap(row => x_confusion.domain().map(col => ({row, col}))))
-      //   .enter().append("rect")
-      //   .attr("class", "cell")
-      //   .attr("x", d => x_confusion(d.col))
-      //   .attr("y", d => y_confusion(d.row))
-      //   .attr("width", gridSize)
-      //   .attr("height", gridSize);
-
       // Add column labels
       svg_confusion.selectAll(".column-label")
         .data(x_confusion.domain())
@@ -541,11 +531,11 @@ html *
        
       })
 
-      svg3.append("g")
+      svg3.append("g").attr("class", "rectangles")
         .selectAll("g")
         .data(series)
         .enter().append("g")
-        .attr("class", "serie")
+        .attr("class", d => "rects_" + d.key)
         .attr("fill", d => color(d.key))
         //.text(function(d) {console.log(d)})
         .selectAll("rect")
@@ -558,7 +548,7 @@ html *
 
       //lines
       svg3
-        .select("g")
+        .append("g").attr("class", "connection_lines")
         .selectAll("line.connection_line")
         .data(connection_lines)
         .enter()
@@ -571,7 +561,7 @@ html *
           .attr("y1", (d) => y_explain(d[0]))
           .attr("y2", (d) => y_explain(d[1]));
 
-      svg3.append("g")
+      svg3.append("g").attr("class", "fraction_lines")
         .selectAll("line.fraction_line")
         .data(fraction_lines)
         .enter()
@@ -588,7 +578,7 @@ html *
           .attr("y1", (d) => y_explain(d))
           .attr("y2", (d) => y_explain(d));
 
-      svg3.append("g")
+      svg3.append("g").attr("class", "multiplier_annotation")
         .selectAll("text.multiplier")
         .data(series)
         .enter()
@@ -602,7 +592,7 @@ html *
         .style("font-size", "80%")
         .text(d => "x" + (d.index+1));
 
-      svg3.append("g")
+      svg3.append("g").attr("class", "rhythm_labels")
         .selectAll("text.legend")
         .data(series)
         .enter()
@@ -618,7 +608,7 @@ html *
         .style("font-size", "80%")
         .text(d => d.key);
       
-      svg3.append("g")
+      svg3.append("g").attr("class", "bar_labels")
         .selectAll("text.sum")
         .data([{"sum":done_points, "type":"points"}, {"sum":done_ticks, "type":"ticks"}])
         .enter()
@@ -634,7 +624,7 @@ html *
         .text(d => d.sum);
       
 
-      //#endregion
+    //#endregion
 
       
       //#region                       ##############      split by rhythm   ########
@@ -659,10 +649,12 @@ html *
       // functions
       function build_stacked_chart(series, type) {
         
-        var svg2 = d3.select("#stacked_chart")
+        var svg2 = d3.select("#explain_weights")
           .append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
+          .attr("transform",
+            "translate(" + margin.left + ",0)")
           .attr("class", "stacked_svg")
           .append("g")
           .attr("transform",
@@ -704,28 +696,48 @@ html *
           //.text(function(d) {console.log(d)})
           .attr("height", d => y_stacked(d[0]) - y_stacked(d[1]))
           .attr("width", x_stacked.bandwidth());
+      
+        svg2.append("g").attr("class", "bar_labels")
+        .selectAll("text.sum")
+        .data([{"sum":done_points, "type":"do_it"}, {"sum":remembered_points, "type":"remember"}])
+        .enter()
+        .append("text")
+        .attr("class", "sum")
+        //.text(function(d) {console.log(d)})
+        .attr("x", (d) => x_stacked(d.type) + x_stacked.bandwidth()/2)
+        .attr("y", (d) => y_stacked(d.sum))
+        .attr("dy", "-1em")
+        .style("text-anchor", "middle")
+        .style("font-family", "Ubuntu")
+        .style("font-size", "70%")
+        .text(d => d.sum);
 
-        const legend = svg2.selectAll(".legend")
+       // legend
+
+        let legend =  svg2.append("g")
+        .attr("class", "legend")
+        .attr("transform", `translate( ${width - 18} , 0)`);
+
+        legend.append("g").attr("class", "legend_rectangles")
+          .selectAll("rect")
           .data(rhythms.slice().reverse())
-          .enter().append("g")
-          .attr("class", "legend")
-          .attr("transform", (d, i) => `translate(0,${i * 20})`);
-
-        legend.append("rect")
-          .attr("x", width - 18)
+          .enter().append("rect")
+          .attr("transform", (d, i) => `translate(0, ${i*20})`)
           .attr("width", 18)
           .attr("height", 18)
           .style("fill", color);
-
-        legend.append("text")
-          .attr("x", width - 24)
-          .attr("y", 9)
+    
+        
+        legend.append("g").attr("class", "legend_text")
+          .selectAll("text")
+          .data(rhythms.slice().reverse())
+          .enter().append("text")
+          .attr("transform", (d, i) => `translate(-5, ${i*20+9})`)
           .attr("dy", ".35em")
           .style("text-anchor", "end")
-          .style("font-family", "calibri")
           .style("font-size", "80%")
-          .text(d => d);
-        
+          .text(d => d)
+          
         
       }
       
@@ -816,7 +828,7 @@ html *
           .attr("class",svg_class)
             .attr("width", small_multiples_width + margin.left + margin.right)
             .attr("height", small_multiples_width + margin.top + margin.bottom)
-            .text(function(d) {console.log(remove_weird_symbols(d[0]))})
+            // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
             //.text(function(d) {console.log(d);})
           .append("g")
             .attr("transform",
@@ -846,8 +858,6 @@ html *
       grouped_data.forEach(function(data, i) {
       let max_points = d3.sum(grouped_by_grouping.get(i), (d) => d.points)
       let classname = remove_weird_symbols(i);
-      console.log(d3.select("g." + classname))
-      console.log(classname) 
       d3.select("g." + classname)
         .selectAll('.bar')
         .data(data)
