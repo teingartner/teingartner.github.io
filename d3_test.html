@@ -82,8 +82,8 @@
         }
         var rhythms = Object.keys(rhythms_points_mapping_en);
       }
-      const types = ["do_it", "remember"]
-      const partner_types = ["partner_does_it", "partner_remembers"]
+      const types = ["I_do_it", "I_remember"]
+      const partner_types = ["partner_does_it", "partner_I_remembers"]
 
 
       //#endregion
@@ -101,12 +101,12 @@
       //         "category":"Haushalt + Wohnen",
       //         "rhythm": "täglich",
       //         "points": "4.00",
-      //         "do_it": true,
-      //         "remember": false,
+      //         "I_do_it": true,
+      //         "I_remember": false,
       //         "not_apply": false,
       //         "partner_does_it": false,
-      //         "partner_remembers": true,
-      //         "do_it_and_remember": false
+      //         "partner_I_remembers": true,
+      //         "I_do_it_and_I_remember": false
       //     }
       // }
       let domains = Object.keys(data_raw);
@@ -151,13 +151,13 @@
               //either empty array: partner does it, or object with answers 
               if (Array.isArray(obj_arr_answers)) {
                 //console.log("partner does it")
-                questions_final[quest_ID]["do_it"] = false;
-                questions_final[quest_ID]["remember"] = false;
+                questions_final[quest_ID]["I_do_it"] = false;
+                questions_final[quest_ID]["I_remember"] = false;
                 questions_final[quest_ID]["partner_does_it"] = true;
-                questions_final[quest_ID]["partner_remembers"] = true;
+                questions_final[quest_ID]["partner_I_remembers"] = true;
                 questions_final[quest_ID]["not_apply"] = false;
-                questions_final[quest_ID]["do_it_and_remember"] = false;
-                //"do_it_and_remember": false//partner +=1
+                questions_final[quest_ID]["I_do_it_and_I_remember"] = false;
+                //"I_do_it_and_I_remember": false//partner +=1
                 //partner_rhm +=1
               }
               else {
@@ -165,40 +165,40 @@
                 let answers = Object.keys(obj_answers)
                 //console.log(answers)
                 //console.log(obj_answers)
-                if (answers.length == 2) { //no need to go into answers, this must be "done" and "remembered"
-                  questions_final[quest_ID]["do_it"] = true;
-                  questions_final[quest_ID]["remember"] = true;
+                if (answers.length == 2) { //no need to go into answers, this must be "done" and "I_remembered"
+                  questions_final[quest_ID]["I_do_it"] = true;
+                  questions_final[quest_ID]["I_remember"] = true;
                   questions_final[quest_ID]["not_apply"] = false;
                   questions_final[quest_ID]["partner_does_it"] = false;
-                  questions_final[quest_ID]["partner_remembers"] = false;
-                  questions_final[quest_ID]["do_it_and_remember"] = true;
+                  questions_final[quest_ID]["partner_I_remembers"] = false;
+                  questions_final[quest_ID]["I_do_it_and_I_remember"] = true;
                 }
                 else {
-                  questions_final[quest_ID]["do_it_and_remember"] = false;
+                  questions_final[quest_ID]["I_do_it_and_I_remember"] = false;
                   let obj_single_answer = obj_answers[answers[0]] //only answer
                   //console.log(obj_single_answer)
                   //console.log(obj_single_answer["answer_type"])
                   switch (obj_single_answer["answer_type"]) {
-                    case "1": //"do_it"
-                      questions_final[quest_ID]["do_it"] = true;
-                      questions_final[quest_ID]["remember"] = false;
+                    case "1": //"I_do_it"
+                      questions_final[quest_ID]["I_do_it"] = true;
+                      questions_final[quest_ID]["I_remember"] = false;
                       questions_final[quest_ID]["not_apply"] = false;
                       questions_final[quest_ID]["partner_does_it"] = false;
-                      questions_final[quest_ID]["partner_remembers"] = true;
+                      questions_final[quest_ID]["partner_I_remembers"] = true;
                       break;
-                    case "2": //"remember"
-                      questions_final[quest_ID]["do_it"] = false;
-                      questions_final[quest_ID]["remember"] = true;
+                    case "2": //"I_remember"
+                      questions_final[quest_ID]["I_do_it"] = false;
+                      questions_final[quest_ID]["I_remember"] = true;
                       questions_final[quest_ID]["not_apply"] = false;
                       questions_final[quest_ID]["partner_does_it"] = true;
-                      questions_final[quest_ID]["partner_remembers"] = false;
+                      questions_final[quest_ID]["partner_I_remembers"] = false;
                       break;
                     case "3": //"not_apply"
-                      questions_final[quest_ID]["do_it"] = false;
-                      questions_final[quest_ID]["remember"] = false;
+                      questions_final[quest_ID]["I_do_it"] = false;
+                      questions_final[quest_ID]["I_remember"] = false;
                       questions_final[quest_ID]["not_apply"] = true;
                       questions_final[quest_ID]["partner_does_it"] = false;
-                      questions_final[quest_ID]["partner_remembers"] = false;
+                      questions_final[quest_ID]["partner_I_remembers"] = false;
                       break;
                   }
                 }
@@ -211,21 +211,21 @@
       }
       //questions_final.forEach((element) => console.log(element));
       //console.table(questions_final)
-      //console.table(questions_final.filter(function(d) {return d.remember == true}))
+      //console.table(questions_final.filter(function(d) {return d.I_remember == true}))
       let valid_questions = questions_final.filter(function (d) { return d.not_apply == false })
       //console.table(valid_questions)
       let max_num_points = d3.sum(valid_questions, (d) => d.points)
 
       //print some stats of points
-      let remembered_questions = questions_final.filter(function (d) { return d.remember == true })
-      let done_questions = questions_final.filter(function (d) { return d.do_it == true })
+      let I_remembered_questions = questions_final.filter(function (d) { return d.I_remember == true })
+      let done_questions = questions_final.filter(function (d) { return d.I_do_it == true })
       let not_apply_questions = questions_final.filter(function (d) { return d.not_apply == true })
       let partner_does_it_questions = questions_final.filter(function (d) { return d.partner_does_it == true })
-      let partner_remembers_questions = questions_final.filter(function (d) { return d.partner_remembers == true })
-      let remembered_points = d3.sum(remembered_questions, (d) => d.points)
+      let partner_I_remembers_questions = questions_final.filter(function (d) { return d.partner_I_remembers == true })
+      let I_remembered_points = d3.sum(I_remembered_questions, (d) => d.points)
       let done_points = d3.sum(done_questions, (d) => d.points)
       let partner_done_points = d3.sum(partner_does_it_questions, (d) => d.points)
-      let partner_remembers_points = d3.sum(partner_remembers_questions, (d) => d.points)
+      let partner_I_remembers_points = d3.sum(partner_I_remembers_questions, (d) => d.points)
       let number_not_apply = d3.count(not_apply_questions, (d) => d.ID)
       // group by daily, monthly etc. for plots and analysis
       let grouped_by_rhythm = d3.group(valid_questions, d => d.rhythm)
@@ -233,14 +233,14 @@
       const uniqueCategories = Array.from(new Set(valid_questions.map(d => d.category)));
       const uniqueDomains = Array.from(new Set(valid_questions.map(d => d.domain)));
       //console.log(uniqueDomains)
-      console.log("points done: " + done_points + ", points remembered: " + remembered_points +
+      console.log("points done: " + done_points + ", points I_remembered: " + I_remembered_points +
         ", points done of partner: " + partner_done_points +
-        ", points remembered of partner: " + partner_remembers_points +
+        ", points I_remembered of partner: " + partner_I_remembers_points +
         ", number not apply: " + number_not_apply +
         ", max sum of points reachable, for each category: " + max_num_points
       )
       // check validity of data
-      if (done_points + partner_done_points != remembered_points + partner_remembers_points ||
+      if (done_points + partner_done_points != I_remembered_points + partner_I_remembers_points ||
         done_points + partner_done_points != max_num_points) {
         throw "something is wrong with the dataset"
       }
@@ -276,8 +276,8 @@
       var series = stack(formattedData);
       // add text
       d3.select("body").append("p").html("Here's your score: You have " + done_points + " of " + max_num_points +
-      " I-do-it points and " + remembered_points + " of " + max_num_points + " I-remember-to-do-it points. " +
-      "Your total score is " + (remembered_points + done_points) + ".")
+      " I-do-it points and " + I_remembered_points + " of " + max_num_points + " I-I_remember-to-do-it points. " +
+      "Your total score is " + (I_remembered_points + done_points) + ".")
       build_overview_chart()
       d3.select("body").append("p").html("How are the points calculated? We wanted to weigh the tasks more that are done one a daily basis - in contrast to those which are done only yearly.\n This is explained with your do-it checkmarks that you set in the test:")
       build_explain_weights_chart()
@@ -330,11 +330,11 @@
           //.attr("transform", "translate(-40," + height/2 + "),rotate(-90)")
           .text("points");
 
-        let rolled_up_do_it = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.do_it)
-        let rolled_up_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.remember)
+        let rolled_up_I_do_it = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.I_do_it)
+        let rolled_up_I_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.I_remember)
         let data_overview = [
-          { "type": "do_it", "value": rolled_up_do_it.get(true) },
-          { "type": "remember", "value": rolled_up_remember.get(true) },
+          { "type": "I_do_it", "value": rolled_up_I_do_it.get(true) },
+          { "type": "I_remember", "value": rolled_up_I_remember.get(true) },
         ];
         //console.log(data_overview)
 
@@ -353,7 +353,7 @@
         //add bar labels
         svg.append("g").attr("class", "label")
           .selectAll("text.sum")
-          .data([{ "sum": done_points, "type": "do_it" }, { "sum": remembered_points, "type": "remember" }])
+          .data([{ "sum": done_points, "type": "I_do_it" }, { "sum": I_remembered_points, "type": "I_remember" }])
           .enter()
           .append("text")
           .attr("class", "sum")
@@ -588,11 +588,11 @@
         const innerHeight = conf_height - conf_margin.top - conf_margin.bottom;
 
         const x_confusion = d3.scaleBand()
-          .domain(['remember', 'partner_remembers'])
+          .domain(['I_remember', 'partner_I_remembers'])
           .range([0, innerWidth]);
 
         const y_confusion = d3.scaleBand()
-          .domain(['do_it', 'partner_does_it'])
+          .domain(['I_do_it', 'partner_does_it'])
           .range([0, innerHeight]);
 
         const svg_confusion = d3.select(".confusion_matrix")
@@ -631,8 +631,8 @@
         // Map data to cell positions
         const mappedData = valid_questions.map(d => ({
           ...d,
-          x: x_confusion(d.remember ? "remember" : "partner_remembers") + x_confusion.bandwidth() / 2,
-          y: y_confusion(d.do_it ? "do_it" : "partner_does_it") + y_confusion.bandwidth() / 2,
+          x: x_confusion(d.I_remember ? "I_remember" : "partner_I_remembers") + x_confusion.bandwidth() / 2,
+          y: y_confusion(d.I_do_it ? "I_do_it" : "partner_does_it") + y_confusion.bandwidth() / 2,
           r: radiusScale(d.points)
         }));
 
@@ -765,7 +765,7 @@
 
         // Add Y axis
         var y_stacked = d3.scaleLinear()
-          .domain([0, Math.max(done_points, remembered_points) + 20])
+          .domain([0, Math.max(done_points, I_remembered_points) + 20])
           .range([height, 0]);
         svg2.append("g")
           .attr("class", "myYaxis")
@@ -798,7 +798,7 @@
 
         svg2.append("g").attr("class", "label")
           .selectAll("text.sum")
-          .data([{ "sum": done_points, "type": "do_it" }, { "sum": remembered_points, "type": "remember" }])
+          .data([{ "sum": done_points, "type": "I_do_it" }, { "sum": I_remembered_points, "type": "I_remember" }])
           .enter()
           .append("text")
           .attr("class", "sum")
@@ -849,24 +849,24 @@
       function build_multiples_chart(grouping) {
 
         //prep data
-        let grouped_data = d3.group(valid_questions, d => d[grouping], d => d.remember)
-        let grouped_do_it_data = d3.group(valid_questions, d => d[grouping], d => d.do_it)
-        //console.log(grouped_do_it_data)
+        let grouped_data = d3.group(valid_questions, d => d[grouping], d => d.I_remember)
+        let grouped_I_do_it_data = d3.group(valid_questions, d => d[grouping], d => d.I_do_it)
+        //console.log(grouped_I_do_it_data)
         //console.table(group_test.get("täglich"))
-        let do_it_points = []
-        let remember_points = []
+        let I_do_it_points = []
+        let I_remember_points = []
 
         grouped_data.forEach(function (value, key) {
           value.delete(false)
           let to_rename = value.get(true)
           if (!to_rename) { to_rename = [{ "points": 0 }] }
-          value.set("remember", to_rename)
+          value.set("I_remember", to_rename)
           value.delete(true)
-          let do_it = grouped_do_it_data.get(key)
-          if (!do_it) { do_it = [{ "points": 0 }] }
-          value.set("do_it", do_it.get(true))
-          do_it_points.push(d3.sum(value.get("do_it"), (d) => d.points))
-          remember_points.push(d3.sum(value.get("remember"), (d) => d.points))
+          let I_do_it = grouped_I_do_it_data.get(key)
+          if (!I_do_it) { I_do_it = [{ "points": 0 }] }
+          value.set("I_do_it", I_do_it.get(true))
+          I_do_it_points.push(d3.sum(value.get("I_do_it"), (d) => d.points))
+          I_remember_points.push(d3.sum(value.get("I_remember"), (d) => d.points))
 
         })
         // console.log(grouped_data)
@@ -902,7 +902,7 @@
 
         // Add Y axis
         var y_multiples = d3.scaleLinear()
-          // .domain([0, Math.max(...do_it_points.concat(remember_points, max_reachable_points_per_rhythm))+20]) 
+          // .domain([0, Math.max(...I_do_it_points.concat(I_remember_points, max_reachable_points_per_rhythm))+20]) 
           .domain([0, 1])
           .range([small_multiples_width, 0]);
         svg_multiples.append("g")
@@ -923,7 +923,7 @@
             .attr("y", function (d) { return y_multiples((d3.sum(d[1], (s) => s.points)) / max_points) })
             // .text(function(d) {
             //    console.log((d3.sum(d[1], (s) => s.points)/max_points));
-            //   d3.sum(remembered_questions, (d) => d.points)
+            //   d3.sum(I_remembered_questions, (d) => d.points)
             //                   //  console.log(d)
             //  })
             .attr("width", x_multiples.bandwidth())
@@ -966,11 +966,11 @@
       function build_bar_comparison_charts(grouping) {
         d3.select("body").append("div").attr("class", grouping + "_bar_comp")
         //prep data
-        let grouped_data_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.remember, d => d[grouping])
-        let grouped_do_it_data = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.do_it, d => d[grouping])
+        let grouped_data_I_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.I_remember, d => d[grouping])
+        let grouped_I_do_it_data = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.I_do_it, d => d[grouping])
         let grouped_data = new Map();
-        grouped_data.set("remember", normaliseMap(grouped_data_remember));
-        grouped_data.set("do_it", normaliseMap(grouped_do_it_data));
+        grouped_data.set("I_remember", normaliseMap(grouped_data_I_remember));
+        grouped_data.set("I_do_it", normaliseMap(grouped_I_do_it_data));
   
 
         // create svg
@@ -1003,7 +1003,7 @@
 
         // Add Y axis
         let y_multiples = d3.scaleLinear()
-          // .domain([0, Math.max(...do_it_points.concat(remember_points, max_reachable_points_per_rhythm))+20]) 
+          // .domain([0, Math.max(...I_do_it_points.concat(I_remember_points, max_reachable_points_per_rhythm))+20]) 
           .domain([0, 100])
           .range([small_multiples_height, 0]);
         svg_multiples.append("g")
@@ -1024,7 +1024,7 @@
             .attr("y", function (d) { return y_multiples(d[1]); })
             // .text(function(d) {
             //    console.log((d3.sum(d[1], (s) => s.points)/max_points));
-            //   d3.sum(remembered_questions, (d) => d.points)
+            //   d3.sum(I_remembered_questions, (d) => d.points)
             //                   //  console.log(d)
             //  })
             .attr("width", x_multiples.bandwidth())
@@ -1059,7 +1059,7 @@
             .attr("text-anchor", "end")
             .text("50%")
 
-          //x-Axis
+          //x-
           svg_multiples.append("g")
             .attr("transform", "translate(0," + small_multiples_height + ")")
             .call(d3.axisBottom(x_multiples))
