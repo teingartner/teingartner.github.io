@@ -511,7 +511,7 @@
                 }
             }
         },
-        "Kleidung + Transporthilfen": {
+        "Kinderkleidung + Transporthilfen": {
             "daily": {
                 "77": {
                     "Kleidung auswählen": []
@@ -635,7 +635,7 @@
                 }
             }
         },
-        "Körper + Pflege": {
+        "Körper + Hygiene": {
             "daily": {
                 "95": {
                     "Haare kämmen": {
@@ -986,7 +986,7 @@
                 }
             }
         },
-        "Beziehungspflege": {
+        "Paarbeziehungspflege": {
             "daily": {
                 "141": {
                     "Beschäftigung + Input": {
