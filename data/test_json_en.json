@@ -295,7 +295,7 @@
                 }
             }
         },
-        "Fahren + Freizeit": {
+        "Trips + leisure": {
             "weekly": {
                 "52": {
                     "Entertainment\/Familienausflüge am Wochenende planen": []
@@ -358,7 +358,7 @@
                 }
             }
         },
-        "Beziehungspflege": {
+        "Relationship maintenance": {
             "daily": {
                 "158": {
                     "Verhütung": {
@@ -443,7 +443,7 @@
         }
     },
     "... with children": {
-        "Kita + Schule": {
+        "Daycare + school": {
             "daily": {
                 "70": {
                     "Brotboxen vorbereiten": {
@@ -511,7 +511,7 @@
                 }
             }
         },
-        "Kinderkleidung + Transporthilfen": {
+        "Clothes + transportation": {
             "daily": {
                 "77": {
                     "Kleidung auswählen": []
@@ -589,7 +589,7 @@
                 }
             }
         },
-        "Schlaf + Beziehung": {
+        "Sleep + relationship": {
             "daily": {
                 "87": {
                     "Einschlafbegleitung": []
@@ -635,7 +635,7 @@
                 }
             }
         },
-        "Körper + Hygiene": {
+        "Body + hygiene": {
             "daily": {
                 "95": {
                     "Haare kämmen": {
@@ -710,7 +710,7 @@
                 }
             }
         },
-        "Geburtstag + Feste": {
+        "Birthdays + celebrations": {
             "monthly": {
                 "106": {
                     "Freund*innen\/Familie über Kinderwünsche informieren": []
@@ -737,7 +737,7 @@
                 }
             }
         },
-        "Freizeit": {
+        "Leisure": {
             "daily": {
                 "109": {
                     "Spielverabredungen treffen": {
@@ -793,7 +793,7 @@
         }
     },
     "... with other family members to care for": {
-        "Körper + Pflege": {
+        "Body + care": {
             "daily": {
                 "115": {
                     "Haare kämmen": {
@@ -986,7 +986,7 @@
                 }
             }
         },
-        "Paarbeziehungspflege": {
+        "Relationship": {
             "daily": {
                 "141": {
                     "Beschäftigung + Input": {
@@ -1038,7 +1038,7 @@
                 }
             }
         },
-        "Kleidung + Transporthilfen": {
+        "Clothes + transport": {
             "daily": {
                 "144": {
                     "Kleidung auswählen": []
@@ -1087,7 +1087,7 @@
                 }
             }
         },
-        "Organisation + Verwaltung": {
+        "Organisation + administration": {
             "daily": {
                 "151": {
                     "Kommunikation mit KK, med. Dienst, Pflegekasse, Ärzt*innen, Therapeut*innen": []
