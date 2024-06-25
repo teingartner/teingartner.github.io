@@ -41,6 +41,16 @@
     stroke-width: 1;
   }
 
+  .chart_title {
+    font-size: 20px;
+  }
+
+  .grid line {
+      stroke: lightgrey;
+      stroke-opacity: 0.7;
+      shape-rendering: crispEdges;
+    }
+
   /* .tick {
   font-size: 13px;
 } */
@@ -277,7 +287,7 @@
 
       var series = stack(formattedData);
       // add text
-      build_categories_diverging()
+
       d3.select("body").append("p").html("Here's your score: You have " + done_points + " of " + max_num_points +
       " I-do-it points and " + I_remembered_points + " of " + max_num_points + " I-I_remember-to-do-it points. " +
       "Your total score is " + (I_remembered_points + done_points) + ".")
@@ -288,7 +298,8 @@
       // build_multiples_chart(grouping = "rhythm")
       // build_multiples_chart(grouping = "domain")
       build_bar_comparison_charts(grouping = "rhythm")
-      build_categories_chart()
+      //build_categories_chart()
+      build_categories_diverging()
       build_confusion_matrix()
       // build_bar_comparison_charts(grouping = "domain")
       //#endregion
@@ -401,6 +412,10 @@
 
       function build_explain_weights_chart() {
         d3.select("body").append("div").attr("class", "explain_weights")
+        d3.select("body").append("div").attr("class", "scoring tooltip")
+        
+        let tooltip = d3.select(".scoring.tooltip");
+        
         var svg3 = d3.select(".explain_weights")
           .append("svg")
           .attr("width", width + margin.left + margin.right)
@@ -413,7 +428,7 @@
 
         var x_explain = d3.scaleBand()
           .range([0, width])
-          .domain(["checkmarks", "points"])
+          .domain(["I-do-it checkmarks", "I-do-it points"])
           .paddingInner(0.5)
           .paddingOuter(0.5)
 
@@ -453,8 +468,8 @@
         formattedData[1] = formatted_ticks
         var series = stack(formattedData) //stack data
         series.forEach(item => {
-          item[0].data["type"] = "points"
-          item[1].data["type"] = "checkmarks"
+          item[0].data["type"] = "I-do-it points"
+          item[1].data["type"] = "I-do-it checkmarks"
         })
 
         // data for lines
@@ -467,26 +482,26 @@
         series.forEach((item, index) => {
           switch (item.key) {
             case rhythms[3]: //yearly
-              fraction_lines[i] = item[0][1]
-              i++;
+              // fraction_lines[i] = item[0][1]
+              // i++;
               break;
             case rhythms[2]: //monthly
-              fraction_lines[i] = item[0][1]
-              fraction_lines[i + 1] = item[0][0] + (item[1][1] - item[1][0])
-              i += 2;
+              // fraction_lines[i] = item[0][1]
+              fraction_lines[i] = item[0][0] + (item[1][1] - item[1][0])
+              i += 1;
               break;
             case rhythms[1]: //weekly
-              fraction_lines[i] = item[0][1]
-              fraction_lines[i + 1] = item[0][0] + (item[1][1] - item[1][0])
-              fraction_lines[i + 2] = item[0][0] + 2 * (item[1][1] - item[1][0])
-              i += 3;
+              // fraction_lines[i] = item[0][1]
+              fraction_lines[i] = item[0][0] + (item[1][1] - item[1][0])
+              fraction_lines[i + 1] = item[0][0] + 2 * (item[1][1] - item[1][0])
+              i += 2;
               break;
             case rhythms[0]: //daily
-              fraction_lines[i] = item[0][1]
-              fraction_lines[i + 1] = item[0][0] + (item[1][1] - item[1][0])
-              fraction_lines[i + 2] = item[0][0] + 2 * (item[1][1] - item[1][0])
-              fraction_lines[i + 3] = item[0][0] + 3 * (item[1][1] - item[1][0])
-              i += 4;
+              // fraction_lines[i] = item[0][1]
+              fraction_lines[i] = item[0][0] + (item[1][1] - item[1][0])
+              fraction_lines[i + 1] = item[0][0] + 2 * (item[1][1] - item[1][0])
+              fraction_lines[i + 2] = item[0][0] + 3 * (item[1][1] - item[1][0])
+              i += 3;
               break;
             default:
               break;
@@ -495,20 +510,39 @@
 
         })
 
+        //rectangles
         svg3.append("g").attr("class", "rectangles")
           .selectAll("g")
           .data(series)
           .enter().append("g")
           .attr("class", d => "rects_" + d.key)
-          .attr("fill", d => color(d.key))
-          //.text(function(d) {console.log(d)})
-          .selectAll("rect")
-          .data(d => d)
-          .enter().append("rect")
-          .attr("x", d => x_explain(d.data.type))
-          .attr("y", d => y_explain(d[0]))
-          .attr("height", d => y_explain(d[1]) - y_explain(d[0]))
-          .attr("width", x_explain.bandwidth());
+          .each(function(parentData) {
+            d3.select(this)
+            .selectAll("rect")
+            .data(d => d)
+            .enter().append("rect")
+            .attr("fill", d => color(parentData.key))
+            .attr("x", d => x_explain(d.data.type))
+            .attr("y", d => y_explain(d[0]))
+            .attr("height", d => y_explain(d[1]) - y_explain(d[0]))
+            .text(function(d) {console.log(parentData)})
+            .attr("width", x_explain.bandwidth())
+              .on("mouseover", function (event, d) {
+                tooltip.style("visibility", "visible").text(
+                  d.data.type == "I-do-it checkmarks" ? (d[1] - d[0]) + " checkmarks" : (d[1] - d[0]) + " points");
+                d3.select(this)
+                  .attr("fill", mntlld_red)
+              })
+              .on("mousemove", function (event, d) {
+                tooltip.style("top", (event.pageY - 10) + "px")
+                  .style("left", (event.pageX + 10) + "px");
+              })
+              .on("mouseout", function (event, d) {
+                tooltip.style("visibility", "hidden");
+                d3.select(this)
+                  .attr("fill", color(parentData.key));
+              })
+          });
 
         //lines
         svg3
@@ -570,7 +604,7 @@
 
         svg3.append("g").attr("class", "label")
           .selectAll("text.sum")
-          .data([{ "sum": done_points, "type": "points" }, { "sum": done_ticks, "type": "checkmarks" }])
+          .data([{ "sum": done_points, "type": "I-do-it points" }, { "sum": done_ticks, "type": "I-do-it checkmarks" }])
           .enter()
           .append("text")
           .attr("class", "sum")
@@ -585,7 +619,7 @@
 
       function build_confusion_matrix() {
         d3.select("body").append("div").attr("class", "confusion_matrix")
-        d3.select("body").append("div").attr("class", "tooltip")
+        d3.select("body").append("div").attr("class", "confusion tooltip")
         var conf_margin = { top: 30, right: 400, bottom: 20, left: 20 };
         var conf_width = 1200 - conf_margin.left - conf_margin.right;
         var conf_height = 400 - conf_margin.top - conf_margin.bottom;
@@ -651,7 +685,7 @@
           .stop();
 
         for (let i = 0; i < 500; ++i) simulation.tick(); // Run the simulation
-        const tooltip = d3.select(".tooltip");
+        let tooltip = d3.select(".confusion.tooltip");
         // Draw points
         svg_confusion.append("g").selectAll(".point")
           .data(mappedData)
@@ -720,7 +754,7 @@
         colorLegend.append("text")
           .attr("x", 0)
           .attr("y", 0)
-          .text("Color (Domain):")
+          .text("Colour (Domain):")
           .style("font-size", "12px")
           .style("font-weight", "bold");
 
@@ -749,6 +783,8 @@
 
 
       function build_stacked_chart(series, type) {
+        d3.select("body").append("div").attr("class", "stacked tooltip")
+        let tooltip = d3.select(".stacked.tooltip");
 
         var svg2 = d3.select(".explain_weights")
           .append("svg")
@@ -791,17 +827,34 @@
           // Enter in the stack data = loop key per key = group per group
           .data(series)
           .enter().append("g")
-          .attr("class", "serie")
-          .attr("fill", d => color(d.key))
-          //.text(function(d) {console.log(d)})
-          .selectAll("rect")
-          .data(d => d)
-          .enter().append("rect")
-          .attr("x", d => x_stacked(d.data.type))
-          .attr("y", d => y_stacked(d[1]))
-          //.text(function(d) {console.log(d)})
-          .attr("height", d => y_stacked(d[0]) - y_stacked(d[1]))
-          .attr("width", x_stacked.bandwidth());
+          .attr("class", d => "rects_" + d.key)
+          .each(function(parentData) {
+            d3.select(this)
+            .selectAll("rect")
+            .data(d => d)
+            .enter().append("rect")
+            .attr("fill", d => color(parentData.key))
+            .attr("class", "serie")
+            .attr("x", d => x_stacked(d.data.type))
+            .attr("y", d => y_stacked(d[1]))
+            //.text(function(d) {console.log(d)})
+            .attr("height", d => y_stacked(d[0]) - y_stacked(d[1]))
+            .attr("width", x_stacked.bandwidth())
+            .on("mouseover", function (event, d) {
+                tooltip.style("visibility", "visible").text((d[1] - d[0]) + " points");
+                d3.select(this)
+                  .attr("fill", mntlld_red)
+              })
+              .on("mousemove", function (event, d) {
+                tooltip.style("top", (event.pageY - 10) + "px")
+                  .style("left", (event.pageX + 10) + "px");
+              })
+              .on("mouseout", function (event, d) {
+                tooltip.style("visibility", "hidden");
+                d3.select(this)
+                  .attr("fill", color(parentData.key));
+              });
+            });
 
         svg2.append("g").attr("class", "label")
           .selectAll("text.sum")
@@ -1085,7 +1138,7 @@
             //.attr("y", -20)
             .attr("dy", ".75em")
             .attr("transform", "translate(-50," + 0 + "),rotate(-90)")
-            .text("fraction of reachable points, in %");
+            .text("share of points, in %");
 
           })
 
@@ -1246,7 +1299,7 @@
             .attr("x", (small_multiples_width))
             .attr("dy", ".75em")
             //.attr("transform", "translate(-50," + 0 + "),rotate(-90)")
-            .text("fraction of reachable points, in %");
+            .text("share of points, in %");
 
           switch (i) {
             case "I_do_it":
@@ -1278,23 +1331,24 @@
       
       function build_categories_diverging() {
         d3.select("body").append("div").attr("class", "categories_diverging")
+        d3.select("body").append("div").attr("class", "diverging tooltip")
+        
+        let tooltip = d3.select(".diverging.tooltip");
+        let categories_chart_margin = { top: 80, right: 400, bottom: 20, left: 230 };
+        let small_multiples_width = 1000 - categories_chart_margin.left - categories_chart_margin.right;
+        let small_multiples_height = 420 - categories_chart_margin.top - categories_chart_margin.bottom;
         
         //prep data
-        let grouped_I_do_it_data = d3.rollup(valid_questions, v => d3.sum(v, d => d.points * (-1)),  d => d.I_do_it, d => d.category)
-        let grouped_data_I_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.I_remember,  d => d.category)
+        let grouped_I_do_it_data = d3.rollup(valid_questions, v => d3.sum(v, d => (d.points * (-1))),  d => d.I_do_it, d=> d.domain, d => d.category)
+        let grouped_data_I_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.I_remember, d=> d.domain, d => d.category)
         console.log(grouped_I_do_it_data)
+        
         let grouped_data = new Map();
         grouped_data.set("I_do_it", normaliseAndSpecify(grouped_I_do_it_data));
         grouped_data.set("I_remember", normaliseAndSpecify(grouped_data_I_remember));
         console.log(grouped_data)
-        //d3.sort(grouped_data.get("I_do_it"), (d) => d.value)
-        //console.log(d3.ascending(grouped_data.get("I_do_it").get("All care-communities, for example couples")))
         
         // create svg
-        let small_multiples_width = width*1.3
-        let small_multiples_height = height
-        let categories_chart_margin = { top: 70, right: 20, bottom: 20, left: 250 };
-        
         let svg_multiples = d3.select(".categories_diverging")
             .append("svg")
             .attr("class", "small_multiples_svg")
@@ -1309,71 +1363,83 @@
 
         
 
-        // Add X axis
+        // Add X axis scale
         let x = d3.scaleLinear()
           // .domain([0, Math.max(...I_do_it_points.concat(I_remember_points, max_reachable_points_per_rhythm))+20]) 
           .domain([-100, 100])
           .range([ 0, small_multiples_width]);
-
-        
 
 
         let y = d3.scaleBand()
           .range([0, small_multiples_height])
           .domain(uniqueCategories)
           .padding(0.05);
-   
 
-        // svg_multiples.append("g")
-        //   .attr("transform", "translate(0,0)")
-        //   .call(d3.axisLeft(fy))
+        //add grid lines
 
-
-
-          //console.log(data)
           
           
           d3.select(".group_diverging")
             .selectAll("g")
-            .data(grouped_data)
-            .enter()
-            .append("g")
-            // .attr("transform", (d, i) => `translate(0,${5*i})`)
-            .attr("class", d => "group_" + d[0])
-            // .text(function(d) {console.log(d)})
-            .attr("fill", function (d) { return domainColor(d[0]) })
-            .selectAll('rect')
-            .data(([,d]) => d)
-            .enter()
-            .append('rect')
-            .attr("x", d => (x(d[1][0])))
-            .attr("y", d => y(d[0]) )
-            // // .text(function(d) {
-              // //    console.log((d3.sum(d[1], (s) => s.points)/max_points));
-              // //   d3.sum(I_remembered_questions, (d) => d.points)
-              // //                   //  console.log(d)
-              // //  })
-              .attr("height", y.bandwidth())
-              .attr("width", d => ((x(Math.max(Math.abs(d[1][0]), Math.abs(d[1][1])))) - x(0)))
-              .text(function(d) {console.log(Math.max(Math.abs(d[1][0]), Math.abs(d[1][1])))})
-              // .text(function(d) {console.log(Math.abs((d[1][0])))})
-              //.text(function(d) {console.log(d[1])})
-            // .attr("fill", function (d) { return domainColor(i) });
-            //console.log(test)
+            .data(grouped_data).enter()
+              .append("g")
+              .attr("class", d => "group_" + d[0])
+              // .text(function(d) {console.log(d[0])}) //I do it and remember
+              .selectAll("g")
+              .data(([,d]) => d).enter()
+                .append("g", d => "group_" + d[0]) //domains
+                .attr("fill", function (d) { return domainColor(d[0]) })
+                .selectAll('rect')
+                .data(([,d]) => d).enter() //categories
+                  .append('rect')
+                    .attr("x", d => (x(d[1][0])))
+                    .attr("y", d => y(d[0]) )
+                    .attr("height", y.bandwidth())
+                    .attr("width", d => ((x(Math.max(Math.abs(d[1][0]), Math.abs(d[1][1])))) - x(0)))
+                    .on("mouseover", function (event, d) {
+                      tooltip.style("visibility", "visible").text(Math.max(Math.abs(d[1][0]), Math.abs(d[1][1])) + "%");
+                      d3.select(this)
+                        .attr("fill-opacity", "0.7")
+                    })
+                    .on("mousemove", function (event, d) {
+                      tooltip.style("top", (event.pageY - 10) + "px")
+                        .style("left", (event.pageX + 10) + "px");
+                    })
+                    .on("mouseout", function (event, d) {
+                      d3.select(this).attr("fill-opacity", "1");
+                      tooltip.style("visibility", "hidden");
+                    });
+                    // .text(function(d) {console.log(d)})
+                    // .text(function(d) {console.log(Math.abs((d[1][0])))})
+                    //.text(function(d) {console.log(d[1])})
+                  // .attr("fill", function (d) { return domainColor(i) });
 
-          let g_of_grouping = d3.select("g.group_diverging")
+        let g_of_grouping = d3.select("g.group_diverging")
+
+        //add grid
+        g_of_grouping
+          .insert("g",":first-child") //behind the bars
+          .attr("class", "grid")
+          .attr("transform", `translate(0,${small_multiples_height})`)
+          .call(d3.axisBottom(x)
+                  .ticks(width / 50)
+                  .tickSize(-small_multiples_height)
+                  .tickFormat(""))
+          .call(g => g.select(".domain").remove());
           
-            //dashed line
-          g_of_grouping
+          //middle line
+          g_of_grouping.append("g").attr("class", "lines")
             .append("line")
             .attr("class", "zero_line")
             .attr("stroke", "black")
+            .attr("stroke-width", 2)
             .attr("y1", 0)
             .attr("y2", small_multiples_height)
             .attr("x1", (d) => x(0))
             .attr("x2", (d) => x(0));
-
-            g_of_grouping
+            
+            //dashed line
+            g_of_grouping.select(".lines")
             .selectAll(".dashed_line")
             .data([-50, 50]).enter()
             .append("line")
@@ -1398,11 +1464,11 @@
           g_of_grouping
             .append("text")
             .attr("class", "chart_title")
-            .attr("x", (small_multiples_width / 2))
+            .attr("x", (0))
             .attr("y", 0 - (categories_chart_margin.top))
             .attr("dy", "1em")
             .attr("text-anchor", "middle")
-            .text("Title");
+            .text("Share of points by category");
 
 
   
@@ -1417,19 +1483,19 @@
           .call(g => g.append("text")
               .attr("class", "x axislabel")
               .attr("x", x(50))
-              .attr("y", -40)
+              .attr("y", -28)
               .attr("fill", "currentColor")
               .attr("text-anchor", "middle")
-              .style("font-size", "140%")
-              .text("I_remember"))
+              .style("font-size", "150%")
+              .text("I remember"))
           .call(g => g.append("text")
               .attr("class", "x axislabel")
               .attr("x", x(-50))
-              .attr("y", -40)
+              .attr("y", -28)
               .attr("fill", "currentColor")
               .attr("text-anchor", "middle")
-              .style("font-size", "140%")
-              .text("I_do_it"));
+              .style("font-size", "150%")
+              .text("I do it"));
           
           //xAxis label
           g_of_grouping.append("text")
@@ -1438,7 +1504,7 @@
             .attr("y", (small_multiples_height + 15))
             .attr("x", (small_multiples_width))
             //.attr("transform", "translate(-50," + 0 + "),rotate(-90)")
-            .text("fraction of reachable points");
+            .text("share of points");
    
           
           // svg_multiples.append("g").attr("class", "y_axis")
@@ -1453,20 +1519,41 @@
             .tickSize(0))
           .call(g => g.select(".domain").remove())
           ;
-        //   ;
 
-        // g_of_grouping.select(".y_axis")
-        //   .selectAll(".tick").data(grouped_data.get("I_do_it"))
-        //     //.attr("transform", ([name, min]) => `translate(${x(min[0])},${y(name) + y.bandwidth() / 2})`)
-        //     // .append("line")
-        //     //   .attr("stroke", "currentColor")
-        //     //   .attr("x2", "-9")
-        //     .append("text")
-        //       .attr("fill", "currentColor")
-        //       .attr("x", -9)
-        //       .attr("dy", "0.32em")
-        //       .text(d => d[0])
-          
+        // legend
+        const legend = svg_multiples.append("g")
+          .attr("class", "legend")
+          .attr("transform", `translate(${small_multiples_width + 40}, 20)`);
+
+
+          legend.append("text")
+          .attr("x", 0)
+          .attr("y", 0)
+          .text("Colour (Domain):")
+          .style("font-size", "12px")
+          .style("font-weight", "bold");
+
+          legend.selectAll("rect")
+          .data(uniqueDomains)
+          .enter().append("rect")
+          .attr("x", 10)
+          .attr("y", (d, i) => 20 + i * 20)
+          .attr("width", 10)
+          .text(function(d) {console.log(d[0])}) //I do it and remember
+          .attr("height", 10)
+          .attr("fill", d => domainColor(d));
+
+          legend.selectAll("text.color-label")
+          .data(uniqueDomains)
+          .enter().append("text")
+          .attr("class", "color-label")
+          .attr("x", 30)
+          .attr("y", (d, i) => 25 + i * 20) // Adjust y to vertically center with the rect
+          .attr("dy", "0.35em")
+          .text(d => d)
+          .style("font-size", "12px"); // Ensure the text size is visible
+
+        
 
 
       }
@@ -1571,9 +1658,13 @@
             normalised.set(key, new Map())
             for (let [inner_key, value_inner] of value.entries()) {
               if (map1.has(key)) {
-                normalised.get(key).set(inner_key, (100*(map1.get(key).get(inner_key) / (map1.get(key).get(inner_key) + value_inner))) | 0);
+                if (value_inner >= 0) {
+                  normalised.get(key).set(inner_key, [0, ((100*(map1.get(key).get(inner_key) / (map1.get(key).get(inner_key) + value_inner))) | 0)]);
+                } else {
+                  normalised.get(key).set(inner_key, [((-100*(map1.get(key).get(inner_key) / (map1.get(key).get(inner_key) + value_inner))) | 0), 0]);
+                }
               } else {
-                normalised.get(key).set(inner_key, value_inner);
+                normalised.get(key).set(inner_key, [0,0]);
               }
             }
           }
