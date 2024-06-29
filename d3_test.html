@@ -5,12 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mental Load Dev</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <style>
   html * {
     font-family: "Ubuntu" !important;
+  }
+
+  body {
+    margin-left: 40px; 
   }
 
   .tooltip {
@@ -43,7 +48,7 @@
   }
 
   .chart_title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .grid line {
@@ -55,6 +60,29 @@
 
   input, label {
     display:block;
+    font-size: 14px;
+  }
+
+  p {
+    max-width: 850px;
+    font-size: 14px;
+  }
+
+  button {
+    
+    padding: 5px;
+    
+    /* background-color: #C8532E; */
+    border: 0px;
+    border-radius: 2px;
+   
+    /* Initially hidden */
+  }
+  button:hover {
+    background-color: #C8532E;
+  }
+  button:active {
+    background-color: #cb846f;
   }
 
   /* .tick {
@@ -268,6 +296,7 @@
         var mntlld_lightblue = "#0A92BA"
         var mntlld_green = "#7FB701"
         var mntlld_grey = "#F2F2F2"
+        var mntlld_dark_grey = "#ABABAB"
         var mntlld_red = "#C8532E"
 
         var color = d3.scaleOrdinal()
@@ -293,21 +322,23 @@
 
       var series = stack(formattedData);
       // add text
+      d3.select("body").append("h1").html("Evaluation")
       d3.select("body").append("div").attr("class", "tooltip")
       var tooltip = d3.select(".tooltip");
       d3.select("body").append("p").html("Here's your score: You have " + done_points + " of " + max_num_points +
       " I-do-it points and " + I_remembered_points + " of " + max_num_points + " I-I_remember-to-do-it points. " +
-      "Your total score is " + (I_remembered_points + done_points) + ".")
+      "<br> Your total score is " + (I_remembered_points + done_points) + ".")
       build_overview_chart()
+      d3.select("body").append("h2").html("Scoring")
       d3.select("body").append("p").html("How are the points calculated? We wanted to weigh the tasks more that are done one a daily basis - in contrast to those which are done only yearly.\n This is explained with your do-it checkmarks that you set in the test:")
       build_explain_weights_chart()
       build_stacked_chart(series, type)
-      // build_multiples_chart(grouping = "rhythm")
-      // build_multiples_chart(grouping = "domain")
+      d3.select("body").append("h2").html("Do you prefer a certain kind of task?")
       build_bar_comparison_charts(grouping = "rhythm")
-      //build_categories_chart()
       build_categories_diverging()
+      d3.select("body").append("h2").html("Comparison to partner")
       build_confusion_matrix()
+      d3.select("body").append("h2").html("But what about the paid work?")
       build_working_time()
       // build_bar_comparison_charts(grouping = "domain")
       //#endregion
@@ -333,9 +364,7 @@
           .range([0, width])
           .domain(types)
           .padding(0.2);
-        svg.append("g")
-          .attr("transform", "translate(0," + height + ")")
-          .call(d3.axisBottom(x))
+
 
         // Add Y axis
         //initial with max number of points for daily tasks
@@ -374,6 +403,18 @@
           .attr("width", x.bandwidth())
           .attr("height", function (d) { return height - y(d.value); })
           .attr("fill", mntlld_darkblue)
+          .on("mouseover", function (event, d) {
+            tooltip.style("visibility", "visible").text(d.value + " Points");
+            d3.select(this).attr("fill", mntlld_red)
+          })
+          .on("mousemove", function (event, d) {
+            tooltip.style("top", (event.pageY - 10) + "px")
+              .style("left", (event.pageX + 10) + "px");
+          })
+          .on("mouseout", function (event, d) {
+            d3.select(this).attr("fill", mntlld_darkblue);
+            tooltip.style("visibility", "hidden");
+          });
 
         //add bar labels
         svg.append("g").attr("class", "label")
@@ -415,6 +456,11 @@
           .attr("dy", "-.35em")
           .style("text-anchor", "end")
           .text(d => d.text)
+        
+        //x-Axis on top
+          svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
       }
 
 
@@ -625,6 +671,11 @@
 
       function build_confusion_matrix() {
         d3.select("body").append("div").attr("class", "confusion_matrix")
+     
+        d3.select(".confusion_matrix").append("p").html("Your partner does all the tasks that you don't do. " +
+       "And your partner remembers all the tasks you don't remember. <br> Each circle is one task.").style("display", "block")
+    
+
         var conf_margin = { top: 30, right: 400, bottom: 20, left: 20 };
         var conf_width = 1200 - conf_margin.left - conf_margin.right;
         var conf_height = 400 - conf_margin.top - conf_margin.bottom;
@@ -701,7 +752,7 @@
           .attr("fill", d => domainColor(d.domain))
           .on("mouseover", function (event, d) {
             tooltip.style("visibility", "visible").text(d.Text);
-            d3.select(this).attr("fill", mntlld_grey)
+            d3.select(this).attr("fill", mntlld_dark_grey)
           })
           .on("mousemove", function (event, d) {
             tooltip.style("top", (event.pageY - 10) + "px")
@@ -737,8 +788,8 @@
           .attr("cx", 10)
           .attr("cy", (d, i) => 20 + i * 25)
           .attr("r", d => radiusScale(d))
-          .attr("fill", mntlld_grey)
-          .attr("stroke", "darkgrey");
+          .attr("fill", mntlld_dark_grey)
+          //.attr("stroke", "darkgrey");
 
         sizeLegend.selectAll("text.size-label")
           .data(sizeValues)
@@ -934,7 +985,7 @@
         // console.log(grouped_data)
 
         // create svg
-        var small_multiples_width = width / 2
+        var width = width / 2
         d3.select("body").append("div").attr("class", grouping + "_small_multiples")
         var svg_multiples = d3.select("." + grouping + "_small_multiples")
           .append("g")
@@ -943,8 +994,8 @@
           .enter()
           .append("svg")
           .attr("class", "small_multiples_svg")
-          .attr("width", small_multiples_width + margin.left + margin.right)
-          .attr("height", small_multiples_width + margin.top + margin.bottom)
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", width + margin.top + margin.bottom)
           // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
           //.text(function(d) {console.log(d);})
           .append("g")
@@ -1027,6 +1078,11 @@
 
       function build_bar_comparison_charts(grouping) {
         d3.select("body").append("div").attr("class", grouping + "_bar_comp")
+        d3.select("." + grouping + "_bar_comp").append("h3").html("By frequency of tasks")
+
+        let margin = { top: 50, right: 20, bottom: 40, left: 60 };
+        let width = 400 - margin.left - margin.right;
+        let height = 250 - margin.top - margin.bottom;
         
         //prep data
         let grouped_data_I_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.I_remember, d => d[grouping])
@@ -1037,8 +1093,7 @@
   
 
         // create svg
-        let small_multiples_width = width
-        let small_multiples_height = height/1.5
+      
         
         let svg_multiples = d3.select("." + grouping + "_bar_comp")
           .append("g")
@@ -1047,8 +1102,8 @@
           .enter()
           .append("svg")
           .attr("class", "small_multiples_svg")
-          .attr("width", small_multiples_width + margin.left + margin.right)
-          .attr("height", small_multiples_width + margin.top + margin.bottom)
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")")
@@ -1066,7 +1121,7 @@
         }
         // X axis
         let x_multiples = d3.scaleBand()
-          .range([0, small_multiples_width])
+          .range([0, width])
           .domain(x_axis_grouping)
           .padding(0.1);
 
@@ -1075,7 +1130,7 @@
         let y_multiples = d3.scaleLinear()
           // .domain([0, Math.max(...I_do_it_points.concat(I_remember_points, max_reachable_points_per_rhythm))+20]) 
           .domain([0, 100])
-          .range([small_multiples_height, 0]);
+          .range([height, 0]);
         svg_multiples.append("g")
           .attr("class", "myYaxis_multiples")
           .call(d3.axisLeft(y_multiples));
@@ -1097,7 +1152,7 @@
             //                   //  console.log(d)
             //  })
             .attr("width", x_multiples.bandwidth())
-            .attr("height", function (d) { return small_multiples_height - y_multiples(d[1]); })
+            .attr("height", function (d) { return height - y_multiples(d[1]); })
             .attr("fill", function (d) { return grouping == "domain" ? domainColor(d[0]) : color(d[0]) });
 
           //console.log(max_points)
@@ -1109,7 +1164,7 @@
             .attr("class", "dashed_line")
             //.text(function(d) {console.log(d)})
             .attr("x1", 0)
-            .attr("x2", small_multiples_width)
+            .attr("x2", width)
             .attr("y1", (d) => y_multiples(50))
             .attr("y2", (d) => y_multiples(50));
           
@@ -1117,7 +1172,7 @@
           g_of_grouping
             .append("text")
             .attr("class", "label")
-            .attr("x", small_multiples_width)
+            .attr("x", width)
             .attr("y", (d) => y_multiples(50))
             .attr("dy", "-.35em")
             .attr("text-anchor", "end")
@@ -1127,7 +1182,7 @@
           g_of_grouping
             .append("text")
             .attr("class", "chart_title")
-            .attr("x", (small_multiples_width / 2))
+            .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 3))
             .attr("text-anchor", "middle")
             .text(i);
@@ -1146,13 +1201,17 @@
 
           //x-Axis
           svg_multiples.append("g")
-            .attr("transform", "translate(0," + small_multiples_height + ")")
+            .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x_multiples))
       }
       
-      function build_categories_chart() {
-        d3.select("body").append("div").attr("class", "categories_chart")
+    // ####################################################################################################################
+    function build_categories_chart() {
+      d3.select("body").append("div").attr("class", "categories_chart")
+      d3.select(".categories_chart").append("h3").html("By task categories")
         
+
+
         //prep data
         let grouped_data_I_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.I_remember, d => d.domain, d => d.category)
         let grouped_I_do_it_data = d3.rollup(valid_questions, v => d3.sum(v, d => d.points),  d => d.I_do_it,  d => d.domain, d => d.category)
@@ -1178,9 +1237,10 @@
         //console.log(d3.ascending(grouped_data.get("I_do_it").get("All care-communities, for example couples")))
         
         // create svg
-        let small_multiples_width = width
-        let small_multiples_height = height
-        let categories_chart_margin = { top: 50, right: 20, bottom: 20, left: 250 };
+        let margin = { top: 50, right: 20, bottom: 40, left: 250 };
+        let width = 400 - margin.left - margin.right;
+        let height = 250 - margin.top - margin.bottom;
+
         
         let svg_multiples = d3.select(".categories_chart")
           .append("g")
@@ -1189,13 +1249,13 @@
             .enter()
             .append("svg")
             .attr("class", "small_multiples_svg")
-            .attr("width", small_multiples_width + categories_chart_margin.left + categories_chart_margin.right)
-            .attr("height", small_multiples_width + categories_chart_margin.top + categories_chart_margin.bottom)
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", width + margin.top + margin.bottom)
             // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
             //.text(function(d) {console.log(d[0]);})
             .append("g")
             .attr("transform",
-              "translate(" + categories_chart_margin.left + "," + categories_chart_margin.top + ")")
+              "translate(" + margin.left + "," + margin.top + ")")
             .attr("class", function (d) { return remove_weird_symbols(d[0]); })
         
 
@@ -1203,23 +1263,23 @@
         let x = d3.scaleLinear()
           // .domain([0, Math.max(...I_do_it_points.concat(I_remember_points, max_reachable_points_per_rhythm))+20]) 
           .domain([0, 100])
-          .range([ 0, small_multiples_width]);
+          .range([ 0, width]);
 
         
         // Y axis
         // let fy = d3.scaleBand()
-        //   .range([0, small_multiples_height])
+        //   .range([0, height])
         //   .domain(uniqueDomains)
         //   .padding(0.1);
         // console.log(fy.bandwidth())
 
         let y_do_it = d3.scaleBand()
-          .range([0, small_multiples_height])
+          .range([0, height])
           .domain(categories_sorted_do_it)
           .padding(0.05);
         
         let y_remember = d3.scaleBand()
-          .range([0, small_multiples_height])
+          .range([0, height])
           .domain(categories_sorted_remember)
           .padding(0.05);
 
@@ -1269,7 +1329,7 @@
             .attr("class", "dashed_line")
             //.text(function(d) {console.log(d)})
             .attr("y1", 0)
-            .attr("y2", small_multiples_height)
+            .attr("y2", height)
             .attr("x1", (d) => x(50))
             .attr("x2", (d) => x(50));
           
@@ -1277,7 +1337,7 @@
           // g_of_grouping
           //   .append("text")
           //   .attr("class", "label")
-          //   .attr("x", small_multiples_height)
+          //   .attr("x", height)
           //   .attr("x", (d) => x(50))
           //   .attr("dy", "-.35em")
           //   .attr("text-anchor", "end")
@@ -1287,7 +1347,7 @@
           g_of_grouping
             .append("text")
             .attr("class", "chart_title")
-            .attr("x", (small_multiples_width / 2))
+            .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 3))
             .attr("text-anchor", "middle")
             .text(i);
@@ -1297,8 +1357,8 @@
           g_of_grouping.append("text")
             .attr("class", "y axislabel")
             .attr("text-anchor", "end")
-            .attr("y", (small_multiples_height + 25))
-            .attr("x", (small_multiples_width))
+            .attr("y", (height + 25))
+            .attr("x", (width))
             .attr("dy", ".75em")
             //.attr("transform", "translate(-50," + 0 + "),rotate(-90)")
             .text("share of points, in %");
@@ -1324,7 +1384,7 @@
         //add x_axis
 
         svg_multiples.append("g")
-          .attr("transform", "translate(0," + (small_multiples_height) + ")")
+          .attr("transform", "translate(0," + (height) + ")")
           .call(d3.axisBottom(x));
         
 
@@ -1333,10 +1393,11 @@
       
       function build_categories_diverging() {
         d3.select("body").append("div").attr("class", "categories_diverging")
+        d3.select(".categories_diverging").append("h3").html("By task categories")
         
-        let categories_chart_margin = { top: 80, right: 400, bottom: 20, left: 230 };
-        let small_multiples_width = 1000 - categories_chart_margin.left - categories_chart_margin.right;
-        let small_multiples_height = 420 - categories_chart_margin.top - categories_chart_margin.bottom;
+        let margin = { top: 80, right: 400, bottom: 0, left: 230 };
+        let width = 1000 - margin.left - margin.right;
+        let height = 420 - margin.top - margin.bottom;
         
         //prep data
         let grouped_I_do_it_data = d3.rollup(valid_questions, v => d3.sum(v, d => (d.points * (-1))),  d => d.I_do_it, d=> d.domain, d => d.category)
@@ -1352,13 +1413,13 @@
         let svg_multiples = d3.select(".categories_diverging")
             .append("svg")
             .attr("class", "small_multiples_svg")
-            .attr("width", small_multiples_width + categories_chart_margin.left + categories_chart_margin.right)
-            .attr("height", small_multiples_width + categories_chart_margin.top + categories_chart_margin.bottom)
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", width + margin.top + margin.bottom)
             // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
             //.text(function(d) {console.log(d[0]);})
             .append("g")
             .attr("transform",
-              "translate(" + categories_chart_margin.left + "," + categories_chart_margin.top + ")")
+              "translate(" + margin.left + "," + margin.top + ")")
             .attr("class", "group_diverging")
 
         
@@ -1367,11 +1428,11 @@
         let x = d3.scaleLinear()
           // .domain([0, Math.max(...I_do_it_points.concat(I_remember_points, max_reachable_points_per_rhythm))+20]) 
           .domain([-100, 100])
-          .range([ 0, small_multiples_width]);
+          .range([ 0, width]);
 
 
         let y = d3.scaleBand()
-          .range([0, small_multiples_height])
+          .range([0, height])
           .domain(uniqueCategories)
           .padding(0.05);
 
@@ -1420,10 +1481,10 @@
         g_of_grouping
           .insert("g",":first-child") //behind the bars
           .attr("class", "grid")
-          .attr("transform", `translate(0,${small_multiples_height})`)
+          .attr("transform", `translate(0,${height})`)
           .call(d3.axisBottom(x)
                   .ticks(width / 50)
-                  .tickSize(-small_multiples_height)
+                  .tickSize(-height)
                   .tickFormat(""))
           .call(g => g.select(".domain").remove());
           
@@ -1434,7 +1495,7 @@
             .attr("stroke", "black")
             .attr("stroke-width", 2)
             .attr("y1", 0)
-            .attr("y2", small_multiples_height)
+            .attr("y2", height)
             .attr("x1", (d) => x(0))
             .attr("x2", (d) => x(0));
             
@@ -1446,7 +1507,7 @@
             .attr("class", "dashed_line")
             .attr("stroke", "black")
             .attr("y1", 0)
-            .attr("y2", small_multiples_height)
+            .attr("y2", height)
             .attr("x1", (d) => x(d))
             .attr("x2", (d) => x(d));
           
@@ -1454,7 +1515,7 @@
           // g_of_grouping
           //   .append("text")
           //   .attr("class", "label")
-          //   .attr("x", small_multiples_height)
+          //   .attr("x", height)
           //   .attr("x", (d) => x(50))
           //   .attr("dy", "-.35em")
           //   .attr("text-anchor", "end")
@@ -1465,7 +1526,7 @@
             .append("text")
             .attr("class", "chart_title")
             .attr("x", (0))
-            .attr("y", 0 - (categories_chart_margin.top))
+            .attr("y", 0 - (margin.top))
             .attr("dy", "1em")
             .attr("text-anchor", "middle")
             .text("Share of points by category");
@@ -1501,8 +1562,8 @@
           g_of_grouping.append("text")
             .attr("class", "x axislabel")
             .attr("text-anchor", "end")
-            .attr("y", (small_multiples_height + 15))
-            .attr("x", (small_multiples_width))
+            .attr("y", (height + 15))
+            .attr("x", (width))
             //.attr("transform", "translate(-50," + 0 + "),rotate(-90)")
             .text("share of points");
    
@@ -1523,7 +1584,7 @@
         // legend
         const legend = svg_multiples.append("g")
           .attr("class", "legend")
-          .attr("transform", `translate(${small_multiples_width + 40}, 20)`);
+          .attr("transform", `translate(${width + 40}, 20)`);
 
 
           legend.append("text")
@@ -1559,32 +1620,24 @@
       }
       
       function build_working_time() {
-        let div = d3.select("body").append("div").attr("class", "working_time").style("float", "left")
-        
-        div.append("div").append("p").style("float", "left")
-          .text("A typical week of childcare has 7x14h = 98h when children do not go to daycare or school. ")
-
-        let input_group = div.append("div")
-          .attr("class", "inputs")
-          .style("float", "left")
-          .style("margin-top", "10px")
-          .style("margin-bottom", "10px")
-
-
-        let data = [
+        var total_percentage = 0.5; //start with 50/50 distribution
+        let input_data = [
           {"text": "Person 1: Working hours per week", "value": 40, "id":"Person1"},
           {"text": "Hours children in childcare per day", "value": 8, "id":"Childcare"},
           {"text": "Person 2: Working hours per week", "value": 20, "id":"Person2"}
         ]
 
-        let margin = { top: 30, right: 40, bottom: 50, left: 20 };
+        var numbers = [];
+        var sum = 0;
+
+        
+        let margin = { top: 50, right: 40, bottom: 40, left: 20 };
         let width = 400 - margin.left - margin.right;
         let height = 150 - margin.top - margin.bottom;
       
-        console.log(data.map(item => item.id))
         // colours
         let work_colour = d3.scaleOrdinal()
-          .domain(data.map(item => item.id))
+          .domain(input_data.map(item => item.id))
           .range([mntlld_lightblue, mntlld_grey, mntlld_green])
         let work_division_colour_ids = ["Person1-PaidWork", "Person1-Childcare",
                                          "Person2-Childcare", "Person2-PaidWork"];
@@ -1592,8 +1645,25 @@
           .domain(work_division_colour_ids)
           .range([mntlld_lightblue, "#7EC2D6", "#B9D57A", mntlld_green])
 
-        input_group.selectAll("g")
-          .data(data).enter()
+        //start appending
+
+        let div = d3.select("body").append("div").attr("class", "working_time").style("display", "block")
+        div.append("p").style("display", "block")
+          .html("Mental Load is difficult to measure in time since it's often in parallel of performing other tasks. "
+           + "But we can take the example of childcare to visualise the impact of different amounts of paid work " + 
+           "on care work. <br>A typical week of childcare has 7x14h = 98h when children do not go to daycare or school. ")
+
+        let input_group = div.append("div")
+          .attr("class", "inputs")
+          .style("float", "left")
+          .style("margin-top", "10px")
+          .style("margin-bottom", "10px")
+          .style("width", "100%")
+
+
+        //append inputs
+        input_group.selectAll("div")
+          .data(input_data).enter()
           .append("div")
             .attr("class", d => d.text)
               .style("float", "left")
@@ -1606,16 +1676,22 @@
               .attr("value", d => d.value)
               .attr("id", d => d.id)
               .style("margin", "12px 0px")
-              .on("change", load_hours_overview)
+              .on("change", function() {
+                numbers = [];
+                sum = 0;
+                load_hours_overview()
+                load_hours_division()
+              })
             
-          input_group.selectAll("div")
-            .insert("label", ":first-child")
-              .attr("for", d => d.id)
-              .text(d=> d.text)
+        input_group.selectAll("div")
+          .insert("label", ":first-child")
+            .attr("for", d => d.id)
+            .text(d=> d.text)
 
         div.append("p")
           .attr("class", "summarise_input")
-          .style("float", "left")
+          .style("display", "block")
+
         
 
         div.append("svg")
@@ -1631,19 +1707,43 @@
         div.append("p")
           .attr("class", "between_svgs")
           .style("display", "block")
+        
+        div.append("div").attr("class", "division_div")
+        .style("width", "100%")
+        .style("float", "left")
+        .style("display", "block");
 
-        div.append("svg")
-          .attr("class", "working_svg")
-          .style("display", "block")
+        d3.select(".division_div").append("svg")
+          .attr("class", "division_svg")
           .style("float", "left")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .append("g")
             .attr("class", "working_division")
             .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")")
+              "translate(" + margin.left + "," + margin.top + ")");
           
+        d3.select(".division_div").append("button")
+          .attr("type", "button")
+          .text("Reset to 50:50")
+          .style("margin-top", margin.top + "px")
+          .on("click", function() {
+            total_percentage = 0.5;
+            numbers = [];
+            sum = 0;
+            load_hours_overview();
+            load_hours_division();});
+              
+        d3.select(".division_div").append("p")
+        .attr("class", "hint")
+        .style("font-size", "10px")
+        .text("try moving the division line");
         
+        div.append("p")
+        .attr("class", "concl_division")
+        .style("display", "block");
+        
+
         
           d3.select(".working_svg").append("svg:defs")
             .selectAll("marker")
@@ -1664,28 +1764,29 @@
           let x = d3.scaleLinear()
             .range([ 0, width]);
         
+        
         load_hours_overview()
+        load_hours_division()
 
         function load_hours_overview (){
         
           //working hours bar chart
-          let numbers = [];
+          
           let stacked = [];
-          let sum = 0;
           for (let i = 0; i < 3; i++) {
-            let value = Number(d3.select("#" + data[i].id).property("value"))
+            let value = Number(d3.select("#" + input_data[i].id).property("value"))
             
             if (i == 1) {//special calculation for childcare
               value = 98 - (5*value)
               stacked.push({
                 "x_values": [sum, sum + value],
-                "id": data[i].id
+                "id": input_data[i].id
               });
             } else {
               // numbers.push({i: value});
               stacked.push({
                 "x_values": [sum, sum + value],
-                "id": data[i].id
+                "id": input_data[i].id
               });
             } 
             numbers.push(value)
@@ -1694,11 +1795,11 @@
           x.domain([0, sum]);
 
           div.select(".summarise_input")
-          .text(`According to your input, person 1 does ${numbers[0]} hours of paid work and 
-          person 2 does ${numbers[2]} hours. Substracting the ${d3.select("#" + data[1].id).property("value")} hours
+          .html(`According to your input, person 1 does ${numbers[0]} hours of paid work and 
+          person 2 does ${numbers[2]} hours. Substracting the ${d3.select("#" + input_data[1].id).property("value")} hours
           your child/children is/are in childcare or school everyday from the typical week, there is still
-          98 - 5*${d3.select("#" + data[1].id).property("value")} = ${numbers[1]} hours of childcare to do.
-          The total working time (paid + care) is ${sum} hours.`)
+          98 - 5*${d3.select("#" + input_data[1].id).property("value")} = ${numbers[1]} hours of childcare to do.
+          <br>The total working time (paid + care) is ${sum} hours.`)
 
           let g = d3.select(".working_hours")
 
@@ -1710,6 +1811,20 @@
               .attr("height", height)
               .attr("width", d => x(d.x_values[1] - d.x_values[0]))
               .attr("fill", d => work_colour(d.id))
+              .on("mouseover", function (event, d) {
+                tooltip.style("visibility", "visible").text(d.id + ": " + Math.round(10*(d.x_values[1] - d.x_values[0]))/10 + " hours");
+                d3.select(this)
+                  .attr("fill", mntlld_red)
+              })
+              .on("mousemove", function (event, d) {
+                tooltip.style("top", (event.pageY - 10) + "px")
+                  .style("left", (event.pageX + 10) + "px");
+              })
+              .on("mouseout", function (event, d) {
+                tooltip.style("visibility", "hidden");
+                d3.select(this)
+                  .attr("fill", work_colour(d.id));
+              });
             
           g.selectAll(".label")
               .data(stacked)
@@ -1719,18 +1834,17 @@
               .attr("x", d => x( d.x_values[0] + (d.x_values[1] - d.x_values[0]) / 2))
               .attr("y", height/2)
               .attr("dy", ".35em")
-              .text(d => (d.x_values[1] - d.x_values[0]) != 0 ? (d.x_values[1] - d.x_values[0]) : "");
+              .text(d => (d.x_values[1] - d.x_values[0]) > 0 ? (d.x_values[1] - d.x_values[0]) : "");
 
             g.selectAll(".barlabel")
               .data(stacked)
               .join("text")
-              .text(d=>console.log(d))
               .attr("class", "barlabel")
               .attr("text-anchor", "middle")
               .attr("x", d => x( d.x_values[0] + (d.x_values[1] - d.x_values[0]) / 2))
               .attr("y", 0)
               .attr("dy", "-.35em")
-              .text(d => (d.x_values[1] - d.x_values[0]) != 0 ? d.id : "");
+              .text(d => (d.x_values[1] - d.x_values[0]) > 0 ? d.id : "");
 
           
           g.selectAll(".line")
@@ -1757,15 +1871,17 @@
           
           // text in between
           div.select(".between_svgs")
-          .text(`This total is divided by two. blablabla`)
+          .html(`An equal distribution would leave each person with ${sum + "/2 = " + sum/2} working hours.`)
+        }
 
-            //division hours bar chart
+        function load_hours_division (){
+          //division hours bar chart
           
           let division_numbers = [];
-          let half_hours = sum/2
+          let half_hours = sum * total_percentage
           division_numbers[0] = numbers[0]
           division_numbers[1] = half_hours - numbers[0]
-          division_numbers[2] = half_hours - numbers[2]
+          division_numbers[2] = (sum-half_hours) - numbers[2]
           division_numbers[3] = numbers[2]
           
           let division_stacked = [];
@@ -1777,8 +1893,8 @@
               });
               j = j + division_numbers[i];
             }
-          console.log(division_numbers)
-          console.log(division_stacked)
+          // console.log(division_numbers)
+          // console.log(division_stacked)
 
           let g_division = d3.select(".working_division")
           g_division.selectAll("rect")
@@ -1790,7 +1906,7 @@
               .attr("width", d => x(d.x_values[1] - d.x_values[0]))
               .attr("fill", d => work_division_colour(d.id))
               .on("mouseover", function (event, d) {
-                tooltip.style("visibility", "visible").text(d.id + ": " + (d.x_values[1] - d.x_values[0]) + " hours");
+                tooltip.style("visibility", "visible").text(d.id + ": " + Math.round(10*(d.x_values[1] - d.x_values[0]))/10 + " hours");
                 d3.select(this)
                   .attr("fill", mntlld_red)
               })
@@ -1805,7 +1921,7 @@
               });
    
             
-          g_division.selectAll("text")
+          g_division.selectAll("text") //text in middle of rects
             .data(division_stacked)
             .join("text")
               .attr("class", "x axislabel")
@@ -1813,13 +1929,25 @@
               .attr("x", d => x( d.x_values[0] + (d.x_values[1] - d.x_values[0]) / 2))
               .attr("y", height/2)
               .attr("dy", ".35em")
-              .text(d => (d.x_values[1] - d.x_values[0]));
+              .text(d => (d.x_values[1] - d.x_values[0]) > 0 ? Math.round(10*(d.x_values[1] - d.x_values[0]))/10 : "");
 
           
-          g_division.selectAll(".labelline")
-            .data([[0, width/2], [width/2, width]])
+          g_division.selectAll(".labelline.top")
+            .data([[0, width*total_percentage], [width*total_percentage, width]])
             .join("line")
-            .attr("class","labelline")
+            .attr("class","labelline top")
+            .attr("stroke", "black")
+            .attr("marker-start", "url(#start-arrow)")
+            .attr("marker-end", "url(#end-arrow)")
+            .attr("x1", d=>d[0])
+            .attr("x2", d=>d[1])
+            .attr("y1", -10)
+            .attr("y2", -10);
+
+            g_division.selectAll(".labelline.bottom")
+            .data([[x(numbers[0]), width*total_percentage], [width*total_percentage, x(sum-numbers[2])]])
+            .join("line")
+            .attr("class","labelline bottom")
             .attr("stroke", "black")
             .attr("marker-start", "url(#start-arrow)")
             .attr("marker-end", "url(#end-arrow)")
@@ -1828,27 +1956,32 @@
             .attr("y1", height + 10)
             .attr("y2", height + 10);
 
-          //division line between persons
-          g_division.selectAll(".divisionline")
-            .data([width/2])
-            .join("line")
-            .attr("stroke-width",  2.5)
-            // .attr("fill", "none")
-            .attr("class","divisionline")
-            .attr("stroke", "black")
-            .attr("x1", d=>d)
-            .attr("x2", d=>d)
-            .attr("y1", 0)
-            .attr("y2", height);
-
-          g_division.selectAll(".ann.axislabel")
-            .data([width/4, 0.75*width])
+          
+          
+          g_division.selectAll(".ann.axislabel.top")
+            .data([ 
+              // {"x": (width*total_percentage)/2,  "text": Math.round(10*sum*total_percentage)/10 + " hours"},
+              // {"x":((width*total_percentage) + (width*(1-total_percentage))/2),  "text": Math.round(10*sum*(1-total_percentage))/10 + " hours"}
+              {"x": (width*total_percentage)/2,  "text": Math.round(1000*total_percentage)/10 + "%"},
+              {"x":((width*total_percentage) + (width*(1-total_percentage))/2),  "text": Math.round(1000*(1-total_percentage))/10 + "%"}
+                  ])
             .join("text")
-            .attr("class", "ann axislabel")
+            .attr("class", "ann axislabel top")
             .attr("text-anchor", "middle")
-            .attr("x", d => d)
+            .attr("x", d => d.x)
+            .attr("y", -18)
+            .text(d => d.text);
+
+          g_division.selectAll(".ann.axislabel.bottom")
+            .data([ {"x": x(numbers[0] + division_numbers[1]/2),  "text":Math.round((1000*division_numbers[1]/numbers[1]))/10 + "%"},
+                    {"x":x(numbers[0] + division_numbers[1] + division_numbers[2]/2),  "text": Math.round((1000*division_numbers[2]/(numbers[1])))/10 + "%"}
+                  ])
+            .join("text")
+            .attr("class", "ann axislabel bottom")
+            .attr("text-anchor", "middle")
+            .attr("x", d => d.x)
             .attr("y", height + 25)
-            .text(sum/2 + " hours");
+            .text(d => d.text);
 
           g_division.selectAll(".barlabel")
             .data([ { "x":width/4, "text": "Person 1"},
@@ -1857,15 +1990,44 @@
               .attr("class", "barlabel")
               .attr("text-anchor", "middle")
               .attr("x", d => d.x)
-              .attr("y", 0)
+              .attr("y", -30)
               .attr("dy", "-.35em")
             .text(d=>d.text);
             
-          
+          // text in between
+          div.select(".concl_division")
+          .html(`This means that Person 1 would take on ${Math.round((1000*division_numbers[1]/(numbers[1])))/10}% of the childcare hours, which is an overall 
+          of ${Math.round(total_percentage*1000)/10}% of all work.
+          <br>
+          And Person 2 does ${Math.round((1000*division_numbers[2]/(numbers[1])))/10}% of the childcare hours, which is an overall 
+          of ${Math.round((1-total_percentage)*1000)/10}% of all working hours.`)
+        
+          //division line between persons
+        d3.select(".working_division").selectAll(".divisionline")
+            .data([width*total_percentage])
+            .join("line")
+            .attr("stroke-width",  2.5)
+            // .attr("fill", "none")
+            .attr("class","divisionline")
+            .attr("stroke", "black")
+            .attr("x1", d=>d)
+            .attr("x2", d=>d)
+            .attr("y1", 0)
+            .attr("y2", height)
+            .style("cursor", "col-resize")
     
         } 
 
-
+        //division line between persons
+        d3.select(".divisionline")
+            .call(d3.drag().on("drag", function (event, d) {
+                  d3.select(this)
+                   .attr("x1", Math.min(Math.max(event.x, x(numbers[0])), x(sum-numbers[2])));
+                   d3.select(this)
+                   .attr("x2", Math.min(Math.max(event.x, x(numbers[0])), x(sum-numbers[2])));
+                   total_percentage = (Math.min(Math.max(event.x, x(numbers[0])), x(sum-numbers[2]))/width)
+                   load_hours_division()
+            }))
       }
       //#endregion
 
