@@ -100,12 +100,12 @@
     var width = 400 - margin.left - margin.right;
     var height = 350 - margin.top - margin.bottom;
 
-    var language = "en"
+    var language = "de"
 
     // append the svg object to the body of the page
 
 
-    d3.json("data/test_json_en.json").then(function (data_raw) {
+    d3.json("data/test_json_committed.json").then(function (data_raw) {
       //#region               ###############      variables   #################
       var all_cats = [];
       if (language == "de") {
@@ -402,7 +402,7 @@
           //.text(function(d) {console.log(d.type);})
           .attr("width", x.bandwidth())
           .attr("height", function (d) { return height - y(d.value); })
-          .attr("fill", mntlld_darkblue)
+          .attr("fill", mntlld_lightblue)
           .on("mouseover", function (event, d) {
             tooltip.style("visibility", "visible").text(d.value + " Points");
             d3.select(this).attr("fill", mntlld_red)
@@ -412,7 +412,7 @@
               .style("left", (event.pageX + 10) + "px");
           })
           .on("mouseout", function (event, d) {
-            d3.select(this).attr("fill", mntlld_darkblue);
+            d3.select(this).attr("fill", mntlld_lightblue);
             tooltip.style("visibility", "hidden");
           });
 
