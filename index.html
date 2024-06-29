@@ -301,13 +301,12 @@
 
         var color = d3.scaleOrdinal()
           .domain(rhythms)
-          .range(['#346B91', '#6EA0C4', '#BCDFF7', '#D6EEFF'])
-
+          .range(['#0d5f83', '#0b81a8', '#38a5c5', '#95ccdc'])
 
           
         var domainColor = d3.scaleOrdinal()
           .domain(uniqueDomains)
-          .range([mntlld_darkblue, mntlld_green, mntlld_red, '#F05B9B'])
+          .range([mntlld_darkblue, mntlld_green, mntlld_red])
       //#endregion
       
 
@@ -326,20 +325,29 @@
       d3.select("body").append("div").attr("class", "tooltip")
       var tooltip = d3.select(".tooltip");
       d3.select("body").append("p").html("Here's your score: You have " + done_points + " of " + max_num_points +
-      " I-do-it points and " + I_remembered_points + " of " + max_num_points + " I-I_remember-to-do-it points. " +
-      "<br> Your total score is " + (I_remembered_points + done_points) + ".")
+      " I-do-it points and " + I_remembered_points + " of " + max_num_points + " I-remember-to-do-it points. " +
+      "<br> <b> Your total score is " + (I_remembered_points + done_points) + "</b>.")
       build_overview_chart()
-      d3.select("body").append("h2").html("Scoring")
-      d3.select("body").append("p").html("How are the points calculated? We wanted to weigh the tasks more that are done one a daily basis - in contrast to those which are done only yearly.\n This is explained with your do-it checkmarks that you set in the test:")
+      d3.select("body").append("h2").html("How does the scoring work?")
+      d3.select("body").append("p").html("The tasks listed are weighted according to the frequency with which they need to be performed. " + 
+          "Four points are awarded for tasks to be performed daily or more frequently. For weekly tasks, three points are awarded. " + 
+          "For monthly tasks, two points are awarded. For annual tasks, one point is awarded. " + 
+          "The subdivision into “Do I” and “Remember I” is done in order to map the mental load, i.e. the cognitive care work that takes place in the head, as well." +
+          "<br> This is explained using your do-it checkmarks that you set in the test:")
       build_explain_weights_chart()
       build_stacked_chart(series, type)
-      d3.select("body").append("h2").html("Do you prefer a certain kind of task?")
+      d3.select("body").append("h2").html("Task comparisons")
+      d3.select("body").append("p").html("To better understand your scores and see in which areas you could be more helpful " + 
+          "(or to see, which are your strongsuit), you can compare your points according to their different attributes.")
+      
       build_bar_comparison_charts(grouping = "rhythm")
       build_categories_diverging()
       d3.select("body").append("h2").html("Comparison to partner")
       build_confusion_matrix()
       d3.select("body").append("h2").html("But what about the paid work?")
       build_working_time()
+      d3.select("body").append("div").style("height", "300px").attr("class", "spacing")
+
       // build_bar_comparison_charts(grouping = "domain")
       //#endregion
 
@@ -638,7 +646,7 @@
           .attr("y", (d) => y_explain(((d[1][0] + (d[1][1] - d[1][0]) / 2) + (d[0][0] + (d[0][1] - d[0][0]) / 2)) / 2))
           .attr("dy", ".35em")
           .style("text-anchor", "middle")
-          .text(d => "x" + (d.index + 1));
+          .html(d => "&times;" + (d.index + 1));
 
         svg3.append("g").attr("class", "label")
           .selectAll("text.legend")
@@ -1146,14 +1154,22 @@
             //.text(function(d) {console.log(d)})
             .attr("x", function (d) { return x_multiples(d[0]); })
             .attr("y", function (d) { return y_multiples(d[1]); })
-            // .text(function(d) {
-            //    console.log((d3.sum(d[1], (s) => s.points)/max_points));
-            //   d3.sum(I_remembered_questions, (d) => d.points)
-            //                   //  console.log(d)
-            //  })
             .attr("width", x_multiples.bandwidth())
             .attr("height", function (d) { return height - y_multiples(d[1]); })
-            .attr("fill", function (d) { return grouping == "domain" ? domainColor(d[0]) : color(d[0]) });
+            .attr("fill", function (d) { return grouping == "domain" ? domainColor(d[0]) : color(d[0]) })
+            .on("mouseover", function (event, d) {
+                tooltip.style("visibility", "visible").text(d[1] + "%");
+                d3.select(this)
+                  .attr("fill", mntlld_red)
+              })
+              .on("mousemove", function (event, d) {
+                tooltip.style("top", (event.pageY - 10) + "px")
+                  .style("left", (event.pageX + 10) + "px");
+              })
+              .on("mouseout", function (event, d) {
+                d3.select(this).attr("fill", function (d) { return grouping == "domain" ? domainColor(d[0]) : color(d[0]) });
+                tooltip.style("visibility", "hidden");
+              });
 
           //console.log(max_points)
           let g_of_grouping = d3.select("g." + grouping + "_" +  classname)
@@ -1301,25 +1317,15 @@
             .append("g")
             // .attr("transform", (d, i) => `translate(0,${5*i})`)
             .attr("class", "group")
-            //.text(function(d) {console.log(d[0])})
             .attr("fill", function (d) { return domainColor(d[0]) })
             .selectAll('rect')
             .data(([,d]) => d)
             .enter()
               .append('rect')
-              // .text(function(d) {console.log(d)})
-              // .text(function(d) {console.log(d)})
               .attr("x", 0)
               .attr("y", function (d) { return i == "I_do_it" ?  y_do_it (d[0]) : y_remember(d[0]) })
-            // // .text(function(d) {
-            // //    console.log((d3.sum(d[1], (s) => s.points)/max_points));
-            // //   d3.sum(I_remembered_questions, (d) => d.points)
-            // //                   //  console.log(d)
-            // //  })
             .attr("height", y_do_it.bandwidth())
             .attr("width", function (d) { return x(d[1]); })
-            // .attr("fill", function (d) { return domainColor(i) });
-            //console.log(test)
 
           let g_of_grouping = d3.select("g." + remove_weird_symbols(i))
           
@@ -1333,15 +1339,6 @@
             .attr("x1", (d) => x(50))
             .attr("x2", (d) => x(50));
           
-          // //line label
-          // g_of_grouping
-          //   .append("text")
-          //   .attr("class", "label")
-          //   .attr("x", height)
-          //   .attr("x", (d) => x(50))
-          //   .attr("dy", "-.35em")
-          //   .attr("text-anchor", "end")
-          //   .text("50%")
 
           //title
           g_of_grouping
@@ -1434,11 +1431,8 @@
         let y = d3.scaleBand()
           .range([0, height])
           .domain(uniqueCategories)
-          .padding(0.05);
+          .padding(0.1);
 
-        //add grid lines
-
-          
           
           d3.select(".group_diverging")
             .selectAll("g")
@@ -1490,14 +1484,18 @@
           
           //middle line
           g_of_grouping.append("g").attr("class", "lines")
-            .append("line")
-            .attr("class", "zero_line")
-            .attr("stroke", "black")
-            .attr("stroke-width", 2)
-            .attr("y1", 0)
-            .attr("y2", height)
-            .attr("x1", (d) => x(0))
-            .attr("x2", (d) => x(0));
+            .selectAll(".zero_line")
+            .data([
+              {"width": 4, "col": "white"},
+              {"width": 1, "col": "black"}])
+            .join("line")
+              .attr("class", "zero_line")
+              .attr("stroke", d=>d.col)
+              .attr("stroke-width", d=>d.width)
+              .attr("y1", 0)
+              .attr("y2", height)
+              .attr("x1", (d) => x(0))
+              .attr("x2", (d) => x(0));
             
             //dashed line
             g_of_grouping.select(".lines")
