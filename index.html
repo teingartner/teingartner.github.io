@@ -256,7 +256,7 @@
       //questions_final.forEach((element) => console.log(element));
       //console.table(questions_final)
       //console.table(questions_final.filter(function(d) {return d.I_remember == true}))
-      let valid_questions = questions_final.filter(function (d) { return d.not_apply == false })
+      var valid_questions = questions_final.filter(function (d) { return d.not_apply == false })
       //console.table(valid_questions)
       let max_num_points = d3.sum(valid_questions, (d) => d.points)
 
@@ -271,6 +271,7 @@
       let partner_done_points = d3.sum(partner_does_it_questions, (d) => d.points)
       let partner_remembers_points = d3.sum(partner_remembers_questions, (d) => d.points)
       let number_not_apply = d3.count(not_apply_questions, (d) => d.ID)
+      var questions_answered = d3.count(valid_questions, (d) => d.ID)
       // group by daily, monthly etc. for plots and analysis
       let grouped_by_rhythm = d3.group(valid_questions, d => d.rhythm)
 
@@ -281,7 +282,8 @@
         ", points done of partner: " + partner_done_points +
         ", points I_remembered of partner: " + partner_remembers_points +
         ", number not apply: " + number_not_apply +
-        ", max sum of points reachable, for each category: " + max_num_points
+        ", max sum of points reachable, for each category: " + max_num_points +
+        ". Answered questions: " + questions_answered
       )
       // check validity of data
       if (done_points + partner_done_points != I_remembered_points + partner_remembers_points ||
@@ -346,6 +348,8 @@
       build_confusion_matrix()
       d3.select("body").append("h2").html("But what about the paid work?")
       build_working_time()
+      d3.select("body").append("h2").html("What if...?")
+      build_restructuring()
       d3.select("body").append("div").style("height", "300px").attr("class", "spacing")
 
       // build_bar_comparison_charts(grouping = "domain")
@@ -1222,7 +1226,7 @@
       }
       
     // ####################################################################################################################
-    function build_categories_chart() {
+      function build_categories_chart() {
       d3.select("body").append("div").attr("class", "categories_chart")
       d3.select(".categories_chart").append("h3").html("By task categories")
         
@@ -1266,7 +1270,7 @@
             .append("svg")
             .attr("class", "small_multiples_svg")
             .attr("width", width + margin.left + margin.right)
-            .attr("height", width + margin.top + margin.bottom)
+            .attr("height", height + margin.top + margin.bottom)
             // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
             //.text(function(d) {console.log(d[0]);})
             .append("g")
@@ -1411,7 +1415,7 @@
             .append("svg")
             .attr("class", "small_multiples_svg")
             .attr("width", width + margin.left + margin.right)
-            .attr("height", width + margin.top + margin.bottom)
+            .attr("height", height + margin.top + margin.bottom)
             // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
             //.text(function(d) {console.log(d[0]);})
             .append("g")
@@ -1998,14 +2002,15 @@
           of ${Math.round(total_percentage*1000)/10}% of all work.
           <br>
           And Person 2 does ${Math.round((1000*division_numbers[2]/(numbers[1])))/10}% of the childcare hours, which is an overall 
-          of ${Math.round((1-total_percentage)*1000)/10}% of all working hours.`)
+          of ${Math.round((1-total_percentage)*1000)/10}% of all working hours.
+          <br> <b>Note:</b> Mental load is not necessarily tied to working hours because it can be performed in parallel with other tasks 
+          (e.g., commuting can be combined with dinner planning).`) // TODO: put where?
         
           //division line between persons
         d3.select(".working_division").selectAll(".divisionline")
             .data([width*total_percentage])
             .join("line")
             .attr("stroke-width",  2.5)
-            // .attr("fill", "none")
             .attr("class","divisionline")
             .attr("stroke", "black")
             .attr("x1", d=>d)
@@ -2016,7 +2021,7 @@
     
         } 
 
-        //division line between persons
+        //division line interactivity
         d3.select(".divisionline")
             .call(d3.drag().on("drag", function (event, d) {
                   d3.select(this)
@@ -2025,7 +2030,264 @@
                    .attr("x2", Math.min(Math.max(event.x, x(numbers[0])), x(sum-numbers[2])));
                    total_percentage = (Math.min(Math.max(event.x, x(numbers[0])), x(sum-numbers[2]))/width)
                    load_hours_division()
-            }))
+        }))
+      }
+
+
+      function build_restructuring() {
+        d3.select("body").append("div").attr("class", "restructuring")
+
+        //compute height of svg
+        let item_height = 23;
+        let button_width = 55;
+        let req_height = (questions_answered + 2) * item_height + (questions_answered) * 5;
+        let margin = { top: 40, right: 40, bottom: 40, left: 20 };
+        let width = 680 - margin.left - margin.right;
+        let height = req_height - margin.top - margin.bottom;
+
+        // create svg
+        let svg = d3.select(".restructuring")
+            .append("svg")
+            .attr("class", "restructuring_svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
+            //.text(function(d) {console.log(d[0]);})
+            .append("g")
+            .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")")
+            .attr("class", "group_restructuring")
+
+        let items = d3.select(".group_restructuring")
+        .selectAll(".item")
+        .data(valid_questions)
+        .join("g")
+        .attr("class", "item")
+
+        
+        items.append("text")
+          .attr("class", "label")
+          .attr("x", 20)
+          .attr("y", (d,i) => ((i+0.5) * item_height) + i*5 )
+          .attr("dy", ".35em")
+          .text(d=> d.Text)
+
+        //I_do_it buttons
+        items.append("rect")
+          .attr("x", width-(2*button_width))
+          .attr("y", (d,i) => (i * item_height) + i*5 )
+          .attr("height", item_height)
+          .attr("width", button_width)
+          .attr("fill-opacity", "0.7")
+          .attr("fill", function (d) {
+            if(d.I_do_it) {
+              return mntlld_green
+            } else {
+              return mntlld_dark_grey
+            }
+          })
+          .on("mouseover", function (event, d) {
+            d3.select(this)
+              .attr("fill-opacity", "1")
+          })
+          .on("mouseout", function (event, d) {
+            d3.select(this).attr("fill-opacity", "0.7");
+          })
+          .on("mousedown", function (event, d) {
+            d3.select(this)
+              .attr("fill-opacity", "0.3")
+          })
+          .on("mouseup", function (event, d) {
+            d3.select(this)
+              .attr("fill-opacity", "1")
+              .attr("fill", function (d) {
+                if (d.I_do_it_restr | 0) {
+                  d.I_do_it_restr = false;
+                  if(d.I_do_it) {
+                    d3.select(this.parentNode)
+                      .append("text")
+                      .attr("id", "point_change")
+                      .attr("x", width - (1.5 * button_width))
+                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                      .attr("text-anchor","middle" )
+                      .text(d => "-" + d.points)
+                    console.log("fall1")
+                  } else {
+                    d3.select(this.parentNode).select("#point_change").remove()
+                    console.log("fall2")
+                  }
+                  return mntlld_dark_grey
+                } else if(d.I_do_it_restr == false) {
+                  if(d.I_do_it) {
+                    d3.select(this.parentNode).select("#point_change").remove()
+                    console.log("fall3")
+                  } else {
+                    d3.select(this.parentNode)
+                      .append("text")
+                      .attr("id", "point_change")
+                      .attr("x", width - (1.5 * button_width))
+                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                      .attr("text-anchor","middle" )
+                      .text(d => "+" + d.points)
+                    console.log("fall4")
+                  }
+                  d.I_do_it_restr = true;
+                  return mntlld_green //color(d.rhythm)
+                } else if(!d.I_do_it) {
+                  d3.select(this.parentNode)
+                      .append("text")
+                      .attr("id", "point_change")
+                      .attr("x", width - (1.5 * button_width))
+                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                      .attr("text-anchor","middle" )
+                      .text(d => "+" + d.points)
+                  d.I_do_it_restr = true;
+                  return mntlld_green //color(d.rhythm)
+                } else if (d.I_do_it) {
+                  d3.select(this.parentNode)
+                      .append("text")
+                      .attr("id", "point_change")
+                      .attr("x", width - (1.5 * button_width))
+                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                      .attr("text-anchor","middle" )
+                      .text(d => "-" + d.points)
+                  d.I_do_it_restr = false;
+                  return mntlld_dark_grey //"#bdbdbd"
+                }
+              })
+          });
+
+        //I_remember buttons
+        items.append("rect")
+          .attr("x", width-(button_width))
+          .attr("y", (d,i) => (i * item_height) + i*5 )
+          .attr("height", item_height)
+          .attr("width", button_width)
+          .attr("fill-opacity", "0.7")
+          .attr("fill", function (d) {
+            if(d.I_remember) {
+              return mntlld_green //color(d.rhythm)
+            } else {
+              return mntlld_dark_grey //"#bdbdbd"
+            }
+          })
+          .on("mouseover", function (event, d) {
+            d3.select(this)
+              .attr("fill-opacity", "1")
+          })
+          .on("mouseout", function (event, d) {
+            d3.select(this).attr("fill-opacity", "0.7");
+          })
+          .on("mousedown", function (event, d) {
+            d3.select(this)
+              .attr("fill-opacity", "0.3")
+          })
+          .on("mouseup", function (event, d) {
+            d3.select(this)
+              .attr("fill-opacity", "1")
+              .attr("fill", function (d) {
+                if (d.I_remember_restr | 0) {
+                  d.I_remember_restr = false;
+                  if(d.I_remember) {
+                    d3.select(this.parentNode)
+                      .append("text")
+                      .attr("id", "point_change_rem")
+                      .attr("x", width - (.5 * button_width))
+                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                      .attr("text-anchor","middle" )
+                      .text(d => "-" + d.points)
+                    console.log("fall1")
+                  } else {
+                    d3.select(this.parentNode).select("#point_change_rem").remove()
+                    console.log("fall2")
+                  }
+                  return mntlld_dark_grey
+                } else if(d.I_remember_restr == false) {
+                  if(d.I_remember) {
+                    d3.select(this.parentNode).select("#point_change_rem").remove()
+                    console.log("fall3")
+                  } else {
+                    d3.select(this.parentNode)
+                      .append("text")
+                      .attr("id", "point_change_rem")
+                      .attr("x", width - (.5 * button_width))
+                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                      .attr("text-anchor","middle" )
+                      .text(d => "+" + d.points)
+                    console.log("fall4")
+                  }
+                  d.I_remember_restr = true;
+                  return mntlld_green //color(d.rhythm)
+                } else if(!d.I_remember) {
+                  d3.select(this.parentNode)
+                      .append("text")
+                      .attr("id", "point_change_rem")
+                      .attr("x", width - (.5 * button_width))
+                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                      .attr("text-anchor","middle" )
+                      .text(d => "+" + d.points)
+                  d.I_remember_restr = true;
+                  return mntlld_green //color(d.rhythm)
+                } else if (d.I_remember) {
+                  d3.select(this.parentNode)
+                      .append("text")
+                      .attr("id", "point_change_rem")
+                      .attr("x", width - (.5 * button_width))
+                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                      .attr("text-anchor","middle" )
+                      .text(d => "-" + d.points)
+                  d.I_remember_restr = false;
+                  return mntlld_dark_grey //"#bdbdbd"
+                }
+              })
+          });
+
+
+        //rhythm rects
+        items.append("rect")
+          .attr("x", 0)
+          .attr("y", (d,i) => (i * item_height) + i*5 )
+          .attr("height", item_height)
+          .attr("width", 15)
+          .attr("fill", d => color(d.rhythm))
+          
+
+        items.append("rect")
+          .attr("stroke", "black")
+          .attr("x", 0)
+          .attr("y", (d,i) => (i * item_height) + i*5 )
+          .attr("height", item_height)
+          .attr("width", width)
+          .attr("fill", "none")
+          .attr("stroke-width", 1);
+
+
+        /////////////////////////////// restructured overview //////////////////////////////////////
+        margin = { top: 40, right: 40, bottom: 40, left: 20 };
+        width = 680 - margin.left - margin.right;
+        height = 400 - margin.top - margin.bottom;
+        
+        let svg2 = d3.select(".restructuring")
+            .append("svg")
+            .attr("class", "restructuring_svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
+            //.text(function(d) {console.log(d[0]);})
+            .append("g")
+            .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")")
+            .attr("class", "group_restructuring")
+
+      
       }
       //#endregion
 
