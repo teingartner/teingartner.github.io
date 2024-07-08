@@ -2039,47 +2039,54 @@
         
 
         let grouped_by_domain = d3.group(valid_questions, d => d.domain)
-        let max_count = 0;
+        let counts = [];
 
         grouped_by_domain.forEach((value, key) => {
           let count = value.length;
-          if (count > max_count) {
-            max_count = count;
-          }
+          counts.push(count)
         });
 
         //compute height of svg
         let item_height = 23;
         let button_width = 55;
-        let req_height = (max_count + 1) * item_height + (max_count + 1) * 5;
+        // let req_height = (max_count + 1) * item_height + (max_count + 1) * 5;
         let margin = { top: 40, right: 40, bottom: 20, left: 20, between: 30 };
         let width = 550 - margin.left - margin.right;
-        let height = req_height;
+        let heights = counts.map((x) => (x + 1) * item_height + (x + 1) * 5);
+        
 
         // create svg
-        d3.select("body").append("div").attr("class", "restructuring").attr("height", height + margin.top + margin.bottom)
-        let svg = d3.select(".restructuring")
-            .append("svg")
-            .attr("class", "restructuring_svg")
-            .attr("width", 3*width + margin.left + margin.right + 2*margin.between)
-            .attr("height", height + margin.top + margin.bottom)
-            // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
-            .text(function(d) {console.log(height);
-              console.log(height + margin.top + margin.bottom);
-            })
-            .append("g")
+        d3.select("body").append("div").attr("class", "restructuring").style("height", (heights[0] + heights[1]+heights[2] + 3*margin.top + 3*margin.bottom) + "px")
+        // let svg = d3.select(".restructuring")
+        //     .append("svg")
+        //     .attr("class", "restructuring_svg")
+        //     .attr("width", 3*width + margin.left + margin.right + 2*margin.between)
+        //     .attr("height", height + margin.top + margin.bottom)
+        //     // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
+        //     .text(function(d) {console.log(height);
+        //       console.log(height + margin.top + margin.bottom);
+        //     })
+        //     .append("g")
+        //     .attr("transform",
+        //       "translate(" + margin.left + "," + margin.top + ")")
+        //     .attr("class", "group_restructuring")
+
+        let domain_svg = d3.select(".restructuring").append("div")
+            .attr("class", "list")
+            .style("width", (width + margin.left + margin.right) + "px")
+            .style("float", "left")
+          .selectAll(".domaingroup")
+          .data(grouped_by_domain)
+          .join("svg")
+          .attr("class", "domaingroup")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", (d,i) => heights[i] + margin.top + margin.bottom)
+          .append("g")
             .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")")
             .attr("class", "group_restructuring")
-
-        let domain_group = d3.select(".group_restructuring")
-          .selectAll(".domaingroup")
-          .data(grouped_by_domain)
-          .join("g")
-          .attr("class", "domaingroup")
-          .attr("transform", (d,i) => 
-              "translate(" + (i*width + i*margin.between) + "," + margin.top + ")")
-
+          
+        domain_group = d3.selectAll(".group_restructuring")
         //title for domain group
         domain_group.append("text")
           .attr("class", "chart_title")
@@ -2103,7 +2110,7 @@
           .text(d => d.text)
 
 
-        let items = d3.selectAll(".domaingroup")
+        let items = d3.selectAll(".group_restructuring")
         .selectAll(".item")
         .data(([,d]) => d)
         .join("g")
