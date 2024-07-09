@@ -48,6 +48,15 @@
     stroke-width: 1;
   }
 
+  .sum {
+    stroke:white;
+    stroke-width:0.5em;
+    fill:black;
+    paint-order:stroke;
+    stroke-linejoin:round;
+    font-size: 13px;
+  }
+
   .chart_title {
     font-size: 18px;
   }
@@ -429,20 +438,7 @@
             tooltip.style("visibility", "hidden");
           });
 
-        //add bar labels
-        svg.append("g").attr("class", "label")
-          .selectAll("text.sum")
-          .data([{ "sum": done_points, "type": "I_do_it" }, { "sum": I_remembered_points, "type": "I_remember" }])
-          .enter()
-          .append("text")
-          .attr("class", "sum")
-          //.text(function(d) {console.log(d)})
-          .attr("x", (d) => x(d.type) + x.bandwidth() / 2)
-          .attr("y", (d) => y(d.sum))
-          .attr("dy", "-1em")
-          .style("text-anchor", "middle")
-          .text(d => d.sum);
-
+       
         //add 50% line
         svg.selectAll(".dashed_line")
           .data([max_num_points / 2, max_num_points])
@@ -469,6 +465,21 @@
           .attr("dy", "-.35em")
           .style("text-anchor", "end")
           .text(d => d.text)
+
+         //add bar labels
+         svg.append("g").attr("class", "label")
+          .selectAll("text.sum")
+          .data([{ "sum": done_points, "type": "I_do_it" }, { "sum": I_remembered_points, "type": "I_remember" }])
+          .enter()
+          .append("text")
+          .attr("class", "sum")
+          //.text(function(d) {console.log(d)})
+          .attr("x", (d) => x(d.type) + x.bandwidth() / 2)
+          .attr("y", (d) => y(d.sum))
+          .attr("dy", "-1em")
+          .style("text-anchor", "middle")
+          .text(d => d.sum);
+
         
         //x-Axis on top
           svg.append("g")
@@ -2036,7 +2047,11 @@
 
 
       function build_restructuring() {
-        
+        d3.select("body").append("p").html("We recommend talking to your partner to discuss your results and to find a " +
+          "division of mental load that fits both of you. You can use this tool to answer the question 'How would the scoring change " + 
+          "if I also take on this task?'" + 
+          "<br> You can use this tool to see how a redistribution would change your score."
+        )
 
         let grouped_by_domain = d3.group(valid_questions, d => d.domain)
         let counts = [];
@@ -2141,7 +2156,7 @@
           })
           .on("mouseover", function (event, d) {
             d3.select(this)
-              .attr("fill-opacity", "0.6")
+              .attr("fill-opacity", "0.4")
           })
           .on("mouseout", function (event, d) {
             d3.select(this).attr("fill-opacity", "1");
@@ -2152,7 +2167,7 @@
           })
           .on("mouseup", function (event, d) {
             d3.select(this)
-              .attr("fill-opacity", "0.6")
+              .attr("fill-opacity", "0.4")
               .attr("fill", function (d) {
                 if (d.I_do_it_restr | 0) {
                   if(d.I_do_it) {
@@ -2233,18 +2248,18 @@
           })
           .on("mouseover", function (event, d) {
             d3.select(this)
-              .attr("fill-opacity", "0.7")
+              .attr("fill-opacity", "0.4")
           })
           .on("mouseout", function (event, d) {
             d3.select(this).attr("fill-opacity", "1");
           })
           .on("mousedown", function (event, d) {
             d3.select(this)
-              .attr("fill-opacity", "0.5")
+              .attr("fill-opacity", "0.9")
           })
           .on("mouseup", function (event, d) {
             d3.select(this)
-              .attr("fill-opacity", "0.7")
+              .attr("fill-opacity", "0.4")
               .attr("fill", function (d) {
                 if (d.I_remember_restr | 0) {
                   if(d.I_remember) {
@@ -2405,6 +2420,16 @@
                 tooltip.style("visibility", "hidden");
               });
 
+        //add 50% line
+        svg2.selectAll(".dashed_line")
+          .data([max_num_points / 2, max_num_points])
+          .join("line")
+          .attr("class", "dashed_line")
+          .attr("x1", 0)
+          .attr("x2", width_bar)
+          .attr("y1", d => y(d))
+          .attr("y2", d => y(d));
+
         update_bars()
         function update_bars() {
 
@@ -2474,13 +2499,12 @@
             .join("text")
             .attr("class", "diff label")
             //.text(function(d) {console.log(d)})
-            .attr("x", (d) => x(d.type) + x.bandwidth() + 12)
+            .attr("x", (d) => x(d.type) + x.bandwidth() + 4)
             .transition()
               .duration(400)
               .ease(d3.easeLinear)
             .attr("y", (d) => y(d.position))
             .attr("dy", ".35em")
-            .style("text-anchor", "middle")
             .text(function(d) {
               if (d.sum > 0){ 
                 return "+" + Math.abs(d.sum)
@@ -2495,15 +2519,7 @@
         
         }
 
-        //add 50% line
-        svg2.selectAll(".dashed_line")
-          .data([max_num_points / 2, max_num_points])
-          .join("line")
-          .attr("class", "dashed_line")
-          .attr("x1", 0)
-          .attr("x2", width_bar)
-          .attr("y1", d => y(d))
-          .attr("y2", d => y(d));
+        
 
         //line labels
         svg2.append("g").attr("class", "line_labels")
