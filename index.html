@@ -2164,16 +2164,18 @@
                     .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
                     .attr("text-anchor","middle" )
                     .text(d => "-" + d.points)
+                    d.I_do_it_restr = false;
                   } else {
                     d3.select(this.parentNode).select("#point_change").remove()
+                    d.I_do_it_restr = "none";
+
                   }
-                  d.I_do_it_restr = false;
                   update_bars()
                   return "#f2f2f2"
                 } else if(d.I_do_it_restr == false) {
                   if(d.I_do_it) {
                     d3.select(this.parentNode).select("#point_change").remove()
-                    console.log("fall3")
+                    d.I_do_it_restr = "none";
                   } else {
                     d3.select(this.parentNode)
                       .append("text")
@@ -2183,9 +2185,8 @@
                       .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
                       .attr("text-anchor","middle" )
                       .text(d => "+" + d.points)
-                    console.log("fall4")
+                      d.I_do_it_restr = true;
                   }
-                  d.I_do_it_restr = true;
                   update_bars()
                   return color(d.rhythm)
                 } else if(!d.I_do_it) {
@@ -2255,15 +2256,17 @@
                       .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
                       .attr("text-anchor","middle" )
                       .text(d => "-" + d.points)
+                      d.I_remember_restr = false;
                   } else {
                     d3.select(this.parentNode).select("#point_change_rem").remove()
+                    d.I_remember_restr = "none";
                   }
-                  d.I_remember_restr = false;
                   update_bars()
                   return "#f2f2f2"
                 } else if(d.I_remember_restr == false) {
                   if(d.I_remember) {
                     d3.select(this.parentNode).select("#point_change_rem").remove()
+                    d.I_remember_restr = "none";
                   } else {
                     d3.select(this.parentNode)
                       .append("text")
@@ -2273,9 +2276,8 @@
                       .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
                       .attr("text-anchor","middle" )
                       .text(d => "+" + d.points)
-                    console.log("fall4")
+                    d.I_remember_restr = true;
                   }
-                  d.I_remember_restr = true;
                   update_bars()
                   return color(d.rhythm)
                 } else if(!d.I_remember) {
@@ -2418,13 +2420,20 @@
             .data(data_restr)
             .join("rect")
               .attr("class", "restr_bar")
-              // .text(function (d) { console.log(d.type); })
+              .text(function (d,i) { console.log( d.value >= 0 ? (height_bar - y(d.value)) : (height_bar - y(Math.abs(d.value)))); })
               .attr("x", function (d) { return x(d.type); })
-              .attr("y", function (d,i) { return y(data_overview[i].value + d.value); }) 
+              .transition()
+                .duration(400)
+                .ease(d3.easeLinear)
+              .attr("y", function (d,i) { return d.value >= 0 ? y(data_overview[i].value + d.value) : y(data_overview[i].value); }) 
               //.text(function(d) {console.log(d.type);})
               .attr("width", x.bandwidth())
-              .attr("height", function (d) { return height_bar - y(d.value); })
-              .attr("fill", mntlld_green)
+              // .attr("height", function (d) { d.value >= 0 ? (height_bar - y(d.value)) : (height_bar - y(Math.abs(d.value))); })
+              .attr("height", function (d) { return height_bar - y(Math.abs(d.value)); })
+              .attr("fill", function(d) { return d.value >= 0 ? mntlld_green : mntlld_grey})
+
+
+        svg2.selectAll(".restr_bar")
               .on("mouseover", function (event, d) {
                 tooltip.style("visibility", "visible").text(d.value + " Points");
                 d3.select(this).attr("fill", mntlld_red)
@@ -2448,10 +2457,41 @@
             .attr("class", "sum")
             //.text(function(d) {console.log(d)})
             .attr("x", (d) => x(d.type) + x.bandwidth() / 2)
+            .transition()
+              .duration(400)
+              .ease(d3.easeLinear)
             .attr("y", (d) => y(d.sum))
             .attr("dy", "-1em")
             .style("text-anchor", "middle")
             .text(d => d.sum);
+
+          //add difference labels
+          svg2
+            .selectAll("text.diff.label")
+            .data([
+              { "sum": data_restr[0].value, "type": "I_do_it", "position": done_points + 0.5*data_restr[0].value},
+              { "sum": data_restr[1].value, "type": "I_remember", "position": I_remembered_points + 0.5*data_restr[1].value}])
+            .join("text")
+            .attr("class", "diff label")
+            //.text(function(d) {console.log(d)})
+            .attr("x", (d) => x(d.type) + x.bandwidth() + 12)
+            .transition()
+              .duration(400)
+              .ease(d3.easeLinear)
+            .attr("y", (d) => y(d.position))
+            .attr("dy", ".35em")
+            .style("text-anchor", "middle")
+            .text(function(d) {
+              if (d.sum > 0){ 
+                return "+" + Math.abs(d.sum)
+              } else if (d.sum < 0){ 
+                return "-" + Math.abs(d.sum)
+              }
+              else {
+                return ""
+              }
+              
+              });
         
         }
 
