@@ -65,6 +65,7 @@
       stroke: lightgrey;
       stroke-opacity: 0.7;
       shape-rendering: crispEdges;
+      
     }
   
 
@@ -85,6 +86,7 @@
     /* background-color: #C8532E; */
     border: 0px;
     border-radius: 2px;
+    cursor: pointer;
    
     /* Initially hidden */
   }
@@ -310,10 +312,13 @@
         var mntlld_grey = "#F2F2F2"
         var mntlld_dark_grey = "#ABABAB"
         var mntlld_red = "#C8532E"
+        var mntlld_lightred = "#cb846f"
 
         var color = d3.scaleOrdinal()
           .domain(rhythms)
-          .range(['#0d5f83', '#0b81a8', '#38a5c5', '#95ccdc'])
+          .range([ //'#0d5f83', 
+            '#0b81a8', '#38a5c5', '#95ccdc', 
+            "#D6E4E9"])
 
           
         var domainColor = d3.scaleOrdinal()
@@ -2071,20 +2076,8 @@
         
 
         // create svg
-        d3.select("body").append("div").attr("class", "restructuring").style("height", (heights[0] + heights[1]+heights[2] + 3*margin.top + 3*margin.bottom) + "px")
-        // let svg = d3.select(".restructuring")
-        //     .append("svg")
-        //     .attr("class", "restructuring_svg")
-        //     .attr("width", 3*width + margin.left + margin.right + 2*margin.between)
-        //     .attr("height", height + margin.top + margin.bottom)
-        //     // .text(function(d) {console.log(remove_weird_symbols(d[0]))})
-        //     .text(function(d) {console.log(height);
-        //       console.log(height + margin.top + margin.bottom);
-        //     })
-        //     .append("g")
-        //     .attr("transform",
-        //       "translate(" + margin.left + "," + margin.top + ")")
-        //     .attr("class", "group_restructuring")
+        d3.select("body").append("div").attr("class", "restructuring").style("height", (heights[0] + heights[1]+heights[2] + 3*margin.top + 3*margin.bottom - 72) + "px")
+        
 
         let domain_svg = d3.select(".restructuring").append("div")
             .attr("class", "list")
@@ -2140,188 +2133,210 @@
           .attr("dy", ".35em")
           .text(d=> d.Text)
 
-        //I_do_it buttons
-        items.append("rect")
-          .attr("x", width-(2*button_width))
-          .attr("y", (d,i) => (i * item_height) + i*5 )
-          .attr("height", item_height)
-          .attr("width", button_width)
-          .attr("fill-opacity", "1")
-          .attr("fill", function (d) {
-            if(d.I_do_it) {
-              return color(d.rhythm)
-            } else {
-              return "#f2f2f2"
-            }
-          })
-          .on("mouseover", function (event, d) {
-            d3.select(this)
-              .attr("fill-opacity", "0.4")
-          })
-          .on("mouseout", function (event, d) {
-            d3.select(this).attr("fill-opacity", "1");
-          })
-          .on("mousedown", function (event, d) {
-            d3.select(this)
-              .attr("fill-opacity", "0.9")
-          })
-          .on("mouseup", function (event, d) {
-            d3.select(this)
-              .attr("fill-opacity", "0.4")
-              .attr("fill", function (d) {
-                if (d.I_do_it_restr | 0) {
-                  if(d.I_do_it) {
+        update_rect_buttons()
+        function update_rect_buttons() {
+          //I_do_it buttons
+          d3.selectAll("rect.i_do").remove()
+          d3.selectAll("rect.i_remember").remove()
+          d3.selectAll("#point_change").remove()
+          d3.selectAll("#point_change_rem").remove()
+
+          
+          items.append("rect")
+            .attr("class", "i_do")
+            .attr("x", width-(2*button_width))
+            .attr("y", (d,i) => (i * item_height) + i*5 )
+            .attr("height", item_height)
+            .attr("width", button_width)
+            .attr("fill-opacity", "1")
+            .style("cursor", "pointer")
+            .attr("fill", function (d) {
+              if(d.I_do_it) {
+                return mntlld_dark_grey //color(d.rhythm)
+              } else {
+                return "#f2f2f2"
+              }
+            })
+            .on("mouseover", function (event, d) {
+              d3.select(this)
+                .attr("fill-opacity", "0.4")
+            })
+            .on("mouseout", function (event, d) {
+              d3.select(this).attr("fill-opacity", "1");
+            })
+            .on("mousedown", function (event, d) {
+              d3.select(this)
+                .attr("fill-opacity", "0.9")
+            })
+            .on("mouseup", function (event, d) {
+              d3.select(this)
+                .attr("fill-opacity", "0.4")
+                .attr("fill", function (d) {
+                  if (d.I_do_it_restr | 0) {
+                    if(d.I_do_it) {
+                      d3.select(this.parentNode)
+                      .append("text")
+                      .attr("id", "point_change")
+                      .attr("x", width - (1.5 * button_width))
+                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                      .attr("text-anchor","middle" )
+                      .text(d => "-" + d.points)
+                      d.I_do_it_restr = false;
+                      update_bars()
+                      return mntlld_lightred
+                    } else {
+                      d3.select(this.parentNode).select("#point_change").remove()
+                      d.I_do_it_restr = "none";
+                      update_bars()
+                      return "#f2f2f2"
+                    }
+                  } else if(d.I_do_it_restr == false) {
+                    if(d.I_do_it) {
+                      d3.select(this.parentNode).select("#point_change").remove()
+                      d.I_do_it_restr = "none";
+                    } else {
+                      d3.select(this.parentNode)
+                        .append("text")
+                        .attr("id", "point_change")
+                        .attr("x", width - (1.5 * button_width))
+                        .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                        .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                        // .attr("fill", function(d) {return d.rhythm == rhythms[0]? "white": "black"})
+                        .attr("text-anchor","middle" )
+                        .text(d => "+" + d.points)
+                        d.I_do_it_restr = true;
+                    }
+                    update_bars()
+                    return mntlld_dark_grey //color(d.rhythm)
+                  } else if(!d.I_do_it) {
                     d3.select(this.parentNode)
-                    .append("text")
-                    .attr("id", "point_change")
-                    .attr("x", width - (1.5 * button_width))
-                    .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
-                    .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
-                    .attr("text-anchor","middle" )
-                    .text(d => "-" + d.points)
+                        .append("text")
+                        .attr("id", "point_change")
+                        .attr("x", width - (1.5 * button_width))
+                        .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                        .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                        // .attr("fill", function(d) {return d.rhythm == rhythms[0]? "white": "black"})
+                        .attr("text-anchor","middle" )
+                        .text(d => "+" + d.points)
+                    d.I_do_it_restr = true;
+                    update_bars()
+                    return color(d.rhythm)
+                  } else if (d.I_do_it) {
+                    d3.select(this.parentNode)
+                        .append("text")
+                        .attr("id", "point_change")
+                        .attr("x", width - (1.5 * button_width))
+                        .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                        .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                        .attr("text-anchor","middle" )
+                        .text(d => "-" + d.points)
                     d.I_do_it_restr = false;
-                  } else {
-                    d3.select(this.parentNode).select("#point_change").remove()
-                    d.I_do_it_restr = "none";
+                    update_bars()
+                    return mntlld_lightred //"#f2f2f2" //"#bdbdbd"
+                  }
+                })
+            });
 
-                  }
-                  update_bars()
-                  return "#f2f2f2"
-                } else if(d.I_do_it_restr == false) {
-                  if(d.I_do_it) {
-                    d3.select(this.parentNode).select("#point_change").remove()
-                    d.I_do_it_restr = "none";
-                  } else {
+          //I_remember buttons
+          items.append("rect")
+            .attr("class", "i_remember")
+            .attr("x", width-(button_width))
+            .attr("y", (d,i) => (i * item_height) + i*5 )
+            .attr("height", item_height)
+            .attr("width", button_width)
+            .attr("fill-opacity", "1")
+            .style("cursor", "pointer")
+            .attr("fill", function (d) {
+              if(d.I_remember) {
+                return mntlld_dark_grey// color(d.rhythm)
+              } else {
+                return "#f2f2f2" //"#bdbdbd"
+              }
+            })
+            .on("mouseover", function (event, d) {
+              d3.select(this)
+                .attr("fill-opacity", "0.4")
+            })
+            .on("mouseout", function (event, d) {
+              d3.select(this).attr("fill-opacity", "1");
+            })
+            .on("mousedown", function (event, d) {
+              d3.select(this)
+                .attr("fill-opacity", "0.9")
+            })
+            .on("mouseup", function (event, d) {
+              d3.select(this)
+                .attr("fill-opacity", "0.4")
+                .attr("fill", function (d) {
+                  if (d.I_remember_restr | 0) {
+                    if(d.I_remember) {
+                      d3.select(this.parentNode)
+                        .append("text")
+                        .attr("id", "point_change_rem")
+                        .attr("x", width - (.5 * button_width))
+                        .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                        .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                        .attr("text-anchor","middle" )
+                        .text(d => "-" + d.points)
+                        d.I_remember_restr = false;
+                        update_bars()
+                        return mntlld_lightred
+                    } else {
+                      d3.select(this.parentNode).select("#point_change_rem").remove()
+                      d.I_remember_restr = "none";
+                      update_bars()
+                      return "#f2f2f2"
+                    }
+                  } else if(d.I_remember_restr == false) {
+                    if(d.I_remember) {
+                      d3.select(this.parentNode).select("#point_change_rem").remove()
+                      d.I_remember_restr = "none";
+                    } else {
+                      d3.select(this.parentNode)
+                        .append("text")
+                        .attr("id", "point_change_rem")
+                        .attr("x", width - (.5 * button_width))
+                        .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                        .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                        // .attr("fill", function(d) {return d.rhythm == rhythms[0]? "white": "black"})
+                        .attr("text-anchor","middle" )
+                        .text(d => "+" + d.points)
+                      d.I_remember_restr = true;
+                    }
+                    update_bars()
+                    return mntlld_dark_grey//color(d.rhythm)
+                  } else if(!d.I_remember) {
                     d3.select(this.parentNode)
-                      .append("text")
-                      .attr("id", "point_change")
-                      .attr("x", width - (1.5 * button_width))
-                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
-                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
-                      .attr("text-anchor","middle" )
-                      .text(d => "+" + d.points)
-                      d.I_do_it_restr = true;
-                  }
-                  update_bars()
-                  return color(d.rhythm)
-                } else if(!d.I_do_it) {
-                  d3.select(this.parentNode)
-                      .append("text")
-                      .attr("id", "point_change")
-                      .attr("x", width - (1.5 * button_width))
-                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
-                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
-                      .attr("text-anchor","middle" )
-                      .text(d => "+" + d.points)
-                  d.I_do_it_restr = true;
-                  update_bars()
-                  return color(d.rhythm)
-                } else if (d.I_do_it) {
-                  d3.select(this.parentNode)
-                      .append("text")
-                      .attr("id", "point_change")
-                      .attr("x", width - (1.5 * button_width))
-                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
-                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
-                      .attr("text-anchor","middle" )
-                      .text(d => "-" + d.points)
-                  d.I_do_it_restr = false;
-                  update_bars()
-                  return "#f2f2f2" //"#bdbdbd"
-                }
-              })
-          });
-
-        //I_remember buttons
-        items.append("rect")
-          .attr("x", width-(button_width))
-          .attr("y", (d,i) => (i * item_height) + i*5 )
-          .attr("height", item_height)
-          .attr("width", button_width)
-          .attr("fill-opacity", "1")
-          .attr("fill", function (d) {
-            if(d.I_remember) {
-              return color(d.rhythm)
-            } else {
-              return "#f2f2f2" //"#bdbdbd"
-            }
-          })
-          .on("mouseover", function (event, d) {
-            d3.select(this)
-              .attr("fill-opacity", "0.4")
-          })
-          .on("mouseout", function (event, d) {
-            d3.select(this).attr("fill-opacity", "1");
-          })
-          .on("mousedown", function (event, d) {
-            d3.select(this)
-              .attr("fill-opacity", "0.9")
-          })
-          .on("mouseup", function (event, d) {
-            d3.select(this)
-              .attr("fill-opacity", "0.4")
-              .attr("fill", function (d) {
-                if (d.I_remember_restr | 0) {
-                  if(d.I_remember) {
-                    d3.select(this.parentNode)
-                      .append("text")
-                      .attr("id", "point_change_rem")
-                      .attr("x", width - (.5 * button_width))
-                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
-                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
-                      .attr("text-anchor","middle" )
-                      .text(d => "-" + d.points)
-                      d.I_remember_restr = false;
-                  } else {
-                    d3.select(this.parentNode).select("#point_change_rem").remove()
-                    d.I_remember_restr = "none";
-                  }
-                  update_bars()
-                  return "#f2f2f2"
-                } else if(d.I_remember_restr == false) {
-                  if(d.I_remember) {
-                    d3.select(this.parentNode).select("#point_change_rem").remove()
-                    d.I_remember_restr = "none";
-                  } else {
-                    d3.select(this.parentNode)
-                      .append("text")
-                      .attr("id", "point_change_rem")
-                      .attr("x", width - (.5 * button_width))
-                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
-                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
-                      .attr("text-anchor","middle" )
-                      .text(d => "+" + d.points)
+                        .append("text")
+                        .attr("id", "point_change_rem")
+                        .attr("x", width - (.5 * button_width))
+                        .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                        .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                        .attr("text-anchor","middle" )
+                        // .attr("fill", function(d) {return d.rhythm == rhythms[0]? "white": "black"})
+                        .text(d => "+" + d.points)
                     d.I_remember_restr = true;
+                    update_bars()
+                    return color(d.rhythm) //mntlld_green 
+                  } else if (d.I_remember) {
+                    d3.select(this.parentNode)
+                        .append("text")
+                        .attr("id", "point_change_rem")
+                        .attr("x", width - (.5 * button_width))
+                        .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
+                        .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
+                        .attr("text-anchor","middle" )
+                        .text(d => "-" + d.points)
+                    d.I_remember_restr = false;
+                    update_bars()
+                    return mntlld_lightred //"#f2f2f2" //"#bdbdbd"
                   }
-                  update_bars()
-                  return color(d.rhythm)
-                } else if(!d.I_remember) {
-                  d3.select(this.parentNode)
-                      .append("text")
-                      .attr("id", "point_change_rem")
-                      .attr("x", width - (.5 * button_width))
-                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
-                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
-                      .attr("text-anchor","middle" )
-                      .text(d => "+" + d.points)
-                  d.I_remember_restr = true;
-                  update_bars()
-                  return color(d.rhythm) //mntlld_green 
-                } else if (d.I_remember) {
-                  d3.select(this.parentNode)
-                      .append("text")
-                      .attr("id", "point_change_rem")
-                      .attr("x", width - (.5 * button_width))
-                      .attr("y", d3.select(this.parentNode).select(".label").attr("y"))
-                      .attr("dy", d3.select(this.parentNode).select(".label").attr("dy"))
-                      .attr("text-anchor","middle" )
-                      .text(d => "-" + d.points)
-                  d.I_remember_restr = false;
-                  update_bars()
-                  return "#f2f2f2" //"#bdbdbd"
-                }
-              })
-          });
+                })
+            });
+
+            d3.selectAll("#border").raise()
+        }
 
 
         //rhythm rects
@@ -2334,6 +2349,7 @@
           
 
         items.append("rect")
+          .attr("id", "border")
           .attr("stroke", "black")
           .attr("x", 0)
           .attr("y", (d,i) => (i * item_height) + i*5 )
@@ -2349,8 +2365,12 @@
         let height_bar = 400 - margin_bar.top - margin_bar.bottom;
         
         let svg2 = d3.select(".restructuring")
-            .append("svg")
+            .append("div")
+            .attr("class", "restr_overview")
             .style("position", "sticky").style("top", 0)
+            .style("margin-left", (width + margin.left + margin.right) + "px")
+            .append("svg")
+            .style("display", "block")
             .attr("class", "overview_svg")
             .attr("width", width_bar + margin_bar.left + margin_bar.right)
             .attr("height", height_bar + margin_bar.top + margin_bar.bottom)
@@ -2400,7 +2420,6 @@
             .data(data_overview)
             .join("rect")
               .attr("class", "org_bar")
-              .text(function (d) { console.log(d.type); })
               .attr("x", function (d) { return x(d.type); })
               .attr("y", function (d) { return y(d.value); })
               //.text(function(d) {console.log(d.type);})
@@ -2445,7 +2464,6 @@
             .data(data_restr)
             .join("rect")
               .attr("class", "restr_bar")
-              .text(function (d,i) { console.log( d.value >= 0 ? (height_bar - y(d.value)) : (height_bar - y(Math.abs(d.value)))); })
               .attr("x", function (d) { return x(d.type); })
               .transition()
                 .duration(400)
@@ -2516,6 +2534,9 @@
               }
               
               });
+
+
+
         
         }
 
@@ -2534,13 +2555,31 @@
           .attr("y", d => y(d.value))
           .attr("dy", "-.35em")
           .style("text-anchor", "end")
-          .text(d => d.text)
+          .text(d => d.text);
         
         //x-Axis on top
         svg2.append("g")
           .attr("transform", "translate(0," + height_bar + ")")
-          .call(d3.axisBottom(x))
+          .call(d3.axisBottom(x));
 
+
+        ///////////////////////////    reset button /////////////////////////
+
+        d3.select(".restr_overview").append("button")
+          .attr("type", "button")
+          .style("margin-left", "165px")
+          .text("Reset to test result")
+          .style("margin-top", margin.top + "px")
+          .on("click", function() {
+            valid_questions.forEach((item) => {
+              item.I_do_it_restr = "none";
+              item.I_remember_restr = "none";
+            });
+            update_rect_buttons();
+            update_bars();
+            ;});
+
+        // d3.select(".list").raise()
         
       
       }
