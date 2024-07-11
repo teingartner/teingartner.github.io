@@ -2473,7 +2473,7 @@
               .attr("width", x.bandwidth())
               // .attr("height", function (d) { d.value >= 0 ? (height_bar - y(d.value)) : (height_bar - y(Math.abs(d.value))); })
               .attr("height", function (d) { return height_bar - y(Math.abs(d.value)); })
-              .attr("fill", function(d) { return d.value >= 0 ? mntlld_green : mntlld_grey})
+              .attr("fill", function(d) { return d.value >= 0 ? mntlld_lightblue : mntlld_lightred})
 
 
         svg2.selectAll(".restr_bar")
@@ -2486,7 +2486,7 @@
                   .style("left", (event.pageX + 10) + "px");
               })
               .on("mouseout", function (event, d) {
-                d3.select(this).attr("fill", mntlld_green);
+                d3.select(this).attr("fill", mntlld_lightblue);
                 tooltip.style("visibility", "hidden");
               });
 
