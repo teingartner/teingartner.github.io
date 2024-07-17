@@ -361,11 +361,29 @@
       build_categories_diverging()
       d3.select("body").append("h2").html("Comparison to partner")
       build_confusion_matrix()
+      d3.select("body").append("h2").html("And now?")
+      d3.select("body").append("p").html("It takes an effort for both parties in the relationship!" + 
+      "<br> If you and your partner find yourself in a traditional role distribution but would ideally want to have a more egalitarian " +
+      "division of household chores and mental load: You are not alone. " +
+      "Couples commonly  justify their own household practices with the strive for efficiency ('it's faster when I do it'), " + 
+      "individual characteristics of the partners ('I'm just a bit more chaotic and laid back') and circumstances beyond their control " +
+      "('my partner's work is just not as flexible so I pick up the children from childcare'). ")
+      "It is not only your individual result, but also that of political and societal structures and role models that have existed for centuries." +
+      d3.select("body").append("p").html("So try looking less for culprits but rather look ahead. " +
+      "<br> Do all of your divisions need to serve efficiency? Maybe there is a division that is not even that efficient (e.g. double checking with your partner " +
+      "before entering something in the family calender because they are its sole master). " +
+      "<br> Question the personality traits you assign to yourself and your partner. Maybe the 'chaotic' partner is a project manager in their day job. " +
+      "Are those traits really innate qualities rather than learned skills? " +
+      "And acknowledge that many decisions formed today's situation (choice of job, distance to school) and are not set in stone. " +
+      "<br> But remember: An individual solution that fit your circumstances that both of you are happy with." +
+      // "<br> and 'How Egalitarian Couples Make Sense of Non-egalitarian Household Practices' by A. Daminger (2020)" +
+      "<br> see affordance theory by McClelland & Sliwa (2023)"
+      )
+      build_restructuring()
       d3.select("body").append("h2").html("But what about the paid work?")
       build_working_time()
-      d3.select("body").append("h2").html("What if...?")
-      build_restructuring()
-      d3.select("body").append("div").style("height", "800px").attr("class", "spacing")
+      // d3.select("body").append("h2").html("Redistribution of Mental Load")
+      d3.select("body").append("div").style("height", "300px").attr("class", "spacing")
 
       // build_bar_comparison_charts(grouping = "domain")
       //#endregion
@@ -2076,7 +2094,7 @@
         
 
         // create svg
-        d3.select("body").append("div").attr("class", "restructuring").style("height", (heights[0] + heights[1]+heights[2] + 3*margin.top + 3*margin.bottom - 72) + "px")
+        d3.select("body").append("div").attr("class", "restructuring").style("height", (heights[0] + heights[1]+heights[2] + 3*margin.top + 3*margin.bottom ) + "px")
         
 
         let domain_svg = d3.select(".restructuring").append("div")
