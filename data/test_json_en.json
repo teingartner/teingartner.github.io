@@ -121,10 +121,10 @@
                     }
                 },
                 "32": {
-                    "Bügeln": []
+                    "Ironing": []
                 },
                 "33": {
-                    "Wocheneinkauf": {
+                    "Grocery shopping": {
                         "65": {
                             "answer": "remember",
                             "points": "3.00",
@@ -133,7 +133,7 @@
                     }
                 },
                 "34": {
-                    "Mahlzeiten planen": {
+                    "Planning meals": {
                         "699": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -142,10 +142,10 @@
                     }
                 },
                 "35": {
-                    "Obst\/Gemüse frisch nachkaufen": []
+                    "Buying fresh fruit + vegetables": []
                 },
                 "36": {
-                    "Monitoring der Familienfinanzen": {
+                    "Monitoring family budget": {
                         "70": {
                             "answer": "do it",
                             "points": "3.00",
@@ -154,12 +154,12 @@
                     }
                 },
                 "28": {
-                    "Müll rausbringen": []
+                    "Taking out garbage": []
                 }
             },
             "monthly": {
                 "46": {
-                    "Betten frisch beziehen": {
+                    "Changing bed sheets": {
                         "90": {
                             "answer": "do it",
                             "points": "2.00",
@@ -168,7 +168,7 @@
                     }
                 },
                 "37": {
-                    "Putzmittel\/Staubsaugerbeutel kaufen": {
+                    "Buying cleaning supplies": {
                         "73": {
                             "answer": "remember",
                             "points": "2.00",
@@ -177,7 +177,7 @@
                     }
                 },
                 "38": {
-                    "Abflüsse reinigen": {
+                    "Cleaning drains": {
                         "74": {
                             "answer": "do it",
                             "points": "2.00",
@@ -191,7 +191,7 @@
                     }
                 },
                 "39": {
-                    "Kleinreparaturen": {
+                    "Small repairs": {
                         "704": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -200,7 +200,7 @@
                     }
                 },
                 "40": {
-                    "Zahlungen veranlassen (Miete, Strom, etc.)": {
+                    "Paying bills for rent, power etc.": {
                         "79": {
                             "answer": "remember",
                             "points": "2.00",
@@ -209,7 +209,7 @@
                     }
                 },
                 "41": {
-                    "Altglas wegbringen": {
+                    "Going to the waste glass disposal": {
                         "706": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -218,19 +218,19 @@
                     }
                 },
                 "42": {
-                    "Deko + Gemütlichkeit zuhause": []
+                    "Decorating at home": []
                 },
                 "43": {
-                    "Garten\/Balkon": []
+                    "Gardening arount the house\/balcony": []
                 },
                 "44": {
-                    "Schrauben + Bohren": []
+                    "Handy work like drilling + screwing": []
                 },
                 "159": {
-                    "Ärzt*innentermine + Gesundheitsorganisation": []
+                    "Doctor's appointments + healthcare": []
                 },
                 "45": {
-                    "Schuhe putzen": []
+                    "Cleaning shoes": []
                 }
             },
             "yearly": {
