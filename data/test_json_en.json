@@ -235,10 +235,10 @@
             },
             "yearly": {
                 "160": {
-                    "Fenster putzen": []
+                    "Cleaning windows": []
                 },
                 "14": {
-                    "Küchenschränke abwischen": {
+                    "Wiping down the kitchen cabinets": {
                         "27": {
                             "answer": "remember",
                             "points": "1.00",
@@ -247,7 +247,7 @@
                     }
                 },
                 "15": {
-                    "Steuererklärung": {
+                    "Doing taxes": {
                         "28": {
                             "answer": "do it",
                             "points": "1.00",
@@ -256,13 +256,13 @@
                     }
                 },
                 "47": {
-                    "Maschinen entkalken": []
+                    "Decalcify machines": []
                 },
                 "48": {
-                    "Kühlschrank + TK + Backofen putzen": []
+                    "Cleaning the oven, fridge, freezer": []
                 },
                 "49": {
-                    "Sperrmüll entsorgen": {
+                    "Taking care of bulky waste": {
                         "97": {
                             "answer": "remember",
                             "points": "1.00",
@@ -271,7 +271,7 @@
                     }
                 },
                 "50": {
-                    "Recherchen für Strom\/Internet\/Versicherung": {
+                    "Doing research for power companies, internet, insurance etc.": {
                         "98": {
                             "answer": "do it",
                             "points": "1.00",
@@ -285,25 +285,25 @@
                     }
                 },
                 "51": {
-                    "Medizinschrank sortieren + updaten": []
+                    "Maintaining medical cabinet": []
                 },
                 "161": {
-                    "Kleinanzeigenverkäufe": []
+                    "Selling used clothes/shoes/stuff": []
                 },
                 "162": {
-                    "Nachbarschaftshilfe": []
+                    "Neighborhood assistance": []
                 }
             }
         },
         "Trips + leisure": {
             "weekly": {
                 "52": {
-                    "Entertainment\/Familienausflüge am Wochenende planen": []
+                    "Entertainment / planning family trips": []
                 }
             },
             "monthly": {
                 "53": {
-                    "Fahrräder instandhalten": {
+                    "Maintaining bycicles": {
                         "104": {
                             "answer": "do it",
                             "points": "2.00",
@@ -317,13 +317,13 @@
                     }
                 },
                 "54": {
-                    "Tanken": []
+                    "Refueling": []
                 },
                 "55": {
-                    "Auto waschen": []
+                    "Washing the car": []
                 },
                 "56": {
-                    "Feiertagsplanung (siehe MentalLoad@Christmas-Test)": {
+                    "Holiday planning": {
                         "110": {
                             "answer": "do it",
                             "points": "2.00",
@@ -334,10 +334,10 @@
             },
             "yearly": {
                 "13": {
-                    "Auto zum TÜV": []
+                    "Car checkups": []
                 },
                 "57": {
-                    "Autoreparaturen": {
+                    "Car repairs": {
                         "112": {
                             "answer": "do it",
                             "points": "1.00",
@@ -351,17 +351,17 @@
                     }
                 },
                 "58": {
-                    "Urlaubsplanung": []
+                    "Vacation planning": []
                 },
                 "59": {
-                    "Koffer packen für Urlaub": []
+                    "Packing suitcases for vacation": []
                 }
             }
         },
         "Relationship maintenance": {
             "daily": {
                 "158": {
-                    "Verhütung": {
+                    "Contraception": {
                         "314": {
                             "answer": "do it",
                             "points": "4.00",
@@ -372,7 +372,7 @@
             },
             "weekly": {
                 "60": {
-                    "Paartermine organisieren": {
+                    "Organizing couple's appointments": {
                         "118": {
                             "answer": "do it",
                             "points": "3.00",
@@ -386,18 +386,18 @@
                     }
                 },
                 "61": {
-                    "Geburtstagsgrüße an Freund*innen + Familie senden": []
+                    "Sending birthday greetings to family + friends": []
                 },
                 "62": {
-                    "Emotionsbegleitung": []
+                    "Emotional support": []
                 }
             },
             "monthly": {
                 "63": {
-                    "Kontaktpflege zu Angehörigen": []
+                    "Staying in contact with relatives": []
                 },
                 "64": {
-                    "Geburtstagsgeschenke für Freund*innen + Familie besorgen": {
+                    "Getting birthday presents for friends + family": {
                         "729": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -406,15 +406,15 @@
                     }
                 },
                 "65": {
-                    "Sich mit partnerschaftlichen Konflikten befassen": []
+                    "Dealing with couple conflicts": []
                 },
                 "163": {
-                    "Besuch bewirten\/Gästebetten machen": []
+                    "Arranging guest bedding": []
                 }
             },
             "yearly": {
                 "66": {
-                    "Erinnerungen + Fotos aufbewahren": {
+                    "Saving memories + photos": {
                         "130": {
                             "answer": "do it",
                             "points": "1.00",
@@ -423,7 +423,7 @@
                     }
                 },
                 "164": {
-                    "Geburtstagsfeiern organisieren": {
+                    "Organizing birthday parties": {
                         "326": {
                             "answer": "do it",
                             "points": "1.00",
@@ -437,7 +437,7 @@
                     }
                 },
                 "165": {
-                    "Sonstige Familienfeste organisieren": []
+                    "Organizing other family celebrations": []
                 }
             }
         }
@@ -446,7 +446,7 @@
         "Daycare + school": {
             "daily": {
                 "70": {
-                    "Brotboxen vorbereiten": {
+                    "Prepping lunchboxes": {
                         "138": {
                             "answer": "do it",
                             "points": "4.00",
@@ -460,13 +460,13 @@
                     }
                 },
                 "67": {
-                    "Bringen": []
+                    "School drop-off": []
                 },
                 "68": {
-                    "Abholen": []
+                    "Picking up": []
                 },
                 "69": {
-                    "Hausaufgaben betreuen": {
+                    "Supervising homework": {
                         "136": {
                             "answer": "do it",
                             "points": "4.00",
@@ -482,10 +482,10 @@
             },
             "weekly": {
                 "71": {
-                    "Wechselkleidung prüfen": []
+                    "Preparing spare clothes": []
                 },
                 "72": {
-                    "Turn- + Sportbekleidung packen\/mitgeben": {
+                    "Buy / pack gym + sportswear": {
                         "737": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -496,28 +496,28 @@
             },
             "monthly": {
                 "73": {
-                    "Schul-\/Kita-\/ sonst. Bedarf besorgen": []
+                    "Get school / daycare supplies": []
                 },
                 "74": {
-                    "Dienste bei Sonderveranstaltungen": []
+                    "Services at special events": []
                 },
                 "75": {
-                    "Ansprechpartner*in\/Notfallkontakt sein\r\n": []
+                    "Emergency contact": []
                 }
             },
             "yearly": {
                 "76": {
-                    "Teilnahme an Eltern-\/Angehörigenabenden": []
+                    "Participating in parent-teacher conferences": []
                 }
             }
         },
         "Clothes + transportation": {
             "daily": {
                 "77": {
-                    "Kleidung auswählen": []
+                    "Choosing clothes": []
                 },
                 "78": {
-                    "Kind(er) anziehen": {
+                    "Dressing kids": {
                         "743": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -528,7 +528,7 @@
             },
             "monthly": {
                 "79": {
-                    "Kleidergrößen prüfen + sortieren": {
+                    "Checking + sorting clothes": {
                         "157": {
                             "answer": "remember",
                             "points": "2.00",
@@ -537,10 +537,10 @@
                     }
                 },
                 "80": {
-                    "Schuhe prüfen + einkaufen": []
+                    "Checking + buying shoes": []
                 },
                 "81": {
-                    "Neue Kleidung einkaufen": {
+                    "Buying new clothes": {
                         "160": {
                             "answer": "do it",
                             "points": "2.00",
@@ -554,10 +554,10 @@
                     }
                 },
                 "82": {
-                    "Reparieren kaputter Kleidung": []
+                    "Repairing clothes": []
                 },
                 "83": {
-                    "Fahrradhelmgrößen prüfen + kaufen": {
+                    "Checking + buying bike helmets": {
                         "748": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -568,7 +568,7 @@
             },
             "yearly": {
                 "84": {
-                    "Ungenutzte Kleidung verschenken\/verkaufen": {
+                    "Selling / donating unused clothes": {
                         "166": {
                             "answer": "do it",
                             "points": "1.00",
@@ -582,28 +582,28 @@
                     }
                 },
                 "85": {
-                    "Kinderwagen\/Tragehilfen waschen\/instandhalten\r\n": []
+                    "Washing / maintaining baby carriages / carriers": []
                 },
                 "86": {
-                    "Kindersitze Auto + Rad": []
+                    "Buying child seats for car + bike": []
                 }
             }
         },
         "Sleep + relationship": {
             "daily": {
                 "87": {
-                    "Einschlafbegleitung": []
+                    "Sleep support": []
                 },
                 "88": {
-                    "Wecken + Aufwachbegleitung": []
+                    "Waking-up support": []
                 },
                 "89": {
-                    "Emotionsbegleitung": []
+                    "Emotional support": []
                 }
             },
             "weekly": {
                 "90": {
-                    "Gespräche mit älteren Kindern (Liebeskummer, Zukunft, ...)": {
+                    "Conversations with older kids (about heartaches, future...)": {
                         "178": {
                             "answer": "do it",
                             "points": "3.00",
@@ -614,7 +614,7 @@
             },
             "monthly": {
                 "91": {
-                    "Nachtschichten bei Krankheit": {
+                    "Night shifts during sickness": {
                         "181": {
                             "answer": "remember",
                             "points": "2.00",
@@ -623,22 +623,22 @@
                     }
                 },
                 "92": {
-                    "Regelvereinbarungen mit Kindern": []
+                    "Rule agreements with older children": []
                 },
                 "93": {
-                    "Ratgeber lesen\/Erziehungsberatung suchen": []
+                    "Reading handbooks / looking for parenting advice": []
                 }
             },
             "yearly": {
                 "94": {
-                    "Erinnerungen\/Fotos aufbewahren": []
+                    "Saving memories + photos": []
                 }
             }
         },
         "Body + hygiene": {
             "daily": {
                 "95": {
-                    "Haare kämmen": {
+                    "Combing hair": {
                         "189": {
                             "answer": "remember",
                             "points": "4.00",
@@ -647,7 +647,7 @@
                     }
                 },
                 "96": {
-                    "Zähne putzen": {
+                    "Brushing teeth": {
                         "190": {
                             "answer": "do it",
                             "points": "4.00",
@@ -661,7 +661,7 @@
                     }
                 },
                 "97": {
-                    "Schnuller + Flaschen sterilisieren": {
+                    "Sterilization of milk bottle + pacifiers": {
                         "192": {
                             "answer": "do it",
                             "points": "4.00",
@@ -672,7 +672,7 @@
             },
             "weekly": {
                 "99": {
-                    "Wickelbedarf\/Drogerieeinkäufe\r\n": {
+                    "Buying diaper changing supplies / drugstore supplies": {
                         "196": {
                             "answer": "do it",
                             "points": "3.00",
@@ -681,10 +681,10 @@
                     }
                 },
                 "100": {
-                    "Nägel schneiden": []
+                    "Cutting nails": []
                 },
                 "101": {
-                    "Baden + Haare waschen": {
+                    "Bathing + washing hair": {
                         "200": {
                             "answer": "do it",
                             "points": "3.00",
@@ -695,28 +695,28 @@
             },
             "monthly": {
                 "102": {
-                    "Ärzt*innentermine vereinbaren": []
+                    "Making doctors' appointments": []
                 },
                 "103": {
-                    "Ärzt*innenbesuche": []
+                    "Doctors' visits": []
                 },
                 "104": {
-                    "Haarschneidebegleitung": []
+                    "Hair cut session‘s aid": []
                 }
             },
             "yearly": {
                 "105": {
-                    "Sehhilfe aktualisieren": []
+                    "Checking visual aids": []
                 }
             }
         },
         "Birthdays + celebrations": {
             "monthly": {
                 "106": {
-                    "Freund*innen\/Familie über Kinderwünsche informieren": []
+                    "Informing friends + family about kids' wishes": []
                 },
                 "107": {
-                    "Kindergeschenke besorgen": {
+                    "Buying presents for kids": {
                         "772": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -727,7 +727,7 @@
             },
             "yearly": {
                 "108": {
-                    "Kindergeburtstage planen + durchführen": {
+                    "Planning + hosting kids' birthday parties": {
                         "214": {
                             "answer": "do it",
                             "points": "1.00",
@@ -740,7 +740,7 @@
         "Leisure": {
             "daily": {
                 "109": {
-                    "Spielverabredungen treffen": {
+                    "Arrange play dates": {
                         "216": {
                             "answer": "do it",
                             "points": "4.00",
@@ -754,20 +754,20 @@
                     }
                 },
                 "110": {
-                    "Nachmittagsbetreuung + Fahrdienste": []
+                    "Planning afternoon activities + driving service": []
                 },
                 "111": {
-                    "Begleitung von Medienkonsum": []
+                    "Minding media consumption": []
                 }
             },
             "weekly": {
                 "112": {
-                    "BabysitterInnen (Orga + Kommunikation)": []
+                    "Babysitter (arrangements + communication)": []
                 }
             },
             "monthly": {
                 "113": {
-                    "Recherche für Sport\/Vereine\/Freizeitaktivitäten": {
+                    "Researching sport activities / clubs / extracurricular activities": {
                         "224": {
                             "answer": "do it",
                             "points": "2.00",
@@ -776,7 +776,7 @@
                     }
                 },
                 "114": {
-                    "Taschengeldausgabe\/-verwaltung": {
+                    "Managing allowances": {
                         "226": {
                             "answer": "do it",
                             "points": "2.00",
@@ -796,7 +796,7 @@
         "Body + care": {
             "daily": {
                 "115": {
-                    "Haare kämmen": {
+                    "Combing hair": {
                         "228": {
                             "answer": "do it",
                             "points": "4.00",
@@ -805,7 +805,7 @@
                     }
                 },
                 "116": {
-                    "Zähne putzen": {
+                    "Brushing teeth": {
                         "230": {
                             "answer": "do it",
                             "points": "4.00",
@@ -819,7 +819,7 @@
                     }
                 },
                 "117": {
-                    "Medikamente richten": {
+                    "Preparing medication": {
                         "782": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -828,7 +828,7 @@
                     }
                 },
                 "118": {
-                    "Medikamentengabe": {
+                    "Giving medication": {
                         "783": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -837,10 +837,10 @@
                     }
                 },
                 "119": {
-                    "Anwendung + Pflege von Medizinprodukten wie z.B. Katheter": []
+                    "Using + taking care of medical devices such as catheters": []
                 },
                 "120": {
-                    "Lagerung + Mobilisierung\/Physio": {
+                    "Positioning and mobilization / physical therapy": {
                         "785": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -849,7 +849,7 @@
                     }
                 },
                 "121": {
-                    "Essen zubereiten": {
+                    "Cooking / meal prep": {
                         "786": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -858,7 +858,7 @@
                     }
                 },
                 "122": {
-                    "Hilfestellung beim Essen": {
+                    "Support while eating": {
                         "787": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -867,12 +867,12 @@
                     }
                 },
                 "123": {
-                    "Toilettengänge\/Inkontinenzversorgung": []
+                    "Toiletting / incontinence care": []
                 }
             },
             "weekly": {
                 "124": {
-                    "Pflegeutensilien bestellen\/einkaufen": {
+                    "Ordering / buying care utensils": {
                         "246": {
                             "answer": "do it",
                             "points": "3.00",
@@ -886,10 +886,10 @@
                     }
                 },
                 "125": {
-                    "Nägel schneiden": []
+                    "Cutting nails": []
                 },
                 "126": {
-                    "Baden + Haare waschen": {
+                    "Bathing + washing hair": {
                         "250": {
                             "answer": "do it",
                             "points": "3.00",
@@ -903,7 +903,7 @@
                     }
                 },
                 "127": {
-                    "Apotheken- + Sanitätshausgänge": {
+                    "Going to the pharmacy / medical supply store": {
                         "792": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -912,7 +912,7 @@
                     }
                 },
                 "128": {
-                    "Therapie-Begleitung": {
+                    "Therapy attendance": {
                         "793": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -921,10 +921,10 @@
                     }
                 },
                 "129": {
-                    "Aufräumen + Putzen (sofern zusätzliche Räumlichkeiten)": []
+                    "Tidying + cleaning (if there are additional spaces)": []
                 },
                 "130": {
-                    "Medikamentenvorräte prüfen": {
+                    "Checking on medication supplies": {
                         "795": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -933,7 +933,7 @@
                     }
                 },
                 "131": {
-                    "Tasche für draußen packen": {
+                    "Packing bag for outside activities": {
                         "796": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -944,7 +944,7 @@
             },
             "monthly": {
                 "132": {
-                    "Ärzt*innenbesuche": {
+                    "Doctors' visits": {
                         "262": {
                             "answer": "do it",
                             "points": "2.00",
@@ -953,19 +953,19 @@
                     }
                 },
                 "133": {
-                    "Sanitätshauskontakte\/Hilfsmittel justieren": []
+                    "Adjusting aids": []
                 },
                 "134": {
-                    "Haarschneidebegleitung": []
+                    "Hair cut session‘s aid": []
                 },
                 "135": {
-                    "Nachtschichten": []
+                    "Doing night shifts": []
                 },
                 "136": {
-                    "Einweisung anderer Menschen in Pflegeablauf": []
+                    "Instructing other people involved in care-routine": []
                 },
                 "137": {
-                    "Pflegebett beziehen ": {
+                    "Changing sheets on care bed": {
                         "273": {
                             "answer": "remember",
                             "points": "2.00",
@@ -976,20 +976,20 @@
             },
             "yearly": {
                 "138": {
-                    "Fachärzt*innenbesuche": []
+                    "Medical specialist visits": []
                 },
                 "139": {
-                    "Kurzzeitpflege organisieren": []
+                    "Organizing short-term care": []
                 },
                 "140": {
-                    "Klinikaufenthalte begleiten": []
+                    "Managing + accompanying hospital stays": []
                 }
             }
         },
         "Relationship": {
             "daily": {
                 "141": {
-                    "Beschäftigung + Input": {
+                    "Entertainment + input": {
                         "280": {
                             "answer": "do it",
                             "points": "4.00",
@@ -998,12 +998,12 @@
                     }
                 },
                 "166": {
-                    "Sterbebegleitung": []
+                    "End of life care": []
                 }
             },
             "weekly": {
                 "142": {
-                    "Organisation + Unterstützung von Freizeitaktiviatäten + sozialen Kontakten": {
+                    "Organisation and/or support of recreational activities + social contacts": {
                         "282": {
                             "answer": "do it",
                             "points": "3.00",
@@ -1012,7 +1012,7 @@
                     }
                 },
                 "167": {
-                    "Gespräche über den Tod, Krankheit, Ängste, Zukunft (betroffene Person\/Geschwister)": {
+                    "Conversations about death, sickness, fears, future (concerned person/siblings)": {
                         "832": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -1023,28 +1023,28 @@
             },
             "monthly": {
                 "143": {
-                    "Spielsachen kaufen": []
+                    "Buying toys": []
                 },
                 "168": {
-                    "Begleitung bei KH-Aufenthalten": []
+                    "Company during hospital stays": []
                 },
                 "169": {
-                    "Vernetzung + regelmäßige Infos an Verwandte\/Freund*innen": []
+                    "Networking + updates for relatives/friends": []
                 }
             },
             "yearly": {
                 "170": {
-                    "Feierlichkeiten organisieren": []
+                    "Organizing parties": []
                 }
             }
         },
         "Clothes + transport": {
             "daily": {
                 "144": {
-                    "Kleidung auswählen": []
+                    "Selecting clothes": []
                 },
                 "145": {
-                    "Person anziehen": {
+                    "Dressing the cared-for person": {
                         "288": {
                             "answer": "do it",
                             "points": "4.00",
@@ -1053,12 +1053,12 @@
                     }
                 },
                 "146": {
-                    "Fahrdienste (organisieren)": []
+                    "(Arrange) driving service": []
                 }
             },
             "weekly": {
                 "147": {
-                    "Hilfsmittel prüfen + instand halten": {
+                    "Checking + maintaining auxiliary equipment": {
                         "292": {
                             "answer": "do it",
                             "points": "3.00",
@@ -1069,10 +1069,10 @@
             },
             "monthly": {
                 "148": {
-                    "Neue Kleidung einkaufen\r\n": []
+                    "Buying new clothes": []
                 },
                 "149": {
-                    "Reparieren kaputter Kleidung": {
+                    "Repairing clothes": {
                         "814": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -1083,19 +1083,19 @@
             },
             "yearly": {
                 "150": {
-                    "Barrierefreiheit sicherstellen": []
+                    "Ensuring accessibility": []
                 }
             }
         },
         "Organisation + administration": {
             "daily": {
                 "151": {
-                    "Kommunikation mit KK, med. Dienst, Pflegekasse, Ärzt*innen, Therapeut*innen": []
+                    "Communication with health/care insurance, medical services, doctors, therapists": []
                 }
             },
             "weekly": {
                 "152": {
-                    "Management + Monitoring von Terminen mit Dienstleister*innen\/Ärzt*innen": {
+                    "Management + monitoring of appointments with service providers / doctors": {
                         "302": {
                             "answer": "do it",
                             "points": "3.00",
@@ -1104,15 +1104,15 @@
                     }
                 },
                 "171": {
-                    "Finanzmanagement\/-monitoring": []
+                    "Financial management / -monitoring": []
                 }
             },
             "monthly": {
                 "153": {
-                    "Antragstellung für Hilfsmittel": []
+                    "Application for aids": []
                 },
                 "154": {
-                    "Widersprüche an die KK schreiben": {
+                    "Writing objections to the health insurance company": {
                         "306": {
                             "answer": "do it",
                             "points": "2.00",
@@ -1126,10 +1126,10 @@
                     }
                 },
                 "172": {
-                    "Nachlassvorbereitung": []
+                    "Estate planning": []
                 },
                 "173": {
-                    "Recherche + Weiterbildung": {
+                    "Research + trainings": {
                         "344": {
                             "answer": "do it",
                             "points": "2.00",
@@ -1145,7 +1145,7 @@
             },
             "yearly": {
                 "155": {
-                    "Weiterbildung zu medizinischen Themen": {
+                    "Doing further trainings on medical topics": {
                         "308": {
                             "answer": "do it",
                             "points": "1.00",
@@ -1154,7 +1154,7 @@
                     }
                 },
                 "156": {
-                    "Weiterbildung zu Hilfestellungen + Leistungen": {
+                    "Doing further trainings on assistance + services": {
                         "821": {
                             "answer": "does not apply",
                             "points": "0.00",
@@ -1163,7 +1163,7 @@
                     }
                 },
                 "174": {
-                    "Nachlassverwaltung": {
+                    "Estate management": {
                         "346": {
                             "answer": "do it",
                             "points": "1.00",
