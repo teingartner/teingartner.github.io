@@ -382,7 +382,7 @@
 
       var series = stack(formattedData);
       // add text
-      d3.select("body").append("h2").html("Evaluation")
+      d3.select("body").append("h2").html("Evaluation").style("margin-top", "30px")
       d3.select("body").append("div").attr("class", "tooltip")
       var tooltip = d3.select(".tooltip");
       d3.select("body").append("p").html("Here's your score: You have " + done_points + " of " + max_num_points +
@@ -441,7 +441,18 @@
       d3.select("body").append("h3").html("But what about the paid work?")
       build_working_time()
       // d3.select("body").append("h2").html("Redistribution of Mental Load")
-      d3.select("body").append("div").style("height", "300px").attr("class", "spacing")
+      d3.select("body").append("h3").html("Social Role Theory")
+      d3.select("body").append("p").html("The unequal division of mental load is a product of social, political and economical circumstances. " + 
+      "The Social Role Theory, developed by Alice Eagly and Wendy Wood tries to explain the unequal division of labour " + 
+      "as well as the differences in affect and behaviour of men and women." + 
+      "<br> This infographic applies the theory to mental labour, have fun exploring!"
+    )
+    d3.select("body").append("img")
+    .attr("src", "/images/political_combined.png")
+    .attr("alt", "Social Role Theory and the Unequal division of Mental Labour")
+    .style("width", "850px")
+    d3.select("body").append("div").style("height", "50px").attr("class", "spacing")
+
       // build_multiples_chart(grouping =  "rhythm")
       // build_categories_chart()
 
@@ -2221,7 +2232,11 @@
           .attr("x", 20)
           .attr("y", (d,i) => ((i+0.5) * item_height) + i*5 )
           .attr("dy", ".35em")
-          .text(d=> d.Text)
+          // .text(function(d) { console.log(d.Text.substring(0, 24) + "...")})
+          .text(function(d) { 
+            // console.log(d.Text.length > 40?d.Text.substring(0, 39) + "...":d.Text);
+            return d.Text.length > 55?d.Text.substring(0, 54) + "...":d.Text;
+          })
 
         update_rect_buttons()
         function update_rect_buttons() {
