@@ -387,8 +387,15 @@
       var tooltip = d3.select(".tooltip");
       d3.select("body").append("p").html("Here's your score: You have " + done_points + " of " + max_num_points +
       " I-do-it points and " + I_remembered_points + " of " + max_num_points + " I-remember-to-do-it points. " +
-      "<br> <b> Your total score is " + (I_remembered_points + done_points) + "</b>.")
-      build_overview_chart()
+      "<br> This means you carry " + Math.round(100*(done_points/max_num_points)) + "% of the phyiscal labour and " +
+      + Math.round(100*(I_remembered_points/max_num_points)) + "% of the mental labour."
+      // "<br> <b> Your total score is " + (I_remembered_points + done_points) + "</b>."
+      )
+      d3.select("body").append("p").html("Keep in mind that your partner has probably a different view on the division of the tasks. " +
+       "<b> This is only a reflection of your perspective!</b> " +
+       "For a better comparison, your partner should also do the test to see where you might disagree on. ")
+      // build_overview_chart()
+      build_overview_percentage_chart()
       d3.select("body").append("h3").html("How does the scoring work?")
       d3.select("body").append("p").html("The tasks listed are weighted according to the frequency with which they need to be performed. " + 
           "Four points are awarded for tasks to be performed daily or more frequently. For weekly tasks, three points are awarded. " + 
@@ -408,9 +415,12 @@
        "And that they remember all the tasks you don't remember. " +
        "But we know that in everyday life, this might not be the case. Some tasks might be left behind and be a source of stress." +
        "<br> For this visualisation, each task is one circle and can be uniquely assigned to one of the four states: " +
-       "<br> I do it & I remember to do it, I do it but my partner reminds me to do it, my partner does it but I remind them to do it, partner both does it & remembers to do it. " +
-       "<br> Hover over the circles to see which task it is. "
+       "<br> I do it and I also remember to do it; I do it but my partner reminds me to do it; my partner does it but I remind them to do it; partner both does it and remembers to do it. " +
+       "<br> <b> Hover over the circles to see which task it is. </b> "
       )
+      d3.select("body").append("p").html("Keep in mind that your partner has probably a different view on the division of the tasks. " +
+       "<b> This is only a reflection of your perspective!</b> " +
+       "For a better comparison, your partner should also do the test to see where you might disagree on. ")
       build_confusion_matrix()
       d3.select("body").append("h3").html("And now?")
       d3.select("body").append("p").html(
@@ -438,8 +448,8 @@
 
       d3.select("body").append("h3").html("Redistribution tool")
       build_restructuring()
-      d3.select("body").append("h3").html("But what about the paid work?")
-      build_working_time()
+      // d3.select("body").append("h3").html("But what about the paid work?")
+      // build_working_time()
       // d3.select("body").append("h2").html("Redistribution of Mental Load")
       d3.select("body").append("h3").html("Social Role Theory")
       d3.select("body").append("p").html("The unequal division of mental load is a product of social, political and economical circumstances. " + 
@@ -575,6 +585,128 @@
           .attr("dy", "-1em")
           .style("text-anchor", "middle")
           .text(d => d.sum);
+
+        
+        //x-Axis on top
+          svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+      }
+
+      function build_overview_percentage_chart() {
+        d3.select("body").append("div").attr("class", "overview_perc_chart")
+
+        // svg for plotting 
+        var svg = d3.select(".overview_perc_chart")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")")
+
+        // X axis
+        var x = d3.scaleBand()
+          .range([0, width])
+          .domain(types)
+          .padding(0.2);
+
+
+        // Add Y axis
+        //initial with max number of points for daily tasks
+        var y = d3.scaleLinear()
+          .domain([0, 100])
+          .range([height, 0]);
+        var yAxis = svg.append("g")
+          .attr("class", "myYaxis")
+          .call(d3.axisLeft(y)
+          .tickFormat(d => (Math.abs(d) + "%")))
+
+        //yAxis label
+        svg.append("text")
+          .attr("class", "y axislabel")
+          .attr("text-anchor", "middle")
+          .attr("y", -30)
+          .attr("dy", ".75em")
+          // .attr("transform", "translate(-40," + 0 + "),rotate(-90)")
+          .text("share of points");
+
+        let rolled_up_I_do_it = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.I_do_it)
+        let rolled_up_I_remember = d3.rollup(valid_questions, v => d3.sum(v, d => d.points), d => d.I_remember)
+        let data_overview = [
+          { "type": "I_do_it", "value": 100 * (rolled_up_I_do_it.get(true)  / max_num_points) },
+          { "type": "I_remember", "value": 100 * (rolled_up_I_remember.get(true)  / max_num_points)},
+        ];
+        //console.log(data_overview)
+
+        svg.append("g").attr("class", "bars")
+          .selectAll("rect")
+          .data(data_overview)
+          .enter().append("rect")
+          //.text(function (d) { console.log(d.type); })
+          .attr("x", function (d) { return x(d.type); })
+          .attr("y", function (d) { return y(d.value); })
+          // .text(function(d) {return (Math.round(10*d.value)/10) + " %"})
+          .attr("width", x.bandwidth())
+          .attr("height", function (d) { return height - y(d.value); })
+          .attr("fill", mntlld_lightblue)
+          .on("mouseover", function (event, d) {
+            tooltip
+              .style("visibility", "visible")
+              .text(Math.round(d.value) + "%");
+            d3.select(this).attr("fill", mntlld_red)
+          })
+          .on("mousemove", function (event, d) {
+            tooltip.style("top", (event.pageY - 10) + "px")
+              .style("left", (event.pageX + 10) + "px");
+          })
+          .on("mouseout", function (event, d) {
+            d3.select(this).attr("fill", mntlld_lightblue);
+            tooltip.style("visibility", "hidden");
+          });
+
+       
+        //add 50% line
+        svg.selectAll(".dashed_line")
+          .data([50])
+          .enter()
+          .append("line")
+          .attr("class", "dashed_line")
+          .attr("x1", 0)
+          .attr("x2", width)
+          .attr("y1", d => y(d))
+          .attr("y2", d => y(d));
+
+        //line labels
+        svg.append("g").attr("class", "line_labels")
+          .selectAll("label")
+          .data([
+            { "value": 50, "text": "50% of reachable points" },
+            // { "value": 100, "text": "reachable points: " + max_num_points }
+          ])
+          .enter()
+          .append("text")
+          .attr("class", "label")
+          .attr("x", width)
+          .attr("y", d => y(d.value))
+          .attr("dy", "-.35em")
+          .style("text-anchor", "end")
+          .text(d => d.text)
+
+         //add bar labels
+         svg.append("g").attr("class", "label")
+          .selectAll("text.sum")
+          .data(data_overview)
+          // .data([{ "sum": done_points, "type": "I_do_it" }, { "sum": I_remembered_points, "type": "I_remember" }])
+          .enter()
+          .append("text")
+          .attr("class", "sum")
+          //.text(function(d) {console.log(d)})
+          .attr("x", (d) => x(d.type) + x.bandwidth() / 2)
+          .attr("y", (d) => y(d.value))
+          .attr("dy", "-1em")
+          .style("text-anchor", "middle")
+          .text(d => Math.round(d.value) + "%");
 
         
         //x-Axis on top
@@ -894,8 +1026,8 @@
           .attr("x", 0)
           .attr("y", 0)
           .text("Size (Frequency):")
-          .style("font-size", "14px")
-          .style("font-weight", 450);
+          .style("font-size", "16px")
+          .style("font-weight", 500);
 
         const sizeValues = [...new Set(valid_questions.map(d => d.points))];
 
@@ -915,7 +1047,7 @@
           .attr("x", 30)
           .attr("y", (d, i) => 20 + i * 25)
           .attr("dy", "0.35em")
-          .style("font-size", "13px")
+          .style("font-size", "14px")
           .text(d => rhythms[Math.abs(d - 4)]);
 
         // Add color legend
@@ -926,8 +1058,8 @@
         colorLegend.append("text")
           .attr("x", 0)
           .attr("y", 0)
-          .style("font-size", "14px")
-          .style("font-weight", 450)
+          .style("font-size", "16px")
+          .style("font-weight", 500)
           .text("Colour (Domain):");
 
         const domainValues = [...new Set(valid_questions.map(d => d.domain))];
@@ -949,7 +1081,7 @@
           .attr("y", (d, i) => 25 + i * 20) // Adjust y to vertically center with the rect
           .attr("dy", "0.35em")
           .text(d => d)
-          .style("font-size", "13px");
+          .style("font-size", "14px");
 
       }
 
@@ -1705,9 +1837,9 @@
           legend.append("text")
           .attr("x", 0)
           .attr("y", 0)
-          .text("Colour (Domain):")
-          .style("font-size", "12px")
-          .style("font-weight", "bold");
+          .style("font-size", "16px")
+          .style("font-weight", 500)
+          .text("Colour (Domain):");
 
           legend.selectAll("rect")
           .data(uniqueDomains)
@@ -1727,7 +1859,7 @@
           .attr("y", (d, i) => 25 + i * 20) 
           .attr("dy", "0.35em")
           .text(d => d)
-          .style("font-size", "12px"); 
+          .style("font-size", "14px"); 
 
         
 
